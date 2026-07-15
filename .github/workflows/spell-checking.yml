@@ -19,4 +19,3 @@ jobs:
         uses: rojopolis/spellcheck-github-actions@0.63.0
         with:
             config_path: .github/.spellcheck.yml
-            task_name: Markdown
