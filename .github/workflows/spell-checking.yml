@@ -1,0 +1,22 @@
+name: Spellcheck Action
+on: push
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: Spellcheck
+        uses: rojopolis/spellcheck-github-actions@0.63.0
+        with:
+            config_path: .spellcheck.yml
+            task_name: Markdown
