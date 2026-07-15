@@ -1,0 +1,6 @@
+GUI
+JDK
+TuProlog
+vs
+Java
+Scala
