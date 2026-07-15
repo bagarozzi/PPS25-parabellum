@@ -2,7 +2,7 @@ jobs: 4
 matrix:
   - name: Markdown Italian
     aspell: 
-      lang: it_IT
+      lang: it
     dictionary:
       wordlists:
       - .github/.wordlist.txt
