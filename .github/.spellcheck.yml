@@ -12,15 +12,3 @@ matrix:
     sources:
       - 'docs/*.md'
     default_encoding: utf-8
-  - name: Markdown English
-    aspell: 
-      lang: en
-    dictionary:
-      wordlists:
-      - .github/.wordlist.txt
-      encoding: utf-8
-    pipeline:
-      - pyspelling.filters.markdown:
-    sources:
-      - 'docs/*.md'
-    default_encoding: utf-8
