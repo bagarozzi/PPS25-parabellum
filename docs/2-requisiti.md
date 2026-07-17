@@ -8,12 +8,24 @@ ai giocatori nemici, eliminandoli.
 Tali funzioni 
 
 ## Modello di dominio
+Il dominio include le seguenti entità:
+- **Entity**: una generica entità con una posizione
+- **Figure**: certe entità sono delle figure, cioè delle forme geometriche con una **Shape** (*forma*) e di si può determinare
+l'appartenenza di un punto
+- **Bullet**: un proiettile, appartenente ad un giocatore, che si muove lungo una traitettoria
+- **Shape**: una forma geometrica che potrebbe essere espressa come un insieme di funzioni matematiche (equazioni, disequazioni... etc)
+- **Trajectory**: la traitettoria di un proiettile
+- **Position**: the position of an entity
 
-### Elemento del dominio x
-Descrizione di ogni elemento del dominio
+Una *Figure* può essere di 3 tipi diversi: 
+- **Obstacle**: una particolare figura geometrica che, quando colpita, possiede dei buchi generati dall'impatto con i proiettili
+- **Player**: un giocatore
+- **Power-up**: un particolare entità che, quando colpita, dona un effetto a chi la colpisce e scompare immediatamente
 
-### Elemento del dominio y
-Descrizione di ogni elemento del dominio
+La figura seguente cattura gli aspetti elencati, includendo le relazioni tra le entità del dominio.
+
+
+<img src="./figures/domain-model.png" width="600" height="auto">
 
 ## Requisiti funzionali
 - La **partita** può essere avviata con una composizione variabile di giocatori:
