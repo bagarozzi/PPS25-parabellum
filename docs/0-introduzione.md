@@ -17,6 +17,6 @@ Naviga tra le sezioni con i seguenti links.
 7. [**Retrospettiva**](7-retrospettiva.md)
 ___
 ___
-**Sommario** | [ **Processo di sviluppo &rarr;**](2-requisiti.md)
+**Introduzione** | [ **Processo di sviluppo &rarr;**](1-processo.md)
 <br>
 [**Torna alla home**](../index.md)
