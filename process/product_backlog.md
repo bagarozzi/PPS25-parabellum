@@ -24,3 +24,8 @@ Most important first.
 | 04 | Domain model Diagram (mermaid) | Sbaraccani | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+
+___
+___
+
+[Torna alla Home](../index.md)

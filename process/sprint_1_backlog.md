@@ -30,3 +30,8 @@ Alcune task sono lasciate da completare entro la sprint Review indicata.
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 
 ### Sprint review meeting (9/08/2026)
+
+___
+___
+
+[**&larr; Torna al Product Backlog**](./product_backlog.md) | [**Torna alla Home**](../index.md)

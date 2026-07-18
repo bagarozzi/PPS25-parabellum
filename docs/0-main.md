@@ -15,5 +15,8 @@ Naviga tra le sezioni con i seguenti links.
 5. [**Implementazione**](5-implementazione.md)
 6. [**Testing**](6-testing.md)
 7. [**Retrospettiva**](7-retrospettiva.md)
-
-La documentazione del processo di sviluppo Agile/SCRUM è consulatibile alla directory ```process```.
+___
+___
+**Sommario** | [ **Processo di sviluppo &rarr;**](2-requisiti.md)
+<br>
+[**Torna alla home**](../index.md)

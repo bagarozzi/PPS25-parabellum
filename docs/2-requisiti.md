@@ -65,3 +65,9 @@ componenti attuali
 - Scala 3.x
 - TuProlog
 - JDK
+
+___
+___
+[**&larr; Processo di sviluppo** ](./1-processo.md) | **Analisi dei requisiti** | [ **Design del sistema &rarr;**](./3-design.md)
+<br>
+[**Torna alla home**](../index.md)

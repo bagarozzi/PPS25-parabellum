@@ -6,3 +6,8 @@ essere completamente funzionale e immutabile.
 <br>
 A questo fine viene sviluppato un componente **GameContext** che viene *osservato* dalla View per ricevere cambiamenti.
 
+___
+___
+[**&larr; Analisi dei requisiti** ](./2-requisiti.md) | **Design del sistema** | [ **Design di dettaglio &rarr;**](./4-dettaglio.md)
+<br>
+[**Torna alla home**](../index.md)
