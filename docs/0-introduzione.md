@@ -1,4 +1,4 @@
-# Parabellum
+# Introduzione
 
 ## Sommario
 Parabellum è un gioco di guerra e strategia ambientato nel piano cartesiano. I giocatori combattono, sparando funzioni matematiche 
