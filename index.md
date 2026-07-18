@@ -8,7 +8,7 @@ In questo documento sono riportati i passaggi intrapresi nel design ed implement
 ## Indice
 Naviga tra le sezioni con i seguenti links.
 
-0. [**Sommario**](./docs/index.md)
+0. [**Sommario**](./docs/0-main.md)
 1. [**Processo di sviluppo**](./docs/1-processo.md)
 2. [**Analisi dei requisiti**](./docs/2-requisiti.md)
 3. [**Design del sistema**](./docs/3-design.md)
