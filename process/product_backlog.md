@@ -15,12 +15,12 @@
 
 ### Tasks
 Most important first.
-| Task ID | Task Description | Assignee | When it's done | Done |
-| :--- | :--- | :--- | :--- | :---: |
-| 01 | Elaborate on Architecture | Everyone | . | no |
-| 01b | Decide on Architecture | Everyone | . | no |
-| 02 | Domain modeling | Everyone | . | no |
-| 03 | Initial GUI draft | Everyone | When the GUI Starts | no |
-| 04 | Domain model Diagram (mermaid) | Sbaraccani | . | no |
-| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no |
-| 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
+| Task ID | Task Description | Assignee | When it's done | Done | First planned in |
+| :--- | :--- | :--- | :--- | :---: | :---: |
+| 01 | Elaborate on Architecture | Everyone | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 01b | Decide on Architecture | Everyone | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 02 | Domain modeling | Everyone | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 03 | Initial GUI draft | Everyone | When the GUI Starts | no | [**Sprint 1**](./sprint_1_backlog.md) | 
+| 04 | Domain model Diagram (mermaid) | Sbaraccani | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
