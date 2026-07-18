@@ -6,6 +6,6 @@ di artefatti intermedi ma funzionanti.
 
 ___
 ___
-[**&larr; Sommario** ](0-main.md) | **Processo di sviluppo** | [ **Analisi dei requisiti &rarr;**](2-requisiti.md)
+[**&larr; Introduzione** ](0-introduzione.md) | **Processo di sviluppo** | [ **Analisi dei requisiti &rarr;**](2-requisiti.md)
 <br>
 [**Torna alla home**](../index.md)
