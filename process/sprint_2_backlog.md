@@ -1,6 +1,6 @@
-# Sprint Backlog - Sprint 3
+# Sprint Backlog - Sprint 2
 
-**Sprint goal**: sprint goals in short
+**Sprint goal**: consegnare un'applicazione minimale in cui si predispone l'architettura per gli sprint futuri
 
 **Duration/Deadline**: 16/08/2026
 
@@ -29,7 +29,7 @@ In particolare si punta ad una versione minimale che predisponga all'aggiunta di
 | 10 | Creazione dell'Engine per stato del gioco e game loop | Bagattoni | . | no |
 | 11 | Gestione delle collisioni dei proiettili | Venturini | . | no |
 
-### Sprint review meeting (16/08/2026)
+### Sprint review meeting (17/08/2026)
 
 ___
 ___
