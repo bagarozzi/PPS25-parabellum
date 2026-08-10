@@ -2,7 +2,7 @@
 
 **Sprint goal**: sprint goals in short
 
-**Duration/Deadline**: 15/08/2026
+**Duration/Deadline**: 16/08/2026
 
 ### Sprint planning meeting (10/08/2026)
 Visti i risultati dello sprint precedente, l'obbiettivo del seguente sarà quello di consegnare una versione funzionante e 
