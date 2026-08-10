@@ -21,11 +21,11 @@ Alcune task sono lasciate da completare entro la sprint Review indicata.
 ### Tasks to be done
 | Task ID | Task Description | Assignee | When it's done | Done |
 | :--- | :--- | :--- | :--- | :---: |
-| 01 | Elaborate on Architecture | Everyone | . | no |
-| 01b | Decide on Architecture | Everyone | . | no |
-| 02 | Domain modeling | Everyone | . | no |
+| 01 | Elaborate on Architecture | Everyone | . | yes |
+| 01b | Decide on Architecture | Everyone | . | yes |
+| 02 | Domain modeling | Everyone | . | yes |
 | 03 | Initial GUI draft | Everyone | When the GUI Starts | no |
-| 04 | Domain model Diagram (mermaid) | Sbaraccani | . | no |
+| 04 | Domain model Diagram (mermaid) | Sbaraccani | . | yes |
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 
