@@ -17,9 +17,13 @@
 Most important first.
 | Task ID | Task Description | Assignee | When it's done | Done | First planned in |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| 03 | Initial GUI draft | Everyone | When the GUI Starts | no | [**Sprint 1**](./sprint_1_backlog.md) | 
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 07 | Interfaccia grafica di base |  | . | no | [**Sprint 2**](./sprint_2_backlog.md) |
+| 08 | Architettura di base: flusso di dati tra model, view, viewmodel |  | . | no | [**Sprint 2**](./sprint_2_backlog.md) |
+| 09 | Inserimento (tramite ViewModel e Engine) e parsing dei parametri di una retta |  | . | no | [**Sprint 2**](./sprint_2_backlog.md) |
+| 10 | Creazione dell'Engine per stato del gioco e game loop |  | . | no | [**Sprint 2**](./sprint_2_backlog.md) |
+| 11 | Gestione delle collisioni dei proiettili |  | . | no | [**Sprint 2**](./sprint_2_backlog.md) |
 
 ___
 ___
