@@ -7,7 +7,6 @@ import it.unibo.parabellum.model.shape.Shape
 
 trait Player extends Figure:
   val name: String
-  val pos: Position
 
 class PlayerImpl(val name: String, val pos: Position, val shape: Shape) extends Player:
 
