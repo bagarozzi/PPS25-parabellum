@@ -5,7 +5,7 @@ import scala.annotation.tailrec
 
 object Engine:
 
-  def run(targetFPS: Int, g: GameState): Unit =
+  def run(g: GameState)(using targetFPS: Int): Unit =
     val optimalTimeNs: Long = 1_000_000_000L / targetFPS
     loop(optimalTimeNs, g)
 
