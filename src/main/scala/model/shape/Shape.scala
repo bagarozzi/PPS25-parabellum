@@ -3,14 +3,15 @@ package model.shape
 
 import util.Position
 
-trait Shape:
-
-  enum Type:
-    case Circ(center: Position, radius: Double)
-    case Rect(center: Position, width: Double, height: Double)
+sealed trait Shape:
 
   def belongs(pos: Position): Boolean
 
-  def getType: Type
+case class Circle(center: Position, radius: Double) extends Shape:
+
+  def belongs(pos: Position): Boolean =
+    val dx = pos.x - center.x
+    val dy = pos.y - center.y
+    (dx * dx + dy * dy) <= (radius * radius)
 
 
