@@ -3,7 +3,7 @@ package model.entity
 
 import util.Position
 
-import it.unibo.parabellum.model.shape.Shape
+import model.shape.Shape
 
 trait Player extends Figure:
   val name: String
