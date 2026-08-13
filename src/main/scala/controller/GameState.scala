@@ -20,3 +20,5 @@ object GameState:
    * @return the new game state
    */
   def update(g: GameState): GameState = ???
+
+  def init(): GameState = GameState(Set(), Set())
