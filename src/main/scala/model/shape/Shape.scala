@@ -3,14 +3,28 @@ package model.shape
 
 import util.Position
 
-trait Shape:
+/**
+ * A Shape is an enclosed area where some point's membership can be verified.
+ */
+sealed trait Shape:
 
-  enum Type:
-    case Circ(center: Position, radius: Double)
-    case Rect(center: Position, width: Double, height: Double)
-
+  /**
+   * Checks if the point belongs (is internal) to the shape.
+   * @param pos the position to check
+   * @return
+   */
   def belongs(pos: Position): Boolean
 
-  def getType: Type
+/**
+ * A class representing a Circle with radius and center.
+ * @param center the center of the circle
+ * @param radius the radius of the circle
+ */
+case class Circle(center: Position, radius: Double) extends Shape:
+
+  def belongs(pos: Position): Boolean =
+    val dx = pos.x - center.x
+    val dy = pos.y - center.y
+    (dx * dx + dy * dy) <= (radius * radius)
 
 
