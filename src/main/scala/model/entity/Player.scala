@@ -6,10 +6,15 @@ import model.shape.{Circle, Shape}
 
 trait Player extends Figure:
   val name: String
+  def kill(): Unit
 
 class PlayerImpl(val name: String, val pos: Position, val shape: Shape) extends Player:
 
   override def belongs(pos: Position): Boolean = shape.belongs(pos)
+  def kill(): Unit = {
+    //TODO implement this method
+    println(name + "has been eliminated")
+  }
 
 object Player:
 
