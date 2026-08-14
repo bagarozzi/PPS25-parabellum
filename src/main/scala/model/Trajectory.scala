@@ -1,4 +1,7 @@
 package it.unibo.parabellum
 package model
 
-class Trajectory
+import util.Position
+
+class Trajectory:
+  def compute(y: Double): Position
