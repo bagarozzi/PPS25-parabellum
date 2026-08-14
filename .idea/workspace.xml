@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="054929f1-e4f3-4bf4-be5b-e39d300135d5" name="Changes" comment="added Impact effect and trajectory">
+    <list default="true" id="054929f1-e4f3-4bf4-be5b-e39d300135d5" name="Changes" comment="implementation of projectile and basic projectile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/controller/GameState.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/controller/GameState.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/Trajectory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/Trajectory.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/entity/Player.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/entity/Player.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/function/Projectile.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/shape/Shape.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/shape/Shape.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/model/CollisionDetector.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/CollisionDetector.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,13 +164,67 @@
       <option name="project" value="LOCAL" />
       <updated>1786721006121</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="implementation of projectile and added the function compute in Trajectory">
+      <option name="closed" value="true" />
+      <created>1786721537708</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1786721537708</updated>
+    </task>
+    <task id="LOCAL-00005" summary="implementation of shape added method sample and BoundingBound for render and finished the Circle implementation">
+      <option name="closed" value="true" />
+      <created>1786721705486</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1786721705486</updated>
+    </task>
+    <task id="LOCAL-00006" summary="first implementation of collision against player">
+      <option name="closed" value="true" />
+      <created>1786721741132</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1786721741132</updated>
+    </task>
+    <task id="LOCAL-00007" summary="changed import">
+      <option name="closed" value="true" />
+      <created>1786721755288</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1786721755288</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added function kill to eliminate the player">
+      <option name="closed" value="true" />
+      <created>1786721777905</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1786721777905</updated>
+    </task>
+    <task id="LOCAL-00009" summary="implementation of projectile and basic projectile">
+      <option name="closed" value="true" />
+      <created>1786721805397</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1786721805397</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First View elements implementation and a simple gui to test the view" />
     <MESSAGE value="added obstacle to control version" />
     <MESSAGE value="added Impact effect and trajectory" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Impact effect and trajectory" />
+    <MESSAGE value="implementation of projectile and added the function compute in Trajectory" />
+    <MESSAGE value="implementation of shape added method sample and BoundingBound for render and finished the Circle implementation" />
+    <MESSAGE value="first implementation of collision against player" />
+    <MESSAGE value="changed import" />
+    <MESSAGE value="added function kill to eliminate the player" />
+    <MESSAGE value="implementation of projectile and basic projectile" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementation of projectile and basic projectile" />
   </component>
 </project>
