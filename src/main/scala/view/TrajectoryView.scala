@@ -6,9 +6,8 @@ import scalafx.scene.shape.Polyline
 /**
  * Rappresenta graficamente una traiettoria curva calcolata dal Model.
  */
-class TrajectoryView extends Polyline {
+class TrajectoryView extends Polyline:
 
-  // Stile della linea curva
   stroke = Red
   strokeWidth = 2.0
   strokeDashArray = Seq(10.0, 10.0)
@@ -17,22 +16,15 @@ class TrajectoryView extends Polyline {
   /**
    * Disegna la curva unendo i punti calcolati dall'Engine.
    *
-   * @param curvePoints Una sequenza di tuple (X, Y) che rappresentano
-   *                    i punti lungo la formula matematica.
+   * @param curvePoints Una sequenza di tuple (X, Y) che rappresentano i punti lungo la traiettoria.
    */
-  def updateTrajectory(curvePoints: Seq[(Double, Double)]): Unit = {
-    // 1. Svuota la linea precedente
+  def updateTrajectory(curvePoints: Seq[(Double, Double)]): Unit =
     points.clear()
 
-    // 2. Aggiunge le nuove coordinate X e Y alla Polyline
-    curvePoints.foreach { case (x, y) =>
+    curvePoints.foreach: (x, y) =>
       points.addAll(x, y)
-    }
 
     visible = true
-  }
 
-  def hideTrajectory(): Unit = {
+  def hideTrajectory(): Unit =
     visible = false
-  }
-}
