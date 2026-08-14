@@ -1,0 +1,50 @@
+Index: src/main/scala/model/shape/Shape.scala
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.unibo.parabellum\r\npackage model.shape\r\n\r\nimport util.Position\r\n\r\ntrait Shape:\r\n\r\n  enum Type:\r\n    case Circ(center: Position, radius: Double)\r\n    case Rect(center: Position, width: Double, height: Double)\r\n\r\n  def belongs(pos: Position): Boolean\r\n\r\n  def getType: Type\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/scala/model/shape/Shape.scala b/src/main/scala/model/shape/Shape.scala
+--- a/src/main/scala/model/shape/Shape.scala	(revision da48448cc2848e665790a98d1379bdfb918eecb9)
++++ b/src/main/scala/model/shape/Shape.scala	(date 1786704038062)
+@@ -3,6 +3,8 @@
+ 
+ import util.Position
+ 
++import scala.collection.StepperShape.Shape
++
+ trait Shape:
+ 
+   enum Type:
+@@ -13,4 +15,30 @@
+ 
+   def getType: Type
+ 
++  case class Union(
++    a: Shape,
++    b: Shape
++  ) extends Shape:
+ 
++    override def belongs(p: Position): Boolean =
++      a.belongs(p) || b.belongs(p)
++      
++  case class Intersection(
++     a: Shape,
++     b: Shape
++  ) extends Shape:
++    
++    override def belongs(p: Position): Boolean =
++      a.belongs(p) && b.belongs(p)
++      
++      
++  case class Difference(
++     a: Shape,
++     b: Shape
++  ) extends Shape:
++    
++    override def belongs(p: Position): Boolean =
++      a.belongs(p) && !b.belongs(p)
++
++
++//idea da discutere figure che scompaiono se fare un calcolo dell'area o calcolare comunque figure quasi vuote

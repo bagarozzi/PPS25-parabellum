@@ -1,0 +1,19 @@
+Index: .idea/sbt.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ScalaSbtSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <SbtProjectSettings>\r\n        <option name=\"converterVersion\" value=\"2\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"C:\\Users\\feder\\Documents\\projects\\graphwar\\PPS25-parabellum\" />\r\n            <option value=\"C:\\Users\\feder\\Documents\\projects\\graphwar\\PPS25-parabellum\\project\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"sbtVersion\" value=\"2.0.2\" />\r\n        <option name=\"separateProdAndTestSourcesIsExplicit\" value=\"true\" />\r\n      </SbtProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/sbt.xml b/.idea/sbt.xml
+--- a/.idea/sbt.xml	(revision e853f0dc300203da6a3605a7e854f2f797cf2c54)
++++ b/.idea/sbt.xml	(date 1783952052909)
+@@ -7,8 +7,8 @@
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+         <option name="modules">
+           <set>
+-            <option value="C:\Users\feder\Documents\projects\graphwar\PPS25-parabellum" />
+-            <option value="C:\Users\feder\Documents\projects\graphwar\PPS25-parabellum\project" />
++            <option value="C:\Users\luca\IdeaProjects\PPS25-parabellum" />
++            <option value="C:\Users\luca\IdeaProjects\PPS25-parabellum\project" />
+           </set>
+         </option>
+         <option name="sbtVersion" value="2.0.2" />
