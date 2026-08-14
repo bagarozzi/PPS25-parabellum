@@ -2,10 +2,9 @@ package it.unibo.parabellum
 package controller
 
 import model.entity.Player
-
-import it.unibo.parabellum.model.function.Projectile
 import it.unibo.parabellum.util.Position
 import it.unibo.parabellum.model.entity.Player.initPlayer
+import model.function.Projectile
 
 /**
  * Represents the state of the game in a certain instant in time.
