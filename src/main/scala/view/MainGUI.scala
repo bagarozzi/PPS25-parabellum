@@ -2,19 +2,22 @@ package it.unibo.parabellum.view
 
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
-import scalafx.scene.paint.Color._
+import scalafx.scene.paint.Color.*
 import scalafx.scene.layout.BorderPane
-import scalafx.Includes._
+import scalafx.Includes.*
 import it.unibo.parabellum.model.entity.Player
 import it.unibo.parabellum.model.function.Projectile
-import it.unibo.parabellum.controller.GameState
+import it.unibo.parabellum.controller.{GameController, GameState}
 
-object MainGUI extends JFXApp3 with View:
+class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
   // Riferimenti ai componenti grafici per poterli aggiornare o rimuovere
   private val gameView = new GameView()
   private var playerViews: Map[String, PlayerView] = Map.empty
   private var projectileView: Option[ProjectileView] = None
+
+  given windowSize: WindowSize = WindowSize(width, height)
+  import CollisionDetector.given
 
   override def start(): Unit =
 
@@ -42,8 +45,10 @@ object MainGUI extends JFXApp3 with View:
     val gameScene = new Scene(800, 600):
       root = rootPane
 
-    def avviaGioco(): Unit =
+    def avviaGioco(): Unit = {
+      GameController.startGame()
       stage.scene = gameScene
+    }
 
     val menuPane = new MenuView(avviaGioco)
     val menuScene = new Scene(800, 600):
@@ -63,32 +68,30 @@ object MainGUI extends JFXApp3 with View:
 
       // 1. Aggiorna o crea i Giocatori usando le coordinate dirette (già scalate)
       state.players.foreach: player =>
-        val px = player.pos.x
-        val py = player.pos.y
+        val tc = GeometryHelper.transform(player.pos)
 
         playerViews.get(player.name) match
           case Some(view) =>
             // Il giocatore esiste già, aggiorniamo solo la posizione
-            view.setPosition(px, py)
+            view.setPosition(tc.x, tc.y)
           case None =>
             // Primo frame in cui vediamo questo giocatore, lo creiamo
-            val newView = new PlayerView(player.name, px, py)
+            val newView = new PlayerView(player.name, tc.x, tc.y)
             playerViews += (player.name -> newView)
             gameView.addElements(newView)
 
       // 2. Aggiorna, crea o rimuove il Proiettile
       state.projectiles match
         case Some(proj) =>
-          val projX = proj.pos.x
-          val projY = proj.pos.y
+            val tc = GeometryHelper.transform(proj.pos)
 
           projectileView match
             case Some(view) =>
               // Proiettile in volo, aggiorniamo la posizione
-              view.setPosition(projX, projY)
+              view.setPosition(tc.x, tc.y)
             case None =>
               // Sparato un nuovo proiettile, creiamo il nodo a schermo
-              val newProjView = new ProjectileView(projX, projY)
+              val newProjView = new ProjectileView(tc.x, tc.y )
               projectileView = Some(newProjView)
               gameView.addElements(newProjView)
 

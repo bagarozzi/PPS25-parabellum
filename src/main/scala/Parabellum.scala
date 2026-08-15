@@ -1,12 +1,11 @@
 package it.unibo.parabellum
 
-import controller.{Engine, GameState}
-import view.MainGUI
+import controller.{Controller, Engine, GameController, GameState}
+import view.{MainGUI, View}
 
 object Parabellum:
 
+  given view: View = MainGUI(1000, 600)
+
   @main def main(): Unit =
-    // Create: View, GameState and pass it to the main loop
-    given targetFPS: Int = 60
-    MainGUI.main(Array.empty[String])
-    Engine.run(GameState.init())
+    view.start()

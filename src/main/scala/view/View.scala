@@ -7,3 +7,5 @@ import it.unibo.parabellum.controller.GameState
  */
 trait View:
   def render(state: GameState): Unit
+  
+  def start(): Unit
