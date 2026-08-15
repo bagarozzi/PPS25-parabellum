@@ -1,9 +1,15 @@
 package it.unibo.parabellum
 package controller
 
+import it.unibo.parabellum.controller.GameState.update
+import controller.GameController
+import it.unibo.parabellum.view.View
+
 import scala.annotation.tailrec
 
 object Engine:
+
+  import Parabellum.given
 
   def run(g: GameState)(using targetFPS: Int): Unit =
     val optimalTimeNs: Long = 1_000_000_000L / targetFPS
@@ -12,9 +18,9 @@ object Engine:
   @tailrec
   private def loop(loopTime: Long, g: GameState): Unit =
     val startTime = System.nanoTime()
-    /*
-      Do work here...
-    */
+
+    val newGameState = update(g, loopTime * 1000)
+    GameController.updateView(newGameState)
 
     val endTime = System.nanoTime()
     val frameTime = endTime - startTime
@@ -27,5 +33,5 @@ object Engine:
     }
     /* Exit loop when a certain condition is met */
     if(true) {
-      loop(loopTime, g)
+      loop(loopTime, newGameState)
     }
