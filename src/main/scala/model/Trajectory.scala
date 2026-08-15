@@ -3,5 +3,7 @@ package model
 
 import util.Position
 
-class Trajectory:
-  def compute(y: Double): Position
+class Trajectory(m: Double, q: Double):
+
+  def compute(x: Double): Position =
+    Position(x, m*x+q)
