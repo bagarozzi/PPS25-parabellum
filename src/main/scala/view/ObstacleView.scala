@@ -24,6 +24,5 @@ class ObstacleView extends Group:
   def drawShape(vertices: Seq[(Double, Double)]): Unit =
     shapePolygon.points.clear()
 
-    // In Scala 3 possiamo usare l'untupling automatico delle tuple nei parametri
     vertices.foreach: (x, y) =>
       shapePolygon.points.addAll(x, y)
