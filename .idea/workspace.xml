@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="054929f1-e4f3-4bf4-be5b-e39d300135d5" name="Changes" comment="implementation of projectile and basic projectile">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/CollisionDetector.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/CollisionDetector.scala" afterDir="false" />
+    <list default="true" id="263ad872-4c7e-4c36-ad84-e3625c59e0a1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="17" />
-  </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
   </component>
   <component name="ExternalProjectsManager">
     <system id="SBT">
@@ -39,192 +30,14 @@
     </system>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;TaricSpears&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/bagarozzi/PPS25-parabellum.git&quot;,
-    &quot;accountId&quot;: &quot;9a7b8d58-f985-44f5-aca6-aea7507389d8&quot;
-  }
-}</component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="2" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="3Hr8pmdiVjnsa4FMCDCvGCx8epC" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.MainGUI.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "collision-branch",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "to.speed.mode.migration.done": "true"
+    "git-widget-placeholder": "collision-branch"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\luca\IdeaProjects\PPS25-parabellum\src\main\scala\model\function" />
-      <recent name="D:\PPS25-parabellum\src\main\scala\view" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="MainGUI" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="it.unibo.parabellum.view.MainGUI" />
-      <module name="parabellum.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.unibo.parabellum.view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.MainGUI" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="ScalaProjectSettings">
-    <option name="migrateConfigurationsNotificationShown" value="true" />
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
-      </set>
-    </attachedChunks>
-  </component>
-  <component name="ShouldUpdateRunConfigurations">
-    <option name="isDowngrading" />
-  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="054929f1-e4f3-4bf4-be5b-e39d300135d5" name="Changes" comment="" />
-      <created>1786615014700</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1786615014700</updated>
-    </task>
-    <task id="LOCAL-00001" summary="First View elements implementation and a simple gui to test the view">
-      <option name="closed" value="true" />
-      <created>1786626198172</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1786626198172</updated>
-    </task>
-    <task id="LOCAL-00002" summary="added obstacle to control version">
-      <option name="closed" value="true" />
-      <created>1786626538914</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1786626538914</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added Impact effect and trajectory">
-      <option name="closed" value="true" />
-      <created>1786721006121</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721006121</updated>
-    </task>
-    <task id="LOCAL-00004" summary="implementation of projectile and added the function compute in Trajectory">
-      <option name="closed" value="true" />
-      <created>1786721537708</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721537708</updated>
-    </task>
-    <task id="LOCAL-00005" summary="implementation of shape added method sample and BoundingBound for render and finished the Circle implementation">
-      <option name="closed" value="true" />
-      <created>1786721705486</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721705486</updated>
-    </task>
-    <task id="LOCAL-00006" summary="first implementation of collision against player">
-      <option name="closed" value="true" />
-      <created>1786721741132</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721741132</updated>
-    </task>
-    <task id="LOCAL-00007" summary="changed import">
-      <option name="closed" value="true" />
-      <created>1786721755288</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721755288</updated>
-    </task>
-    <task id="LOCAL-00008" summary="added function kill to eliminate the player">
-      <option name="closed" value="true" />
-      <created>1786721777905</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721777905</updated>
-    </task>
-    <task id="LOCAL-00009" summary="implementation of projectile and basic projectile">
-      <option name="closed" value="true" />
-      <created>1786721805397</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1786721805397</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="First View elements implementation and a simple gui to test the view" />
-    <MESSAGE value="added obstacle to control version" />
-    <MESSAGE value="added Impact effect and trajectory" />
-    <MESSAGE value="implementation of projectile and added the function compute in Trajectory" />
-    <MESSAGE value="implementation of shape added method sample and BoundingBound for render and finished the Circle implementation" />
-    <MESSAGE value="first implementation of collision against player" />
-    <MESSAGE value="changed import" />
-    <MESSAGE value="added function kill to eliminate the player" />
-    <MESSAGE value="implementation of projectile and basic projectile" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementation of projectile and basic projectile" />
   </component>
 </project>
