@@ -21,5 +21,4 @@ case class BasicProjectile(
 
   override def update(dt: Double): Projectile =
     val newX = position.x + (vel * dt * direction)
-    
     BasicProjectile(trajectory.compute(newX), trajectory, impactEffect, direction)
