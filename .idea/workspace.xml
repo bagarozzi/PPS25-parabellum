@@ -4,19 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="054929f1-e4f3-4bf4-be5b-e39d300135d5" name="Changes" comment="added obstacle to control version">
+    <list default="true" id="054929f1-e4f3-4bf4-be5b-e39d300135d5" name="Changes" comment="Merge branch 'master' of https://github.com/bagarozzi/PPS25-parabellum&#10;&#10;# Conflicts:&#10;#&#9;.idea/sbt.xml">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/PR-test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/build-and-release-jar.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/go.imports.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_08_2026_15_06_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_08_2026_15_06__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_13_08_2026_15_07_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_13_08_2026_15_07__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_08_2026_15_04_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_08_2026_15_04__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/Parabellum.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/controller/Engine.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/controller/GameState.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/model/entity/Entity.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/model/entity/Figure.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/model/entity/Player.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/model/function/Projectile.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/model/shape/Shape.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/util/Position.scala" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/scala/view/GameView.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/view/MainGUI.scala" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/scala/view/MenuView.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/view/ObstacleView.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/view/PlayerView.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/view/ProjectileView.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/view/TrajectoryView.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/view/MainGUI.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/view/MainGUI.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/view/ObstacleView.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/view/ObstacleView.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/view/PlayerView.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/view/PlayerView.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/view/ProjectileView.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/view/ProjectileView.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/view/TrajectoryView.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/view/TrajectoryView.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +54,23 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="SBT">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="parabellum" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -39,18 +79,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "TaricSpears"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TaricSpears&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/bagarozzi/PPS25-parabellum.git",
-    "accountId": "9a7b8d58-f985-44f5-aca6-aea7507389d8"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/bagarozzi/PPS25-parabellum.git&quot;,
+    &quot;accountId&quot;: &quot;9a7b8d58-f985-44f5-aca6-aea7507389d8&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -61,10 +101,10 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="3Hr8pmdiVjnsa4FMCDCvGCx8epC" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -79,7 +119,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feature/task-07-interfaccia-grafica",
+    "git-widget-placeholder": "Merging master",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "to.speed.mode.migration.done": "true"
@@ -112,6 +152,7 @@
   </component>
   <component name="ScalaProjectSettings">
     <option name="migrateConfigurationsNotificationShown" value="true" />
+    <option name="scala3DisclaimerShown" value="true" />
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -119,9 +160,6 @@
         <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
       </set>
     </attachedChunks>
-  </component>
-  <component name="ShouldUpdateRunConfigurations">
-    <option name="isDowngrading" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -149,6 +187,17 @@
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First View elements implementation and a simple gui to test the view" />
