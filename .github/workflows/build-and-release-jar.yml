@@ -1,0 +1,62 @@
+name: Build and Release Sprint Fat Jar and Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+
+  build-and-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Checkout documentation
+        uses: actions/checkout@v4
+        with:
+          ref: docs # need real name here
+          path: orphan-docs
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'sbt'
+
+      - name: Build Fat Jar
+        run: sbt clean assembly
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: scala-game-executable
+          path: target/scala-*/your-game-assembly-*.jar
+
+      - name: Build PDF
+        uses: baileyjm02/markdown-to-pdf@v1
+        with:
+          input_dir: orphan-docs/docs
+          output_dir: pdf-output/
+          image_import: orphan-docs/docs
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint-documentation
+          path: pdf-output/*.pdf
+
+      - name: Release to GitHub
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/scala-*/your-game-assembly-*.jar
+            pdf-output/*.pdf
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
