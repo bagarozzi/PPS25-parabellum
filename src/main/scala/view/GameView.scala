@@ -24,7 +24,7 @@ class GameView extends Pane:
    * @param node L'elemento grafico da rimuovere
    */
   def removeElement(node: Node): Unit =
-    children.remove(node)
+    children.remove(node.delegate)
 
   /**
    * Pulisce l'intera scena rimuovendo tutti gli elementi.

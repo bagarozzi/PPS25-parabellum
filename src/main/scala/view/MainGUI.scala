@@ -1,94 +1,99 @@
 package it.unibo.parabellum.view
 
-import scalafx.application.JFXApp3
+import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
 import scalafx.scene.paint.Color._
-import scalafx.animation.AnimationTimer
+import scalafx.scene.layout.BorderPane
 import scalafx.Includes._
-import scala.math.sin
+import it.unibo.parabellum.model.entity.Player
+import it.unibo.parabellum.model.function.Projectile
+import it.unibo.parabellum.controller.GameState
 
-object MainGUI extends JFXApp3:
+object MainGUI extends JFXApp3 with View:
+
+  // Riferimenti ai componenti grafici per poterli aggiornare o rimuovere
+  private val gameView = new GameView()
+  private var playerViews: Map[String, PlayerView] = Map.empty
+  private var projectileView: Option[ProjectileView] = None
 
   override def start(): Unit =
 
-    // 1. Creazione Giocatore e Traiettoria
-    val playerX = 100.0
-    val playerY = 300.0
-
-    val myPlayer = new PlayerView("Giocatore 1", playerX, playerY)
-    val aimingCurve = new TrajectoryView()
-
-    val ampiezza = 70.0
-    val frequenza = 0.05
-
-    val calcoloPunti = (0 to 120).map: i =>
-      val x = playerX + (i * 5)
-      val y = playerY - (ampiezza * sin((x - playerX) * frequenza))
-      (x, y)
-
-    aimingCurve.updateTrajectory(calcoloPunti)
-
-    // 2. Creazione Proiettile
-    val startPoint = calcoloPunti.head
-    val myProjectile = new ProjectileView(startPoint._1, startPoint._2)
-
-    // 3. Creazione Ostacoli
+    // --- (Opzionale) Manteniamo gli ostacoli statici per ora ---
     val mountainObstacle = new ObstacleView()
-    val mountainVertices = Seq(
-      (250.0, 400.0),
-      (300.0, 200.0),
-      (350.0, 400.0)
-    )
+    val mountainVertices = Seq((250.0, 400.0), (300.0, 200.0), (350.0, 400.0))
     mountainObstacle.drawShape(mountainVertices)
 
     val wallObstacle = new ObstacleView()
-    val wallVertices = Seq(
-      (550.0, 400.0),
-      (550.0, 250.0),
-      (600.0, 250.0),
-      (600.0, 400.0)
-    )
+    val wallVertices = Seq((550.0, 400.0), (550.0, 250.0), (600.0, 250.0), (600.0, 400.0))
     wallObstacle.drawShape(wallVertices)
 
-    // --- NUOVO: UTILIZZO DI GAMEVIEW ---
-    val gameView = new GameView()
+    gameView.addElements(mountainObstacle, wallObstacle)
 
-    // Passiamo tutti i nostri nodi alla GameView tramite il metodo che hai appena creato
-    gameView.addElements(aimingCurve, myPlayer, mountainObstacle, wallObstacle, myProjectile)
+    // --- SETUP DELLA SCENA ---
+    val controlPanel = new ControlPanelView(pendenza =>
+      println(s"Hai premuto SPARA! Pendenza inserita: $pendenza")
+      // In futuro qui potrai chiamare un metodo del Controller per notificare lo sparo
+    )
 
-    // Creiamo la scena di gioco assegnando la gameView come radice
-    val gameScene = new Scene:
-      root = gameView
+    val rootPane = new BorderPane:
+      center = gameView
+      bottom = controlPanel
 
-    // 4. Loop di animazione
-    var currentIndex = 0
-    var frameTick = 0
+    val gameScene = new Scene(800, 600):
+      root = rootPane
 
-    val gameLoop = AnimationTimer: time =>
-      frameTick += 1
-      if frameTick % 2 == 0 then
-        if currentIndex < calcoloPunti.length then
-          val (nextX, nextY) = calcoloPunti(currentIndex)
-          myProjectile.setPosition(nextX, nextY)
-          currentIndex += 1
-        else
-          currentIndex = 0
-
-    // 5. Funzione per passare dal Menu al Gioco
     def avviaGioco(): Unit =
       stage.scene = gameScene
-      gameLoop.start()
 
-    // 6. Creazione Menu e Finestra
     val menuPane = new MenuView(avviaGioco)
-
-    val menuScene = new Scene:
+    val menuScene = new Scene(800, 600):
       fill = White
       root = menuPane
 
     stage = new JFXApp3.PrimaryStage:
       title = "Parabellum"
-      width = 800
-      height = 600
       resizable = false
       scene = menuScene
+
+  /**
+   * Metodo chiamato dall'Engine a ogni frame per aggiornare la grafica.
+   */
+  override def render(state: GameState): Unit =
+    Platform.runLater:
+
+      // 1. Aggiorna o crea i Giocatori usando le coordinate dirette (già scalate)
+      state.players.foreach: player =>
+        val px = player.pos.x
+        val py = player.pos.y
+
+        playerViews.get(player.name) match
+          case Some(view) =>
+            // Il giocatore esiste già, aggiorniamo solo la posizione
+            view.setPosition(px, py)
+          case None =>
+            // Primo frame in cui vediamo questo giocatore, lo creiamo
+            val newView = new PlayerView(player.name, px, py)
+            playerViews += (player.name -> newView)
+            gameView.addElements(newView)
+
+      // 2. Aggiorna, crea o rimuove il Proiettile
+      state.projectiles match
+        case Some(proj) =>
+          val projX = proj.pos.x
+          val projY = proj.pos.y
+
+          projectileView match
+            case Some(view) =>
+              // Proiettile in volo, aggiorniamo la posizione
+              view.setPosition(projX, projY)
+            case None =>
+              // Sparato un nuovo proiettile, creiamo il nodo a schermo
+              val newProjView = new ProjectileView(projX, projY)
+              projectileView = Some(newProjView)
+              gameView.addElements(newProjView)
+
+        case None =>
+          // Non c'è un proiettile nello stato, se è presente a schermo lo rimuoviamo
+          projectileView.foreach: view =>
+            gameView.removeElement(view)
+          projectileView = None
