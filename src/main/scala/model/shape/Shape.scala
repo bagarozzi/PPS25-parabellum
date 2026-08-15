@@ -1,18 +1,16 @@
 package it.unibo.parabellum
 package model.shape
 
-import util.Position
+import util.{BoundingBox, Position}
 
 /**
  * A Shape is an enclosed area where some point's membership can be verified.
  */
-case class BoundingBound(minX: Double, maxX: Double, minY: Double, maxY:Double)
-
 sealed trait Shape:
 
   def function: Position => Boolean
 
-  def bounds: BoundingBound
+  def bounds: BoundingBox
 
   /**
    * Checks if the point belongs (is internal) to the shape.
@@ -25,10 +23,10 @@ sealed trait Shape:
 
   final def sample(step: Double): Seq[Position] =
     for
-      i <- 0 to ((bounds.maxX - bounds.minX) / step).toInt
-      j <- 0 to ((bounds.maxY - bounds.minY) / step).toInt
-      x = bounds.minX + i * step
-      y = bounds.minY + j * step
+      i <- 0 to ((bounds.x1 - bounds.x0) / step).toInt
+      j <- 0 to ((bounds.y1 - bounds.y0) / step).toInt
+      x = bounds.x0 + i * step
+      y = bounds.y0 + j * step
       p = Position(x, y)
       if belongs(p)
     yield p
@@ -51,5 +49,5 @@ case class Circle(
 
       dx * dx + dy * dy <= radius * radius
 
-  override val bounds: BoundingBound = BoundingBound(center.x - radius, center.x + radius, center.y - radius, center.y + radius)
+  override val bounds: BoundingBox = BoundingBox(center.x - radius, center.x + radius, center.y - radius, center.y + radius)
 
