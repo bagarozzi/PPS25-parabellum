@@ -7,7 +7,7 @@ import model.function.Projectile
 import util.{BoundingBox, Position}
 
 object CollisionDetector:
-  val border: BoundingBox = BoundingBox(-15, 15, -25, 25)
+  val border: BoundingBox = BoundingBox(-25, 25, -15, 15)
   given BoundingBox = border
 
   def checkCollisionWithBorders(projectile: Projectile): Option[Projectile] = 
