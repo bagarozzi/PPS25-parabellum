@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/project" />
+            <option value="C:\Users\luca\IdeaProjects\PPS25-parabellum" />
+            <option value="C:\Users\luca\IdeaProjects\PPS25-parabellum\project" />
           </set>
         </option>
         <option name="sbtVersion" value="2.0.2" />
