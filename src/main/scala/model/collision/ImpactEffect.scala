@@ -1,4 +1,4 @@
 package it.unibo.parabellum
-package model
+package model.collision
 
 class ImpactEffect

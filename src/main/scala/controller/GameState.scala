@@ -5,12 +5,12 @@ import model.entity.Player
 
 import it.unibo.parabellum.util.Position
 import it.unibo.parabellum.model.entity.Player.initPlayer
-import model.function.{BasicProjectile, Projectile}
-import model.CollisionDetector.detectCollision
+import model.function.{BasicProjectile, Projectile, Trajectory}
+import it.unibo.parabellum.model.collision.CollisionDetector.detectCollision
 
 
 import it.unibo.parabellum.model
-import it.unibo.parabellum.model.{CollisionDetector, ImpactEffect, Trajectory}
+import it.unibo.parabellum.model.collision.{CollisionDetector, ImpactEffect}
 import it.unibo.parabellum.model.entity.State.dead
 
 /**

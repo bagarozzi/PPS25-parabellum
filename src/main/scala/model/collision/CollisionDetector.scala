@@ -1,12 +1,10 @@
 package it.unibo.parabellum
-package model
+package model.collision
 
-import model.entity.{Entity, Player}
 import controller.GameState
+import model.entity.{Entity, Player}
 import model.function.Projectile
-import util.Position
-
-import it.unibo.parabellum.util.BoundingBox
+import util.{BoundingBox, Position}
 
 object CollisionDetector:
   val border: BoundingBox = BoundingBox(-15, 15, -25, 25)

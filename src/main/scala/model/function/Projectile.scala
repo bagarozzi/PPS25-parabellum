@@ -3,7 +3,7 @@ package model.function
 
 import util.Position
 
-import it.unibo.parabellum.model.{ImpactEffect, Trajectory}
+import it.unibo.parabellum.model.collision.ImpactEffect
 
 case class Projectile private (
                                 startPosition: Position,

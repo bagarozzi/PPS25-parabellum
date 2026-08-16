@@ -1,5 +1,5 @@
 package it.unibo.parabellum
-package model
+package model.function
 
 import util.Position
 

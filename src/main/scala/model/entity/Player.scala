@@ -4,7 +4,7 @@ package model.entity
 import util.Position
 import model.shape.{Circle, Shape}
 
-import it.unibo.parabellum.model.Trajectory
+import it.unibo.parabellum.model.function.Trajectory
 
 trait Player extends Figure:
   val name: String
