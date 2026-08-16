@@ -13,13 +13,13 @@ object CollisionDetector:
   given BoundingBox = border
 
   def checkCollisionWithBorders(projectile: Projectile): Option[Projectile] = 
-    if CollisionDetector.border.checkBoundary(projectile.position) then
+    if CollisionDetector.border.checkBoundary(projectile.pos()) then
       return None
     Some(projectile)
 
 
   def CheckCollisionWithPlayer(offendedPlayers: Set[Player], projectile: Projectile): Unit = 
-    offendedPlayers.filter(p => p.belongs(projectile.position)).foreach(p => p.kill())
+    offendedPlayers.filter(p => p.belongs(projectile.pos())).foreach(p => p.kill())
   
 
   def detectCollision(projectile: Projectile, offendedPlayers: Set[Player]): Option[Projectile] = 

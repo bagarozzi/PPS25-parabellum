@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="263ad872-4c7e-4c36-ad84-e3625c59e0a1" name="Changes" comment="refactor">
+    <list default="true" id="263ad872-4c7e-4c36-ad84-e3625c59e0a1" name="Changes" comment="changed trajectory in functional">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/controller/GameState.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/controller/GameState.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/model/CollisionDetector.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/CollisionDetector.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/model/Trajectory.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/Trajectory.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/model/function/Projectile.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/function/Projectile.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,11 +35,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;git-widget-placeholder&quot;: &quot;collision-branch&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "master"
   }
-}</component>
+}]]></component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="changes with BoundingBox">
       <option name="closed" value="true" />
@@ -73,7 +73,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786811347043</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="changed trajectory in functional">
+      <option name="closed" value="true" />
+      <created>1786875898864</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1786875898864</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -81,6 +89,7 @@
     <MESSAGE value="added chech collisions for borders" />
     <MESSAGE value="added buffer for pending projectile" />
     <MESSAGE value="refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor" />
+    <MESSAGE value="changed trajectory in functional" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed trajectory in functional" />
   </component>
 </project>

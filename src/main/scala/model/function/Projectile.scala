@@ -5,20 +5,34 @@ import util.Position
 
 import it.unibo.parabellum.model.{ImpactEffect, Trajectory}
 
+case class Projectile private (
+                                startPosition: Position,
+                                trajectory: Trajectory,
+                                distance: Double,
+                                speed: Double,
+                                effect: ImpactEffect,
+                                direction: Int
+                              ):
+  def update(dt: Double): Projectile =
+    copy(
+      distance = distance + speed * dt * direction
+    )
+  
+  def pos(): Position=
+    Position(startPosition.x + distance, startPosition.y + trajectory.compute(distance))
 
-trait Projectile:
-    def position: Position
-    def update(dt: Double): Projectile
-    def impactEffect: ImpactEffect
-    def vel: Double = 0.1
+object Projectile:
 
-case class BasicProjectile(
-  position: Position,
-  trajectory: Trajectory,
-  impactEffect: ImpactEffect,
-  direction: Int
-) extends Projectile:
-
-  override def update(dt: Double): Projectile =
-    val newX = position.x + (vel * dt * direction)
-    BasicProjectile(trajectory.compute(newX), trajectory, impactEffect, direction)
+  def create(
+              startPosition: Position,
+              trajectory: Trajectory,
+              direction: Int
+            ): Projectile =
+      Projectile(
+      startPosition,
+      trajectory,
+      0.0,
+      0.1,
+      null, 
+      direction
+    )
