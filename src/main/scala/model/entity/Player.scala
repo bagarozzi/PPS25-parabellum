@@ -15,7 +15,7 @@ trait Player extends Figure:
 enum State:
   case alive, dead
   
-class PlayerImpl(val name: String, val pos: Position, val shape: Shape) extends Player:
+class PlayerImpl(val name: String, val pos: Position, val shape: Shape, var state: State) extends Player:
 
   override def belongs(pos: Position): Boolean = shape.belongs(pos)
   def kill(): Unit = {
@@ -23,10 +23,12 @@ class PlayerImpl(val name: String, val pos: Position, val shape: Shape) extends 
     println(name + "has been eliminated")
   }
 
+  override def shoot(trajectory: Trajectory): Unit = ???
+
 object Player:
 
   private val PLAYER_RADIUS: Double = 0.15
 
-  def initPlayer(name: String, pos: Position): Player = PlayerImpl(name, pos, Circle(pos, PLAYER_RADIUS))
+  def initPlayer(name: String, pos: Position): Player = PlayerImpl(name, pos, Circle(pos, PLAYER_RADIUS), State.alive)
   
   def shoot(trajectory: Trajectory): Unit = ???
