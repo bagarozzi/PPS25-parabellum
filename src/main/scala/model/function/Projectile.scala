@@ -36,3 +36,6 @@ object Projectile:
       null, 
       direction
     )
+
+  def parseStraightLine(startingPosition: Position, angularCoefficient: Double): Trajectory =
+      functionalTrajectory(startingPosition, x => angularCoefficient * x)

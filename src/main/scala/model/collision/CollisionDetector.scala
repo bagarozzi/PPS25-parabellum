@@ -11,7 +11,7 @@ object CollisionDetector:
   given BoundingBox = border
 
   def checkCollisionWithBorders(projectile: Projectile): Option[Projectile] = 
-    if CollisionDetector.border.checkBoundary(projectile.pos()) then
+    if !CollisionDetector.border.checkBoundary(projectile.pos()) then
       return None
     Some(projectile)
 

@@ -5,7 +5,7 @@ import model.entity.Player
 
 import it.unibo.parabellum.util.Position
 import it.unibo.parabellum.model.entity.Player.initPlayer
-import model.function.{BasicProjectile, Projectile, Trajectory}
+import model.function.{Projectile, Trajectory}
 import it.unibo.parabellum.model.collision.CollisionDetector.detectCollision
 
 
@@ -31,12 +31,14 @@ object GameState:
     val players = g.players.diff(g.players.filter(p => p.state == dead))
     var newTurn: Player = g.currentTurn
     if(newProjectile.isDefined) then {
-      newProjectile = detectCollision(newProjectile.get, players)
+      newProjectile = detectCollision(newProjectile.get, players - g.currentTurn)
       if newProjectile.isEmpty then
         newTurn = changeTurn(players, g.currentTurn)
     }
-    if(g.projectiles.isEmpty && pendingTrajectory.isDefined) then
-      newProjectile = Some(BasicProjectile(g.currentTurn.pos, pendingTrajectory.get, ImpactEffect(), 1))
+    if(g.projectiles.isEmpty && pendingTrajectory.isDefined) then {
+      newProjectile = Some(Projectile.create(g.currentTurn.pos, pendingTrajectory.get, 1))
+      pendingTrajectory = None
+    }
     GameState(players, newProjectile, g.currentTurn)
 
 

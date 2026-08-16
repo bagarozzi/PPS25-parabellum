@@ -5,7 +5,8 @@ import view.{MainGUI, View}
 
 object Parabellum:
 
-  given view: View = MainGUI(1000, 600)
+  private val gui = MainGUI(1000, 600)
+  given view: View = gui
 
   @main def main(): Unit =
-    view.start()
+    gui.main(Array.empty[String])
