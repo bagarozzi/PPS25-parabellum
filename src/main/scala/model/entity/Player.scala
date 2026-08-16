@@ -23,12 +23,8 @@ class PlayerImpl(val name: String, val pos: Position, val shape: Shape, var stat
     println(name + "has been eliminated")
   }
 
-  override def shoot(trajectory: Trajectory): Unit = ???
-
 object Player:
 
   private val PLAYER_RADIUS: Double = 0.15
 
   def initPlayer(name: String, pos: Position): Player = PlayerImpl(name, pos, Circle(pos, PLAYER_RADIUS), State.alive)
-  
-  def shoot(trajectory: Trajectory): Unit = ???
