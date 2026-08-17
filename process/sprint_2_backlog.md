@@ -30,7 +30,11 @@ In particolare si punta ad una versione minimale che predisponga all'aggiunta di
 | 11 | Gestione delle collisioni dei proiettili | Venturini | . | yes |
 
 ### Sprint review meeting (17/08/2026)
+Lo sprint ha avuto successo: le task sono state completate ed una versione preliminare del gioco è disponibile.
 
+Oltre al completamento delle task sono state aggiunte delle classi che torneranno utili durante gli sviluppi futuri del progetto.
+
+Le task di documentazione non sono state completate in quanto non sono necessarie al momento.
 ___
 ___
 
