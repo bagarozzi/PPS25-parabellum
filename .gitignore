@@ -1,0 +1,10 @@
+# Ignore all
+*
+
+# Except:
+!.gitignore
+!./process/**
+!index.md
+!./docs/**
+!./.github/**
+!_config.yml
