@@ -1,13 +1,15 @@
 # Ignore all
 /*
 
-# Except:
+# Except files:
 !.gitignore
-!./process/
-!./process/**
 !index.md
-!./docs/
-!./docs/**
-!/.github/
-!./.github/**
 !_config.yml
+
+# and directories: 
+!/process
+!/docs/
+!/docs/figures
+!/docs/figures/src
+!/.github
+!./.github/workflows
