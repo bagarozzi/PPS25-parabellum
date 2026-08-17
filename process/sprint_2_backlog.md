@@ -23,11 +23,11 @@ In particolare si punta ad una versione minimale che predisponga all'aggiunta di
 | :--- | :--- | :--- | :--- | :---: |
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
-| 07 | Interfaccia grafica di base | Sbaraccani | . | no |
-| 08 | Architettura di base: flusso di dati tra model, view, viewmodel | Everyone | . | no |
-| 09 | Inserimento (tramite ViewModel e Engine) e parsing dei parametri di una retta | Everyone | . | no |
-| 10 | Creazione dell'Engine per stato del gioco e game loop | Bagattoni | . | no |
-| 11 | Gestione delle collisioni dei proiettili | Venturini | . | no |
+| 07 | Interfaccia grafica di base | Sbaraccani | . | yes |
+| 08 | Architettura di base: flusso di dati tra model, view, viewmodel | Everyone | . | yes |
+| 09 | Inserimento (tramite ViewModel e Engine) e parsing dei parametri di una retta | Everyone | . | yes |
+| 10 | Creazione dell'Engine per stato del gioco e game loop | Bagattoni | . | yes |
+| 11 | Gestione delle collisioni dei proiettili | Venturini | . | yes |
 
 ### Sprint review meeting (17/08/2026)
 
