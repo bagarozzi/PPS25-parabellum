@@ -11,9 +11,18 @@ case class Team(soldiers: Vector[Soldier], currentIndex: Int):
     copy(currentIndex = (currentIndex + 1) % soldiers.size)
 
   def removeDead(): Team =
+    val newSoldiers =
+      soldiers.filter(_.isAlive)
     copy(
-        soldiers = soldiers.filter(_.isAlive)
-    )
+    soldiers = newSoldiers,
+    currentIndex =
+      if newSoldiers.isEmpty then 0
+      else currentIndex % newSoldiers.size
+  )
+    
+  def isEmpty: Boolean =
+    soldiers.isEmpty
+  
 
 case class TurnManager(
                         teams: Vector[Team],
@@ -35,4 +44,10 @@ case class TurnManager(
     )
     
   def eliminateDeadSoldier: TurnManager =
-    copy(teams = teams.map(t => t.removeDead()))
+    val newTeams = teams.map(t => t.removeDead()).filter(t => !t.isEmpty)
+    copy(newTeams)
+    
+
+  def winner: Option[Team] =
+    if teams.size == 1 then Some(teams.head)
+    else None
