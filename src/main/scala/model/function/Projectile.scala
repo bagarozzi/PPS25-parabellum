@@ -19,7 +19,7 @@ case class Projectile private (
     )
   
   def pos(): Position=
-    Position(startPosition.x + distance, startPosition.y + trajectory.compute(distance))
+      Position(distance, trajectory.compute(distance)).traslate(startPosition)
 
 object Projectile:
 
