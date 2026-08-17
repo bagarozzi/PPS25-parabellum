@@ -1,0 +1,45 @@
+# Sprint Backlog - Sprint 3
+
+**Sprint goal**: aggiunta di 2 giocatori dallo stesso terminale, ostacoli e refactoring generale
+
+**Duration/Deadline**: 16/08/2026
+
+### Sprint planning meeting (17/08/2026)
+Si punta ad aggiungere complessità al gioco:
+- Ostacoli e generazione della mappa triviale ma sensata
+- Abbozzare mappa con Prolog
+- Implementazione di impact effect
+- Refactoring e testing delle collisioni
+- Possibilità per l'utente di inserire funzioni matematiche complesse (quindi il parsing di tali funzioni)
+- Due giocatori giocano uno contro l'altro dallo stesso computer
+- Soldati: ogni giocatore ha più soldati da cui può sparare, ad ogni turno un giocatore sparerà con un soldato diverso
+- I proiettili lasciano dietro di se una linea (tratteggiata o continua) della loro traiettoria [tasked]
+- Aggiungere test di unità ai moduli già (o parzialmente) completi 
+
+### Tasks to be done
+| Task ID | Task Description | Assignee | When it's done | Done |
+| :--- | :--- | :--- | :--- | :---: |
+| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . |
+| 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
+| 12 | Line trail in ProjectileView |  | when projectiles leave a trail behind them while moving | no |
+| 15 | Smaller bullet |  | when the bullet is smaller from the View | no |
+| 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState |  | when obstacles are implemented and tested | no |
+| 14 | Obstacles in View |  | when obstacles are correctly displayed | no |
+| 16 | Map generation: random placement of players and obstacles + Unit testing |  | when a fresh random is generated at each run | no |
+| 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot |  |  | no |
+| 18a | New Functions in View |  | when the user can type entire functions from the View | no |
+| 18b | Parsing of New Functions |  | when New Functions from the View are correctly parsed into Trajectories | no |
+| 19 | Two players have names |  | when each player can choose his/her name and is displayed at their side of the screen | no |
+| 20 | Soldiers |  | when each player has more than one soldier on the field and the turns are correctly managed | no |
+| 21 | Unit testing of: Map |  | ... | no |
+| 22 | Unit testing of: ImpactEffect |  | ... | no |
+| 23 | Unit testing of: Trajectory and Projectile (_after task 18_) |  | ... | no |
+| 24 | Unit testing of: CollisionDetector |  | ... | no |
+
+
+### Sprint review meeting (24/08/2026)
+
+___
+___
+
+[**&larr; Torna al Product Backlog**](./product_backlog.md) | [**Torna alla Home**](../index.md)
