@@ -3,11 +3,11 @@
 
 # Except:
 !.gitignore
-!./process
+!./process/
 !./process/**
 !index.md
-!./docs
+!./docs/
 !./docs/**
-!/.github
+!/.github/
 !./.github/**
 !_config.yml
