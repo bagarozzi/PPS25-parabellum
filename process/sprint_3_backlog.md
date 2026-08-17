@@ -14,7 +14,10 @@ Si punta ad aggiungere complessità al gioco:
 - Due giocatori giocano uno contro l'altro dallo stesso computer
 - Soldati: ogni giocatore ha più soldati da cui può sparare, ad ogni turno un giocatore sparerà con un soldato diverso
 - I proiettili lasciano dietro di se una linea (tratteggiata o continua) della loro traiettoria [tasked]
-- Aggiungere test di unità ai moduli già (o parzialmente) completi 
+- Aggiungere test di unità ai moduli già (o parzialmente) completi
+
+Per questo sprint non vengono assegnate le task, bensì ogni membro seleziona le task che vuole eseguire e appunta il suo nome
+nella riga così che gli altri vedano chi (se) la sta già facendo. 
 
 ### Tasks to be done
 | Task ID | Task Description | Assignee | When it's done | Done |
