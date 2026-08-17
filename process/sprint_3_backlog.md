@@ -39,6 +39,15 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 | 23 | Unit testing of: Trajectory and Projectile (_after task 18_) |  | ... | no |
 | 24 | Unit testing of: CollisionDetector |  | ... | no |
 
+To ease the workflow the tasks may be divided in the following groups (inside each group, ***task order matters***), and did in the following order:
+1. **Adding players and soldiers**: keep the current View and architecture, just add soldiers, players and turn management
+2. **Obstacles**: tasks **[13]**, **[14]**, **[17]** and **[16]** only add Obstacles to the Model and displays them correctly
+3. **Functions**: tasks **[18]** (first a, then b) need to change Projectile and Trajectory implementation, also adding a component to parse functions and generate a general trajectory with (Double => Double) function.
+
+**Independent tasks**: **[12]** - Line trail in Projectile, **[15]** - Smaller bullet 
+
+Keep in mind: ***always merge working code***
+
 
 ### Sprint review meeting (24/08/2026)
 
