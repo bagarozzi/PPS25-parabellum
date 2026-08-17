@@ -23,6 +23,8 @@ class PlayerImpl(val name: String, val pos: Position, val shape: Shape, var stat
     println(name + "has been eliminated")
   }
 
+  def shoot(trajectory: Trajectory): Unit = {}
+  
 object Player:
 
   private val PLAYER_RADIUS: Double = 0.15

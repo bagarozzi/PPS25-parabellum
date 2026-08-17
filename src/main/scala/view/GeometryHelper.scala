@@ -19,5 +19,5 @@ object GeometryHelper:
      */
     def transform(pos: Position)(using windowSize: WindowSize, boundingBox: BoundingBox): Position =
         val rx: Double = windowSize.width/boundingBox.hsize
-        val ry: Double = windowSize.height/boundingBox.vsize
+        val ry: Double = -windowSize.height/boundingBox.vsize
         Position(pos.x * rx, pos.y * ry).traslate(windowSize.width/2, windowSize.height/2)
