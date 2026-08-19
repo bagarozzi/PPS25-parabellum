@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.Player
+import model.entity.{Player, Obstacle}
 
 import it.unibo.parabellum.util.Position
 import it.unibo.parabellum.model.entity.Player.initPlayer
@@ -18,7 +18,7 @@ import it.unibo.parabellum.model.entity.State.dead
  * @param players the set of players currently in the game
  * @param projectiles the projectile that are being fired
  */
-class GameState(val players: Set[Player], val projectiles: Option[Projectile], val currentTurn: Player)
+class GameState(val players: Set[Player],val obstacles: Set[Obstacle], val projectiles: Option[Projectile], val currentTurn: Player)
 object GameState:
   var pendingTrajectory: Option[Trajectory] = None
   /**
@@ -39,7 +39,7 @@ object GameState:
       newProjectile = Some(Projectile.create(g.currentTurn.pos, pendingTrajectory.get, 1))
       pendingTrajectory = None
     }
-    GameState(players, newProjectile, g.currentTurn)
+    GameState(players, g.obstacles, newProjectile, g.currentTurn)
 
 
 
@@ -53,7 +53,8 @@ object GameState:
 
   def init(): GameState =
     val players = Set(initPlayer("player1", Position(-7.5, 0.0)), initPlayer("player2", Position(7.5, 0.0)))
+    val obstacles = Set.empty[Obstacle]
     GameState(
-    players,
+    players, obstacles,
     None,
     players.head)
