@@ -26,8 +26,8 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 12 | Line trail in ProjectileView | Sbaraccani | when projectiles leave a trail behind them while moving | yes |
 | 15 | Smaller bullet | Sbaraccani | when the bullet is smaller from the View | yes |
-| 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState |  | when obstacles are implemented and tested | no |
-| 14 | Obstacles in View |  | when obstacles are correctly displayed | no |
+| 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState | Sbaraccani | when obstacles are implemented and tested | no |
+| 14 | Obstacles in View | Sbaraccani | when obstacles are correctly displayed | no |
 | 16 | Map generation: random placement of players and obstacles + Unit testing |  | when a fresh random is generated at each run | no |
 | 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot |  |  | no |
 | 18a | New Functions in View |  | when the user can type entire functions from the View | no |
