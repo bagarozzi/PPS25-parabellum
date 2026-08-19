@@ -25,7 +25,7 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 12 | Line trail in ProjectileView | Sbaraccani | when projectiles leave a trail behind them while moving | yes |
-| 15 | Smaller bullet | Sbaraccani | when the bullet is smaller from the View | no |
+| 15 | Smaller bullet | Sbaraccani | when the bullet is smaller from the View | yes |
 | 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState |  | when obstacles are implemented and tested | no |
 | 14 | Obstacles in View |  | when obstacles are correctly displayed | no |
 | 16 | Map generation: random placement of players and obstacles + Unit testing |  | when a fresh random is generated at each run | no |
