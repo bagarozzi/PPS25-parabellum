@@ -8,7 +8,7 @@ import scalafx.scene.shape.Circle
  */
 class ProjectileView(initialX: Double, initialY: Double) extends Circle:
 
-  radius = 8.0
+  radius = 4.0
   fill = Black
   stroke = White
   strokeWidth = 1.0
