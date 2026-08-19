@@ -50,4 +50,36 @@ case class Circle(
       dx * dx + dy * dy <= radius * radius
 
   override val bounds: BoundingBox = BoundingBox(center.x - radius, center.x + radius, center.y - radius, center.y + radius)
+/**
+ * A class representing a Polygon made out of vertices.
+ * @param vertices delimitating the polygon
+ */
+case class Polygon(
+                    vertices: Seq[Position]
+                  ) extends Shape:
 
+  // 1. Calcolo del Bounding Box trovando i minimi e massimi tra i vertici
+  override val bounds: BoundingBox =
+    val minX = vertices.map(_.x).min
+    val maxX = vertices.map(_.x).max
+    val minY = vertices.map(_.y).min
+    val maxY = vertices.map(_.y).max
+    BoundingBox(minX, maxX, minY, maxY)
+
+  // 2. Algoritmo per capire se un punto p è dentro il poligono
+  override val function: Position => Boolean =
+    p =>
+      var inside = false
+      var j = vertices.length - 1
+
+      for i <- vertices.indices do
+        val vi = vertices(i)
+        val vj = vertices(j)
+
+        val intersect = ((vi.y > p.y) != (vj.y > p.y)) &&
+          (p.x < (vj.x - vi.x) * (p.y - vi.y) / (vj.y - vi.y) + vi.x)
+
+        if intersect then inside = !inside
+        j = i
+
+      inside
