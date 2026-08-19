@@ -3,9 +3,6 @@ package it.unibo.parabellum.view
 import scalafx.scene.paint.Color._
 import scalafx.scene.shape.Polyline
 
-/**
- * Rappresenta graficamente una traiettoria curva calcolata dal Model.
- */
 class TrajectoryView extends Polyline:
 
   stroke = Red
@@ -14,17 +11,15 @@ class TrajectoryView extends Polyline:
   visible = false
 
   /**
-   * Disegna la curva unendo i punti calcolati dall'Engine.
-   *
-   * @param curvePoints Una sequenza di tuple (X, Y) che rappresentano i punti lungo la traiettoria.
+   * Aggiunge un singolo punto alla scia del proiettile man mano che avanza.
    */
-  def updateTrajectory(curvePoints: Seq[(Double, Double)]): Unit =
+  def addPoint(x: Double, y: Double): Unit =
+    points.addAll(x, y)
+    if (!visible.value) visible = true
+
+  /**
+   * Pulisce e nasconde la traiettoria (da chiamare quando il proiettile esplode/scompare).
+   */
+  def clearTrajectory(): Unit =
     points.clear()
-
-    curvePoints.foreach: (x, y) =>
-      points.addAll(x, y)
-
-    visible = true
-
-  def hideTrajectory(): Unit =
     visible = false
