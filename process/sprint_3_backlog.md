@@ -30,8 +30,8 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 | 14 | Obstacles in View | Sbaraccani | when obstacles are correctly displayed | no |
 | 16 | Map generation: random placement of players and obstacles + Unit testing |  | when a fresh random is generated at each run | no |
 | 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot |  |  | no |
-| 18a | New Functions in View |  | when the user can type entire functions from the View | no |
-| 18b | Parsing of New Functions |  | when New Functions from the View are correctly parsed into Trajectories | no |
+| 18a | New Functions in View | Bagattoni | when the user can type entire functions from the View | no |
+| 18b | Parsing of New Functions | Bagattoni | when New Functions from the View are correctly parsed into Trajectories | no |
 | 19 | Two players have names |  | when each player can choose his/her name and is displayed at their side of the screen | no |
 | 20 | Soldiers |  | when each player has more than one soldier on the field and the turns are correctly managed | no |
 | 21 | Unit testing of: Map |  | ... | no |
