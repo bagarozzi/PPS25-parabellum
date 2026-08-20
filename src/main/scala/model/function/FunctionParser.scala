@@ -6,19 +6,19 @@ import MultiLineWhitespace._
 
 class FunctionParser(function: String):
 
-    private def number[$: P]: P[Int] = P(CharIn("0-9").rep(1).!.map(_.toInt))
+    private def number[$: P]: P[Double] = P(CharIn("+\\-").? ~ CharIn("0-9").rep(1) ~ CharIn(".").? ~ CharIn("0-9").rep(1).?).!.map(_.toDouble)
 
-    private def parens[$: P]: P[Int] = P("(" ~/ addSub ~ ")")
+    private def parens[$: P]: P[Double] = P("(" ~/ addSub() ~ ")")
 
-    private def factor[$: P]: P[Int] = P(number | parens)
+    private def factor[$: P]: P[Double] = P(number | parens)
 
-    private def divMul[$: P]: P[Int] = P(factor ~ (CharIn("*/").! ~/ factor).rep).map(eval)
+    private def divMul[$: P]: P[Double] = P(factor ~ (CharIn("*/").! ~/ factor).rep).map(eval)
 
-    private def addSub[$: P]: P[Int] = P(divMul ~ (CharIn("+\\-").! ~/ divMul).rep).map(eval)
+    private def addSub[$: P](): P[Double] = P(divMul ~ (CharIn("+\\-").! ~/ divMul).rep).map(eval)
 
-    private def expr[$: P]: P[Int] = P(addSub ~ End)
+    private def expr[$: P]: P[Double] = P(addSub() ~ End)
 
-    private def eval(tree: (Int, Seq[(String, Int)])): Int =
+    private def eval(tree: (Double, Seq[(String, Double)])): Double =
         val (base, ops) = tree
         ops.foldLeft(base) { case (left, (op, right)) => op match {
             case "+" => left + right
@@ -28,7 +28,7 @@ class FunctionParser(function: String):
         }
         }
 
-    def calculate(): Int =
+    def calculate(): Double =
         parse(function, p => expr(using p)) match
             case Parsed.Success(value, _) => value
             case failure: Parsed.Failure => throw new IllegalArgumentException("Parsing error")
