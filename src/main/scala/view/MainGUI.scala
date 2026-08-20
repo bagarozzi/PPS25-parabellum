@@ -5,31 +5,37 @@ import scalafx.scene.Scene
 import scalafx.scene.paint.Color.*
 import scalafx.scene.layout.BorderPane
 import scalafx.Includes.*
-import it.unibo.parabellum.model.entity.Player
+import it.unibo.parabellum.model.entity.{Player, Obstacle}
 import it.unibo.parabellum.model.function.Projectile
 import it.unibo.parabellum.controller.{GameController, GameState}
 import it.unibo.parabellum.model.collision.CollisionDetector
-import it.unibo.parabellum.view.TrajectoryView // Assicurati di importarla
+import it.unibo.parabellum.view.TrajectoryView
+import it.unibo.parabellum.model.shape.{Circle => ModelCircle, Polygon => ModelPolygon}
 
+/**
+ * Main GUI of the Parabellum game.
+ * It maps Model entities (players, obstacles, projectiles) into visual objects
+ * and handles UI updates at each game frame.
+ *
+ * @param width  Window width in pixels.
+ * @param height Window height in pixels.
+ */
 class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
   given windowSize: WindowSize = WindowSize(width, height)
   import CollisionDetector.given
 
-  // Riferimenti ai componenti grafici per poterli aggiornare o rimuovere
   private val gameView = new GameView(windowSize.width, windowSize.height)
-
   private val trajectoryView = new TrajectoryView()
 
   private var playerViews: Map[String, PlayerView] = Map.empty
   private var projectileView: Option[ProjectileView] = None
+  private var obstacleViews: Map[Obstacle, ObstacleView] = Map.empty
 
   override def start(): Unit =
 
-    // 2. Aggiungi la scia alla scena (rimarrà invisibile finché non viene usata)
     gameView.addElements(trajectoryView)
 
-    // --- SETUP DELLA SCENA ---
     val controlPanel = new ControlPanelView(pendenza =>
       println(s"Hai premuto SPARA! Pendenza inserita: $pendenza")
       val angularCoefficient: Option[Double] = pendenza.toDoubleOption
@@ -60,53 +66,63 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       resizable = false
       scene = menuScene
 
-  /**
-   * Metodo chiamato dall'Engine a ogni frame per aggiornare la grafica.
-   */
   override def render(state: GameState): Unit =
     Platform.runLater:
 
-      // 1. Aggiorna o crea i Giocatori usando le coordinate dirette (già scalate)
+      state.obstacles.foreach: obs =>
+        if !obstacleViews.contains(obs) then
+          val view = new ObstacleView()
+
+          obs.shape match
+            case ModelCircle(center, radius) =>
+              val tc = GeometryHelper.transform(center)
+              //val tr = GeometryHelper.transform(it.unibo.parabellum.util.Position(radius, 0)).x - GeometryHelper.transform(it.unibo.parabellum.util.Position(0, 0)).x
+              view.drawCircle(tc.x, tc.y, radius)
+
+            case ModelPolygon(vertices) =>
+              val screenVertices = vertices.map: v =>
+                val tc = GeometryHelper.transform(v)
+                (tc.x, tc.y)
+              view.drawPolygon(screenVertices)
+
+          obstacleViews += (obs -> view)
+          gameView.addElements(view)
+
+      val obstaclesToRemove = obstacleViews.keys.toSet.diff(state.obstacles)
+      obstaclesToRemove.foreach: obs =>
+        val view = obstacleViews(obs)
+        gameView.removeElement(view)
+        obstacleViews -= obs
+
+
       state.players.foreach: player =>
         val tc = GeometryHelper.transform(player.pos)
 
         playerViews.get(player.name) match
           case Some(view) =>
-            // Il giocatore esiste già, aggiorniamo solo la posizione
             view.setPosition(tc.x, tc.y)
           case None =>
-            // Primo frame in cui vediamo questo giocatore, lo creiamo
             val newView = new PlayerView(player.name, tc.x, tc.y)
             playerViews += (player.name -> newView)
             gameView.addElements(newView)
 
-      // 2. Aggiorna, crea o rimuove il Proiettile e la sua Scia
       state.projectiles match
         case Some(proj) =>
           val tc = GeometryHelper.transform(proj.pos())
 
           projectileView match
             case Some(view) =>
-              // Proiettile in volo, aggiorniamo la posizione
               view.setPosition(tc.x, tc.y)
-
-              //Allunga la scia aggiungendo il punto corrente
               trajectoryView.addPoint(tc.x, tc.y)
 
             case None =>
-              // Sparato un nuovo proiettile, creiamo il nodo a schermo
               val newProjView = new ProjectileView(tc.x, tc.y )
               projectileView = Some(newProjView)
               gameView.addElements(newProjView)
-
-              //Aggiungi il primo punto della scia
               trajectoryView.addPoint(tc.x, tc.y)
 
         case None =>
-          // Non c'è un proiettile nello stato, se è presente a schermo lo rimuoviamo
           projectileView.foreach: view =>
             gameView.removeElement(view)
           projectileView = None
-
-          //Pulisci e nascondi la scia quando il proiettile scompare o esplode
           trajectoryView.clearTrajectory()
