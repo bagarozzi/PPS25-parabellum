@@ -31,3 +31,8 @@ class ParserSpec extends AnyFlatSpec:
         assert(func(2) === (math.sin(2) + 3))
     }
 
+    "A parser" should "parse a cosine function" in {
+        val func: Function = FunctionParser.parse("cos(x) + 3")
+        assert(func(2) === (math.cos(2) + 3))
+    }
+

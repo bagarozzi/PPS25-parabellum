@@ -18,7 +18,9 @@ object FunctionParser:
 
     private def sine[$: P]: P[Function] = P("sin" ~ "(" ~ addSub() ~ ")").map(func => Function(x => math.sin(func(x))))
 
-    private def elemFunc[$: P]: P[Function] = P(sine)
+    private def cosine[$: P]: P[Function] = P("cos" ~ "(" ~ addSub() ~ ")").map(func => Function(x => math.cos(func(x))))
+
+    private def elemFunc[$: P]: P[Function] = P(sine | cosine)
 
     private def factor[$: P]: P[Function] = P(number | variable | parens | elemFunc)
 
