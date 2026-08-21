@@ -19,7 +19,7 @@ object Engine:
   private def loop(loopTime: Long, g: GameState): Unit =
     val startTime = System.nanoTime()
 
-    val newGameState = update(g, loopTime * 1000)
+    val newGameState = update(g, loopTime * 1000, None)
     GameController.updateView(newGameState)
 
     val endTime = System.nanoTime()

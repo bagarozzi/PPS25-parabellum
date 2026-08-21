@@ -37,14 +37,10 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
     gameView.addElements(trajectoryView)
 
     // --- SETUP DELLA SCENA ---
-    val controlPanel = new ControlPanelView("player 1", "player 2", pendenza =>
-      println(s"Hai premuto SPARA! Pendenza inserita: $pendenza")
-      val angularCoefficient: Option[Double] = pendenza.toDoubleOption
-      GameController.addProjectile(angularCoefficient.get),
-      pendenza =>
-        println(s"Hai premuto SPARA! Pendenza inserita: $pendenza")
-        val angularCoefficient: Option[Double] = pendenza.toDoubleOption
-        GameController.addProjectile(angularCoefficient.get)
+    val controlPanel = new ControlPanelView("player 1", "player 2", userImput =>
+      GameController.addProjectile(userImput),
+      userImput =>
+        GameController.addProjectile(userImput)
     )
 
     val rootPane = new BorderPane:

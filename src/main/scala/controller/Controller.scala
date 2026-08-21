@@ -10,7 +10,7 @@ trait Controller:
 
     def startGame(): Unit
 
-    def addProjectile(angularCoefficient: Double): Unit
+    def addProjectile(newFunction: String): Unit
 
     def updateView(g: GameState)(using view: View): Unit
 
