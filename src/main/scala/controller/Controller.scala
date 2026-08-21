@@ -19,7 +19,7 @@ object GameController extends Controller:
     private var gameState: Option[GameState] = None
     private var gameLoop: Option[AnimationTimer] = None
     private var lastTime: Long = System.nanoTime()
-    private var pendingTrajectory: Option[Trajectory] = None
+    private var pendingFunction: Option[String] = None
 
     import Parabellum.given
 
@@ -38,8 +38,8 @@ object GameController extends Controller:
         gameLoop = Some(timer)
     //Engine.run(gameState.get)
 
-    def addProjectile(angularCoefficient: Double): Unit = gameState match
-        pendingTrajectory = 
+    def addProjectile(newFunction: String): Unit =
+        pendingFunction = Some(newFunction)
 
 
     def updateView(g: GameState)(using view: View): Unit =

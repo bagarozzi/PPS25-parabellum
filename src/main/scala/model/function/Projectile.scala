@@ -2,11 +2,13 @@ package it.unibo.parabellum
 package model.function
 
 import util.Position
+import model.function.Trajectory
+import model.function.FunctionParser
 
 import it.unibo.parabellum.model.collision.ImpactEffect
+import it.unibo.parabellum.model.function
 
 case class Projectile private (
-                                startPosition: Position,
                                 trajectory: Trajectory,
                                 distance: Double,
                                 speed: Double,
@@ -19,18 +21,18 @@ case class Projectile private (
     )
   
   def pos(): Position=
-      Position(distance, trajectory.compute(distance)).traslate(startPosition)
+    trajectory.compute(distance)
 
 object Projectile:
 
   def create(
-              startPosition: Position,
-              trajectory: Trajectory,
+              startingPosition: Position,
+              nonParsedFunction: String,
               direction: Int
-            ): Projectile =
+            ):
+      Projectile =
       Projectile(
-      startPosition,
-      trajectory,
+      Trajectory.create(startingPosition, FunctionParser.parse(nonParsedFunction)),
       0.0,
       0.1,
       null, 
@@ -38,4 +40,4 @@ object Projectile:
     )
 
   def parseStraightLine(startingPosition: Position, angularCoefficient: Double): Trajectory =
-      functionalTrajectory(startingPosition, x => angularCoefficient * x)
+    Trajectory.create(startingPosition, Function(x => angularCoefficient * x))

@@ -4,9 +4,14 @@ package model.function
 import util.Position
 
 trait Trajectory:
-  def compute(x: Double): Double
+  def compute(x: Double): Position
+  
+  
 
 object Trajectory:
-  def functionalTrajectory(startPosition: Position, f: Double => Double) extends Trajectory:
-    override def compute(x: Double): Double =
-      f(x)
+  def create(startPosition: Position, function: Function): Trajectory =
+    new Trajectory {
+      override def compute(x: Double): Position = Position(x, function.apply(x)).traslate(startPosition)
+    }
+    
+          
