@@ -20,8 +20,7 @@ import it.unibo.parabellum.model.shape.{Circle, Polygon}
  */
 class GameState(val players: Set[Player],val obstacles: Set[Obstacle], val projectiles: Option[Projectile], val currentTurn: Player)
 object GameState:
-  
-  var pendingTrajectory: Option[Trajectory] = None
+
   /**
    * Updates the game state, returning a new state.
    * @param g the game state to update
@@ -39,9 +38,8 @@ object GameState:
       if newProjectile.isEmpty then
         newTurn = changeTurn(players, g.currentTurn)
     }
-    if(g.projectiles.isEmpty && pendingTrajectory.isDefined) then {
+    if(g.projectiles.isEmpty && pendingFunction.isDefined) then {
       newProjectile = Some(Projectile.create(g.currentTurn.pos, pendingFunction.get, 1))
-      pendingTrajectory = None
     }
     GameState(players, g.obstacles, newProjectile, g.currentTurn)
 
@@ -49,9 +47,6 @@ object GameState:
 
   private def changeTurn(players: Set[Player], currentTurn: Player): Player =
     players.find(p=> p!= currentTurn).get
-    
-  def addProjectile(trajectory: Trajectory): Unit =
-    pendingTrajectory = Some(trajectory)
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.players, g.obstacles + obstacle, g.projectiles, g.currentTurn)

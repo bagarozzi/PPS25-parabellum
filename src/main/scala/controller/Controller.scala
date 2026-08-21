@@ -33,6 +33,7 @@ object GameController extends Controller:
                 gameState = Some(GameState.update(gameState.get, (time - lastTime)/1_000_000, pendingFunction))
                 lastTime = time
                 updateView(gameState.get)
+                pendingFunction = None
         }
         timer.start()
         gameLoop = Some(timer)
