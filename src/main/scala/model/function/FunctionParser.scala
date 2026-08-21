@@ -4,36 +4,32 @@ package model.function
 import fastparse._
 import MultiLineWhitespace._
 
-class FunctionParser(function: String):
-
-    private def number[$: P]: P[Double] = P(CharIn("+\\-").? ~ CharIn("0-9").rep(1) ~ CharIn(".").? ~ CharIn("0-9").rep(1).?).!.map(_.toDouble)
-
-    private def parens[$: P]: P[Double] = P("(" ~/ addSub() ~ ")")
-
-    private def factor[$: P]: P[Double] = P(number | parens)
-
-    private def divMul[$: P]: P[Double] = P(factor ~ (CharIn("*/").! ~/ factor).rep).map(eval)
-
-    private def addSub[$: P](): P[Double] = P(divMul ~ (CharIn("+\\-").! ~/ divMul).rep).map(eval)
-
-    private def expr[$: P]: P[Double] = P(addSub() ~ End)
-
-    private def eval(tree: (Double, Seq[(String, Double)])): Double =
-        val (base, ops) = tree
-        ops.foldLeft(base) { case (left, (op, right)) => op match {
-            case "+" => left + right
-            case "-" => left - right
-            case "*" => left * right
-            case "/" => left / right
-        }
-        }
-
-    def calculate(): Double =
-        parse(function, p => expr(using p)) match
-            case Parsed.Success(value, _) => value
-            case failure: Parsed.Failure => throw new IllegalArgumentException("Parsing error")
-
 object FunctionParser:
 
-    def parse(function: String): Int = ???
+    def parse(input: String): Function = fastparse.parse(input, p => expr(using p)) match
+        case Parsed.Success(func, _) => func
+        case failure: Parsed.Failure => throw new IllegalArgumentException(s"Parse error: ${failure.trace().longMsg}")
 
+    private def number[$: P]: P[Function] = P(CharIn("+\\-").? ~ CharIn("0-9").rep(1) ~ CharIn(".").? ~ CharIn("0-9").rep(1).?).!.map(d => Function(x => d.toDouble))
+
+    private def variable[$: P]: P[Function] = P("x").map(_ => Function(x => x))
+
+    private def parens[$: P]: P[Function] = P("(" ~/ addSub() ~ ")")
+
+    private def factor[$: P]: P[Function] = P(number | variable | parens)
+
+    private def divMul[$: P]: P[Function] = P(factor ~ (CharIn("*/").! ~/ factor).rep).map(eval)
+
+    private def addSub[$: P](): P[Function] = P(divMul ~ (CharIn("+\\-").! ~/ divMul).rep).map(eval)
+
+    private def expr[$: P]: P[Function] = P(addSub() ~ End)
+
+    private def eval(tree: (Function, Seq[(String, Function)])): Function =
+        val (base, ops) = tree
+        ops.foldLeft(base) { case (leftFunc, (op, rightFunc)) => op match {
+            case "+" => Function(x => leftFunc(x) + rightFunc(x))
+            case "-" => Function(x => leftFunc(x) - rightFunc(x))
+            case "*" => Function(x => leftFunc(x) * rightFunc(x))
+            case "/" => Function(x => leftFunc(x) / rightFunc(x))
+        }
+        }
