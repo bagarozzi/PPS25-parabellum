@@ -29,11 +29,11 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 | 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState | Sbaraccani | when obstacles are implemented and tested | yes |
 | 14 | Obstacles in View | Sbaraccani | when obstacles are correctly displayed | yes |
 | 16 | Map generation: random placement of players and obstacles + Unit testing | Sbaraccani | when a fresh random is generated at each run | no |
-| 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot |  |  | no |
-| 18a | New Functions in View | Bagattoni | when the user can type entire functions from the View | no |
-| 18b | Parsing of New Functions | Bagattoni | when New Functions from the View are correctly parsed into Trajectories | no |
-| 19 | Two players have names |  | when each player can choose his/her name and is displayed at their side of the screen | no |
-| 20 | Soldiers |  | when each player has more than one soldier on the field and the turns are correctly managed | no |
+| 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot | Bagattoni and Venturini |  | no |
+| 18a | New Functions in View | Bagattoni | when the user can type entire functions from the View | yes |
+| 18b | Parsing of New Functions | Bagattoni and Venturini | when New Functions from the View are correctly parsed into Trajectories | yes |
+| 19 | Two players have names | Bagattoni | when each player can choose his/her name and is displayed at their side of the screen | yes |
+| 20 | Soldiers | Venturini | when each player has more than one soldier on the field and the turns are correctly managed | no |
 | 21 | Unit testing of: Map |  | ... | no |
 | 22 | Unit testing of: ImpactEffect |  | ... | no |
 | 23 | Unit testing of: Trajectory and Projectile (_after task 18_) |  | ... | no |
