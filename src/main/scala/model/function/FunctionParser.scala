@@ -16,7 +16,11 @@ object FunctionParser:
 
     private def parens[$: P]: P[Function] = P("(" ~/ addSub() ~ ")")
 
-    private def factor[$: P]: P[Function] = P(number | variable | parens)
+    private def sine[$: P]: P[Function] = P("sin" ~ "(" ~ addSub() ~ ")").map(func => Function(x => math.sin(func(x))))
+
+    private def elemFunc[$: P]: P[Function] = P(sine)
+
+    private def factor[$: P]: P[Function] = P(number | variable | parens | elemFunc)
 
     private def power[$: P]: P[Function] = P(factor ~ (CharIn("^").rep(1) ~ factor).?).map((_, _) match
         case (baseFunc, Some(exp)) => Function(x => math.pow(baseFunc(x), exp(x)))
