@@ -20,6 +20,7 @@ import it.unibo.parabellum.model.shape.{Circle, Polygon}
  */
 class GameState(val players: Set[Player],val obstacles: Set[Obstacle], val projectiles: Option[Projectile], val currentTurn: Player)
 object GameState:
+  
   var pendingTrajectory: Option[Trajectory] = None
   /**
    * Updates the game state, returning a new state.

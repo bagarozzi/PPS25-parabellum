@@ -3,7 +3,7 @@ package controller
 
 import view.View
 
-import it.unibo.parabellum.model.function.Projectile
+import it.unibo.parabellum.model.function.{Projectile, Trajectory}
 import scalafx.animation.AnimationTimer
 
 trait Controller:
@@ -19,6 +19,7 @@ object GameController extends Controller:
     private var gameState: Option[GameState] = None
     private var gameLoop: Option[AnimationTimer] = None
     private var lastTime: Long = System.nanoTime()
+    private var pendingTrajectory: Option[Trajectory] = None
 
     import Parabellum.given
 
@@ -38,8 +39,7 @@ object GameController extends Controller:
     //Engine.run(gameState.get)
 
     def addProjectile(angularCoefficient: Double): Unit = gameState match
-        case Some(g) => GameState.addProjectile(Projectile.parseStraightLine(g.currentTurn.pos, angularCoefficient))
-        case None =>
+        pendingTrajectory = 
 
 
     def updateView(g: GameState)(using view: View): Unit =
