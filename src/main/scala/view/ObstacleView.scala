@@ -2,27 +2,33 @@ package it.unibo.parabellum.view
 
 import scalafx.scene.Group
 import scalafx.scene.paint.Color._
-import scalafx.scene.shape.Polygon
+import scalafx.scene.shape.{Circle, Polygon, Shape}
 
 /**
  * Rappresenta graficamente un ostacolo sulla mappa.
  */
 class ObstacleView extends Group:
 
-  private val shapePolygon = new Polygon:
-    fill = SaddleBrown
-    stroke = Black
-    strokeWidth = 2.0
+  def drawCircle(cx: Double, cy: Double, rad: Double): Unit =
+    val circleShape = new Circle:
+      this.centerX = cx
+      this.centerY = cy
+      this.radius = rad
+      fill = SaddleBrown
+      stroke = Black
+      strokeWidth = 2.0
 
-  children = List(shapePolygon)
+    children = List(circleShape)
 
-  /**
-   * Disegna la forma dell'ostacolo a partire dai suoi vertici.
-   *
-   * @param vertices Sequenza di coordinate (X, Y) che definiscono il perimetro.
-   */
-  def drawShape(vertices: Seq[(Double, Double)]): Unit =
-    shapePolygon.points.clear()
+  def drawPolygon(vertices: Seq[(Double, Double)]): Unit =
+    val shapePolygon = new Polygon:
+      fill = SaddleBrown
+      stroke = Black
+      strokeWidth = 2.0
 
-    vertices.foreach: (x, y) =>
-      shapePolygon.points.addAll(x, y)
+    val flatVertices = vertices.flatMap((x, y) => Seq(x, y))
+      .map(d => d.asInstanceOf[java.lang.Double])
+
+    shapePolygon.points ++= flatVertices
+
+    children = List(shapePolygon)
