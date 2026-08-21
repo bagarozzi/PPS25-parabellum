@@ -28,7 +28,7 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 | 15 | Smaller bullet | Sbaraccani | when the bullet is smaller from the View | yes |
 | 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState | Sbaraccani | when obstacles are implemented and tested | yes |
 | 14 | Obstacles in View | Sbaraccani | when obstacles are correctly displayed | yes |
-| 16 | Map generation: random placement of players and obstacles + Unit testing |  | when a fresh random is generated at each run | no |
+| 16 | Map generation: random placement of players and obstacles + Unit testing | Sbaraccani | when a fresh random is generated at each run | no |
 | 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot |  |  | no |
 | 18a | New Functions in View | Bagattoni | when the user can type entire functions from the View | no |
 | 18b | Parsing of New Functions | Bagattoni | when New Functions from the View are correctly parsed into Trajectories | no |
