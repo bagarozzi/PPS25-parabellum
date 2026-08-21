@@ -30,7 +30,7 @@ object GameController extends Controller:
         lastTime = System.nanoTime()
         val timer = AnimationTimer {
             time =>
-                gameState = Some(GameState.update(gameState.get, (time - lastTime)/1_000_000))
+                gameState = Some(GameState.update(gameState.get, (time - lastTime)/1_000_000, pendingFunction))
                 lastTime = time
                 updateView(gameState.get)
         }

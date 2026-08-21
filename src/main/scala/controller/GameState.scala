@@ -27,7 +27,7 @@ object GameState:
    * @param g the game state to update
    * @return the new game state
    */
-  def update(g: GameState, dt: Double): GameState =
+  def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState =
     var newProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt))
     val players = g.players.diff(g.players.filter(p => p.state == dead))
     //se si vuole dividere cerchi e poligoni
@@ -40,7 +40,7 @@ object GameState:
         newTurn = changeTurn(players, g.currentTurn)
     }
     if(g.projectiles.isEmpty && pendingTrajectory.isDefined) then {
-      newProjectile = Some(Projectile.create(g.currentTurn.pos, pendingTrajectory.get, 1))
+      newProjectile = Some(Projectile.create(g.currentTurn.pos, pendingFunction.get, 1))
       pendingTrajectory = None
     }
     GameState(players, g.obstacles, newProjectile, g.currentTurn)
