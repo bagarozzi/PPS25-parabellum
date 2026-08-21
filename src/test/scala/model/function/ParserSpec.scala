@@ -20,5 +20,9 @@ class ParserSpec extends AnyFlatSpec:
         val func: Function = FunctionParser.parse("2 + x ^ 2")
         assert(func(3) === 11)
     }
-    
-    
+
+    "A parser" should "parse a function containing parenthesis" in {
+        val func: Function = FunctionParser.parse("2 + 3 * x + (x + 2) ^ 2")
+        assert(func(4) === 50)
+    }
+
