@@ -17,6 +17,8 @@ class ParserSpec extends AnyFlatSpec:
     }
 
     "A parser" should "parse a function with the variable raised to some power" in {
-        val func: Function = FunctionParser.parse("2 * x ^ 2")
+        val func: Function = FunctionParser.parse("2 + x ^ 2")
         assert(func(3) === 11)
     }
+    
+    

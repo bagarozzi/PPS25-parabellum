@@ -14,11 +14,16 @@ object FunctionParser:
 
     private def variable[$: P]: P[Function] = P("x").map(_ => Function(x => x))
 
+    private def power[$: P]: P[Function] = P(factor ~ (CharIn("^").rep(1) ~ factor).?).map((_, _) match
+        case (baseFunc, Some(exp)) => Function(x => math.pow(baseFunc(x), exp(x)))
+        case (baseFunc, None) => baseFunc
+    )
+
     private def parens[$: P]: P[Function] = P("(" ~/ addSub() ~ ")")
 
     private def factor[$: P]: P[Function] = P(number | variable | parens)
 
-    private def divMul[$: P]: P[Function] = P(factor ~ (CharIn("*/").! ~/ factor).rep).map(eval)
+    private def divMul[$: P]: P[Function] = P(power ~ (CharIn("*/").! ~/ power).rep).map(eval)
 
     private def addSub[$: P](): P[Function] = P(divMul ~ (CharIn("+\\-").! ~/ divMul).rep).map(eval)
 
