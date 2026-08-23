@@ -34,15 +34,15 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: scala-game-executable
-          path: target/scala-*/your-game-assembly-*.jar
+          name: Parabellum
+          path: target/out/jvm/scala-*/Parabellum.jar
 
       - name: Release to GitHub
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            target/scala-*/your-game-assembly-*.jar
+            target/out/jvm/scala-*/Parabellum.jar
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
