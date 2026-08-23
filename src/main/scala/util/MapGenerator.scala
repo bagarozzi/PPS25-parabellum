@@ -1,8 +1,9 @@
 package it.unibo.parabellum.util
 
-import it.unibo.parabellum.model.entity.{Obstacle, Player}
+import it.unibo.parabellum.model.entity.{Obstacle, Player, Soldier}
 import it.unibo.parabellum.model.entity.Player.initPlayer
 import it.unibo.parabellum.util.{Position, RandomGenerator}
+import it.unibo.parabellum.model.entity.Soldier.initSoldier
 /**
  * Utility object responsible for generating the game map layout.
  * It provides methods to randomly spawn players and obstacles within defined boundaries.
@@ -51,7 +52,7 @@ object MapGenerator:
    * @param maxY The maximum Y-coordinate boundary (top edge of the map).
    * @return A Set containing the two initialized Player entities.
    */
-  def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double): Set[Player] =
+  def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double): Set[Soldier] =
     val midX = (minX + maxX) / 2.0
     val safeMargin = 2.0
 
@@ -63,8 +64,9 @@ object MapGenerator:
 
     val pos1 = Position(p1X, p1Y)
     val pos2 = Position(p2X, p2Y)
-
-    Set(
-      initPlayer("player1", pos1),
-      initPlayer("player2", pos2)
-    )
+    
+    val player1: Player = initPlayer("player1")
+    val player2: Player = initPlayer("player2")
+    
+    Set(initSoldier("Soldier-2", Position(7.5, 0.0), player2, -1), initSoldier("Soldier-1", Position(-7.5, 0.0), player1, 1))
+        

@@ -69,8 +69,8 @@ object TurnManager:
 
   import Team.initTeam
   
-  def initTunrManager(soldiersVector: Vector[Vector[Soldier]]): TurnManager =
-    val teams = for
-      vector <- soldiersVector
-    yield initTeam(vector)
-    TurnManager(teams, 0)
+  def initTunrManager(soldiers: Set[Soldier]): TurnManager =
+   TurnManager(soldiers.groupBy(s => s.owner).
+     map((_, soldiers) => initTeam(soldiers.toVector)).
+     toVector,
+     0)

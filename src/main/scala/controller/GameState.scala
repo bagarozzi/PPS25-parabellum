@@ -53,10 +53,6 @@ object GameState:
     GameState(g.manager, g.obstacles + obstacle, g.projectiles)
 
   def init(): GameState =
-    val player1:  Player = initPlayer("Player-1")
-    val player2:  Player = initPlayer("Player-2")
-    val manager: TurnManager = initTunrManager(Vector(Vector(initSoldier("Soldier-2", Position(7.5, 0.0), player2, -1)), Vector(initSoldier("Soldier-1", Position(-7.5, 0.0), player1, 1))))
-    val obstacles = Set.empty[Obstacle]
     val circle = Obstacle(Position(5.0, 3.0), 20.0)
     
     // TODO: make this resizable
@@ -66,17 +62,9 @@ object GameState:
     val maxY = 5.0
 
  
-    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY)
+    val manager = initTunrManager(MapGenerator.generatePlayers(minX, maxX, minY, maxY))
     val obstacles = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY) // Scegli quanti ostacoli generare (es. 5)
   
     GameState(
     manager, obstacles+circle,
     None)
-
-  
-    GameState(
-      players,
-      obstacles,
-      None,
-      players.head
-    )
