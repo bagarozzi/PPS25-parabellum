@@ -22,6 +22,11 @@ case class Team(soldiers: Vector[Soldier], currentIndex: Int):
     
   def isEmpty: Boolean =
     soldiers.isEmpty
+    
+object Team:
+  def initTeam(soldiers: Vector[Soldier]): Team =
+    Team(soldiers, 0)
+    
   
 
 case class TurnManager(
@@ -51,3 +56,21 @@ case class TurnManager(
   def winner: Option[Team] =
     if teams.size == 1 then Some(teams.head)
     else None
+
+  def enemies: Set[Soldier] =
+    teams.zipWithIndex.
+      filter((_,idx) => idx != currentIndex).
+      flatMap(_._1.soldiers).toSet
+      
+  def soldiers: Set[Soldier] =
+    teams.flatMap(_.soldiers).toSet
+
+object TurnManager:
+
+  import Team.initTeam
+  
+  def initTunrManager(soldiersVector: Vector[Vector[Soldier]]): TurnManager =
+    val teams = for
+      vector <- soldiersVector
+    yield initTeam(vector)
+    TurnManager(teams, 0)
