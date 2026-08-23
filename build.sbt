@@ -13,3 +13,16 @@ lazy val root = rootProject
       //"org.scalameta" %% "munit" % "1.2.3" % Test
     )
   )
+
+lazy val app = (project in file ("parabellum"))
+    .settings(
+        assembly / assemblyJarName := "Parabellum.jar",
+        assembly / mainClass := Some("it.unibo.parabellum.Parabellum"),
+        assembly / assemblyMergeStrategy := {
+            case "module-info.class" => MergeStrategy.discard
+            case PathList("META-INF", "substrate", "config", _*) => MergeStrategy.first
+            case PathList("META-INF", _*) => MergeStrategy.discard
+            case "reference.conf"         => MergeStrategy.concat
+            case _                        => MergeStrategy.first
+        }
+    )
