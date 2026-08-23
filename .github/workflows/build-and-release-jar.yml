@@ -26,7 +26,7 @@ jobs:
         run: sbt clean assembly
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: scala-game-executable
           path: target/scala-*/your-game-assembly-*.jar
