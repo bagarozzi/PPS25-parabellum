@@ -29,7 +29,7 @@ object GameState:
    * @param g the game state to update
    * @return the new game state
    */
-  def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState = {
+  def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState = 
     val manager: TurnManager = g.manager.eliminateDeadSoldier
     
     val updatedProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt))
@@ -47,13 +47,8 @@ object GameState:
         manager.nextTurn
       else
         manager
-      
     
     GameState(nextManager, g.obstacles, projectileToSpawn)
-  }
-
-  private def changeTurn(players: Set[Player], currentTurn: Player): Player =
-    players.find(p=> p!= currentTurn).get
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.projectiles)
