@@ -72,3 +72,11 @@ object GameState:
     GameState(
     manager, obstacles+circle,
     None)
+
+  
+    GameState(
+      players,
+      obstacles,
+      None,
+      players.head
+    )
