@@ -25,7 +25,7 @@ case class Projectile private (
 
 object Projectile:
 
-  def create(
+  def createProjectile(
               startingPosition: Position,
               nonParsedFunction: String,
               direction: Int
