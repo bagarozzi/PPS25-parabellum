@@ -8,7 +8,7 @@ import util.{BoundingBox, Position}
 import model.entity.Soldier
 
 object CollisionDetector:
-  val border: BoundingBox = BoundingBox(-25, 25, -15, 15)
+  private val border: BoundingBox = BoundingBox(-25, 25, -15, 15)
   given BoundingBox = border
 
   private def checkCollisionWithBorders(projectile: Projectile): Option[Projectile] = 
