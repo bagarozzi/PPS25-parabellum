@@ -1,4 +1,4 @@
-package it.unibo.parabellum.model.map
+package it.unibo.parabellum.util
 
 import it.unibo.parabellum.model.entity.{Obstacle, Player}
 import it.unibo.parabellum.model.entity.Player.initPlayer
