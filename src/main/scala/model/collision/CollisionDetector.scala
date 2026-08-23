@@ -20,7 +20,7 @@ object CollisionDetector:
   private def CheckCollisionWithFigure(entities: Set[Figure], projectile: Projectile): Unit = 
     entities.filter(f => f.belongs(projectile.pos())).foreach {
       case soldier: Soldier => soldier.kill()
-      case obstacle: Obstacle => ???
+      case obstacle: Obstacle =>
     }
 
   def detectCollision(projectile: Projectile, entities: Set[Figure]): Option[Projectile] = 

@@ -31,18 +31,16 @@ object GameState:
   def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState = 
     val manager: TurnManager = g.manager.eliminateDeadSoldier
     
-    val updatedProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt))
-    
-    val projectileAfterCollision: Option[Projectile] = updatedProjectile.
-      flatMap(p => detectCollision(p, manager.enemies ++ g.obstacles)) 
-      
+    val updatedProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt)).
+      flatMap(p => detectCollision(p, manager.enemies ++ g.obstacles))
+
     val projectileToSpawn: Option[Projectile] = 
       if pendingFunction.isDefined then
         Some(Projectile.create(manager.current.pos, pendingFunction.get, manager.current.facingDirection))
       else
-        projectileAfterCollision
+        updatedProjectile
     
-    val nextManager = if projectileAfterCollision.isEmpty then 
+    val nextManager = if updatedProjectile.isEmpty then
         manager.nextTurn
       else
         manager
