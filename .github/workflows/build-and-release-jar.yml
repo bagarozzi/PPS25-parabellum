@@ -35,14 +35,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Parabellum
-          path: target/out/jvm/scala-*/Parabellum.jar
+          path: target/out/jvm/scala-*/parabellum/Parabellum.jar
 
       - name: Release to GitHub
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            target/out/jvm/scala-*/Parabellum.jar
+            target/out/jvm/scala-*/parabellum/Parabellum.jar
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
