@@ -3,10 +3,9 @@ package controller
 
 import model.entity.{Obstacle, Player}
 
-import it.unibo.parabellum.util.Position
+import it.unibo.parabellum.util.{Position, MapGenerator}
 import it.unibo.parabellum.model.entity.Player.initPlayer
 import model.function.{Projectile, Trajectory}
-
 import it.unibo.parabellum.model.collision.CollisionDetector.detectCollision
 import it.unibo.parabellum.model
 import it.unibo.parabellum.model.collision.{CollisionDetector, ImpactEffect}
@@ -59,6 +58,17 @@ object GameState:
     val manager: TurnManager = initTunrManager(Vector(Vector(initSoldier("Soldier-2", Position(7.5, 0.0), player2, -1)), Vector(initSoldier("Soldier-1", Position(-7.5, 0.0), player1, 1))))
     val obstacles = Set.empty[Obstacle]
     val circle = Obstacle(Position(5.0, 3.0), 20.0)
+    
+    // TODO: make this resizable
+    val minX = -10.0
+    val maxX = 10.0
+    val minY = -5.0
+    val maxY = 5.0
+
+ 
+    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY)
+    val obstacles = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY) // Scegli quanti ostacoli generare (es. 5)
+  
     GameState(
     manager, obstacles+circle,
     None)
