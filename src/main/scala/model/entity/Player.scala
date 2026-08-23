@@ -6,27 +6,17 @@ import model.shape.{Circle, Shape}
 
 import it.unibo.parabellum.model.function.Trajectory
 
-trait Player extends Figure:
+trait Player:
   val name: String
-  def state: State
-  def kill(): Unit
-  def shoot(trajectory: Trajectory): Unit
 
 enum State:
   case alive, dead
   
-class PlayerImpl(val name: String, val pos: Position, val shape: Shape, var state: State) extends Player:
+class PlayerImpl(val name: String) extends Player
 
-  override def belongs(pos: Position): Boolean = shape.belongs(pos)
-  def kill(): Unit = {
-    //TODO implement this method
-    println(name + "has been eliminated")
-  }
-
-  def shoot(trajectory: Trajectory): Unit = {}
   
 object Player:
 
   private val PLAYER_RADIUS: Double = 0.15
 
-  def initPlayer(name: String, pos: Position): Player = PlayerImpl(name, pos, Circle(pos, PLAYER_RADIUS), State.alive)
+  def initPlayer(name: String): Player = PlayerImpl(name)

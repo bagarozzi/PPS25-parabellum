@@ -96,15 +96,15 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
         obstacleViews -= obs
 
 
-      state.players.foreach: player =>
-        val tc = GeometryHelper.transform(player.pos)
+      state.manager.soldiers.foreach: soldier =>
+        val tc = GeometryHelper.transform(soldier.pos)
 
-        playerViews.get(player.name) match
+        playerViews.get(soldier.name) match
           case Some(view) =>
             view.setPosition(tc.x, tc.y)
           case None =>
-            val newView = new PlayerView(player.name, tc.x, tc.y)
-            playerViews += (player.name -> newView)
+            val newView = new PlayerView(soldier.name, tc.x, tc.y)
+            playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
 
       state.projectiles match
