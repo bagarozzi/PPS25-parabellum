@@ -12,13 +12,16 @@ import it.unibo.parabellum.model
 import it.unibo.parabellum.model.collision.{CollisionDetector, ImpactEffect}
 import it.unibo.parabellum.model.entity.State.dead
 import it.unibo.parabellum.model.shape.{Circle, Polygon}
+import model.entity.Soldier.initSoldier
+import controller.TurnManager.initTunrManager
+import model.entity.Figure
 
 /**
  * Represents the state of the game in a certain instant in time.
- * @param players the set of players currently in the game
+ * @param manager the entity that manage the sequence of turns and the sets of soldiers
  * @param projectiles the projectile that are being fired
  */
-class GameState(val players: Set[Player],val obstacles: Set[Obstacle], val projectiles: Option[Projectile], val currentTurn: Player)
+class GameState(val manager: TurnManager,val obstacles: Set[Obstacle], val projectiles: Option[Projectile])
 object GameState:
 
   /**
@@ -26,36 +29,41 @@ object GameState:
    * @param g the game state to update
    * @return the new game state
    */
-  def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState =
-    var newProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt))
-    val players = g.players.diff(g.players.filter(p => p.state == dead))
-    //se si vuole dividere cerchi e poligoni
-    //val circles = g.obstacles.filter(o => o.shape.isInstanceOf[Circle])
-    //val polygons = g.obstacles.filter(o => o.shape.isInstanceOf[Polygon])
-    var newTurn: Player = g.currentTurn
-    if(newProjectile.isDefined) then {
-      newProjectile = detectCollision(newProjectile.get, players - g.currentTurn)
-      if newProjectile.isEmpty then
-        newTurn = changeTurn(players, g.currentTurn)
-    }
-    if(g.projectiles.isEmpty && pendingFunction.isDefined) then {
-      newProjectile = Some(Projectile.create(g.currentTurn.pos, pendingFunction.get, 1))
-    }
-    GameState(players, g.obstacles, newProjectile, g.currentTurn)
-
-
+  def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState = {
+    val manager: TurnManager = g.manager.eliminateDeadSoldier
+    
+    val updatedProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt))
+    
+    val projectileAfterCollision: Option[Projectile] = updatedProjectile.
+      flatMap(p => detectCollision(p, manager.enemies ++ g.obstacles)) 
+      
+    val projectileToSpawn: Option[Projectile] = 
+      if pendingFunction.isDefined then
+        Some(Projectile.create(manager.current.pos, pendingFunction.get, manager.current.facingDirection))
+      else
+        projectileAfterCollision
+    
+    val nextManager = if projectileAfterCollision.isEmpty then 
+        manager.nextTurn
+      else
+        manager
+      
+    
+    GameState(nextManager, g.obstacles, projectileToSpawn)
+  }
 
   private def changeTurn(players: Set[Player], currentTurn: Player): Player =
     players.find(p=> p!= currentTurn).get
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
-    GameState(g.players, g.obstacles + obstacle, g.projectiles, g.currentTurn)
+    GameState(g.manager, g.obstacles + obstacle, g.projectiles)
 
   def init(): GameState =
-    val players = Set(initPlayer("player1", Position(-7.5, 0.0)), initPlayer("player2", Position(7.5, 0.0)))
+    val player1:  Player = initPlayer("Player-1")
+    val player2:  Player = initPlayer("Player-2")
+    val manager: TurnManager = initTunrManager(Vector(Vector(initSoldier("Soldier-2", Position(7.5, 0.0), player2, -1)), Vector(initSoldier("Soldier-1", Position(-7.5, 0.0), player1, 1))))
     val obstacles = Set.empty[Obstacle]
     val circle = Obstacle(Position(5.0, 3.0), 20.0)
     GameState(
-    players, obstacles+circle,
-    None,
-    players.head)
+    manager, obstacles+circle,
+    None)
