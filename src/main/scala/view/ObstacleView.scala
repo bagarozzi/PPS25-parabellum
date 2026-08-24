@@ -32,3 +32,8 @@ class ObstacleView extends Group:
     shapePolygon.points ++= flatVertices
 
     children = List(shapePolygon)
+
+  def addHole(cx: Double, cy: Double, rad: Double): Unit =
+      val hole = new HoleView()
+      hole.drawHole(cx, cy, rad)
+      this.children.add(hole)

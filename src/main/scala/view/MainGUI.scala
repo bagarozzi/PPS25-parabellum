@@ -10,7 +10,7 @@ import it.unibo.parabellum.model.function.Projectile
 import it.unibo.parabellum.controller.{GameController, GameState}
 import it.unibo.parabellum.model.collision.CollisionDetector
 import it.unibo.parabellum.view.TrajectoryView
-import it.unibo.parabellum.model.shape.{Circle => ModelCircle, Polygon => ModelPolygon}
+import it.unibo.parabellum.model.shape.{Circle => ModelCircle, Polygon => ModelPolygon, Difference}
 
 /**
  * Main GUI of the Parabellum game.
@@ -75,9 +75,26 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
           val view = new ObstacleView()
 
           obs.shape match
+            case Difference(baseShape, holes) =>
+             
+              baseShape match
+                case ModelCircle(center, radius) =>
+                  val tc = GeometryHelper.transform(center)
+                  view.drawCircle(tc.x, tc.y, radius)
+                case ModelPolygon(vertices) =>
+                  val screenVertices = vertices.map: v =>
+                    val tc = GeometryHelper.transform(v)
+                    (tc.x, tc.y)
+                  view.drawPolygon(screenVertices)
+                case _ => ()
+
+              holes.foreach:
+                case ModelCircle(center, radius) =>
+                  val tc = GeometryHelper.transform(center)
+                  view.addHole(tc.x, tc.y, radius)
+                //case _ => () 
             case ModelCircle(center, radius) =>
               val tc = GeometryHelper.transform(center)
-              //val tr = GeometryHelper.transform(it.unibo.parabellum.util.Position(radius, 0)).x - GeometryHelper.transform(it.unibo.parabellum.util.Position(0, 0)).x
               view.drawCircle(tc.x, tc.y, radius)
 
             case ModelPolygon(vertices) =>
