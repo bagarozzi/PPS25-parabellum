@@ -37,15 +37,15 @@ object GameState:
         case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
         case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + Obstacle(obstacle.pos, Difference(obstacle.shape, Set(hole))))
         case DestroyProjectile => g.copy(manager = g.manager.nextTurn, projectile = None)
-      ))
+      )).getOrElse(g.copy(projectile = updatedProjectile))
 
     val newState = if pendingFunction.isDefined && g.pendingFunction.isEmpty then
-       updatedState.get.copy(pendingFunction = pendingFunction)
+       updatedState.copy(pendingFunction = pendingFunction)
     else
-      updatedState.get
+      updatedState
 
     if newState.projectile.isEmpty && newState.pendingFunction.isDefined then
-      newState.copy(projectile = Some(Projectile.createProjectile(g.manager.current.pos, g.pendingFunction.get, g.manager.current.facingDirection)))
+      newState.copy(projectile = Some(Projectile.createProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection)), pendingFunction = None)
     else
       newState
 
