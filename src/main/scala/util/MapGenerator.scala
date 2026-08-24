@@ -29,7 +29,7 @@ object MapGenerator:
         Obstacle(pos, radius)
       else
         val numVertices = 3 + (math.random() * 4).toInt
-        val windowSize = 0.5 + math.random()
+        val windowSize = 3 + math.random()
 
         val minVX = pos.x - windowSize
         val maxVX = pos.x + windowSize

@@ -5,7 +5,7 @@ import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Circle, Polygon, Shape}
 
 /**
- * Rappresenta graficamente un ostacolo sulla mappa.
+ * Visual presentation of an Obstacle on the map.
  */
 class ObstacleView extends Group:
 
