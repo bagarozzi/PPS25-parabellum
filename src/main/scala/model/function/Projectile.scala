@@ -35,7 +35,7 @@ object Projectile:
       Projectile(
       Trajectory.create(startingPosition, FunctionParser.parse(nonParsedFunction)),
       0.0,
-      0.1,
+      0.01,
       normalImpactEffect(), 
       direction
     )

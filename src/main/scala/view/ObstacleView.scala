@@ -5,7 +5,7 @@ import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Circle, Polygon, Shape}
 
 /**
- * Rappresenta graficamente un ostacolo sulla mappa.
+ * Visual presentation of an Obstacle on the map.
  */
 class ObstacleView extends Group:
 
@@ -32,3 +32,8 @@ class ObstacleView extends Group:
     shapePolygon.points ++= flatVertices
 
     children = List(shapePolygon)
+
+  def addHole(cx: Double, cy: Double, rad: Double): Unit =
+      val hole = new HoleView()
+      hole.drawHole(cx, cy, rad)
+      this.children.add(hole)
