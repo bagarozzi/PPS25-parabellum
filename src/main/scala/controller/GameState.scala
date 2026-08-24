@@ -35,7 +35,7 @@ object GameState:
     val updatedState = updatedProjectile.map(detectCollision(_, g.manager.enemies ++ g.obstacles)).
       map(_.foldLeft(g.copy(projectile = updatedProjectile))((g,i) => i match
         case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
-        case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + Obstacle(obstacle.pos, Difference(obstacle.shape, Set(hole))))
+        case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
         case DestroyProjectile => g.copy(manager = g.manager.nextTurn, projectile = None)
       )).getOrElse(g.copy(projectile = updatedProjectile))
 

@@ -3,6 +3,8 @@ package model.shape
 
 import util.{BoundingBox, Position}
 
+import scala.annotation.tailrec
+
 /**
  * A Shape is an enclosed area where some point's membership can be verified.
  */
@@ -37,6 +39,11 @@ case class Difference(a: Shape, b: Set[Shape]) extends Shape:
 
   override def bounds: BoundingBox = ???
 
+  def diffSet: Set[Shape] =
+    def findDiffSet(a: Shape): Set[Shape] = a match
+      case Difference(c, d) => (d + c).flatMap(findDiffSet)
+      case s => Set(s)
+    b.flatMap(findDiffSet)
 
 /**
  * A class representing a Circle with radius and center.
