@@ -1,7 +1,8 @@
 package it.unibo.parabellum.model.map
 
-import org.scalatest.funsuite.AnyFunSuite
 import it.unibo.parabellum.model.shape.{Circle, Polygon}
+import it.unibo.parabellum.util.MapGenerator
+import org.scalatest.funsuite.AnyFunSuite
 
 class MapGeneratorTest extends AnyFunSuite:
 
