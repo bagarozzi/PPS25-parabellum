@@ -75,8 +75,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
           val view = new ObstacleView()
 
           obs.shape match
-            case Difference(baseShape, holes) =>
-             
+            case diff @ Difference(baseShape, _) =>
               baseShape match
                 case ModelCircle(center, radius) =>
                   val tc = GeometryHelper.transform(center)
@@ -88,11 +87,12 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
                   view.drawPolygon(screenVertices)
                 case _ => ()
 
-              holes.foreach:
+              diff.diffSet.foreach:
                 case ModelCircle(center, radius) =>
                   val tc = GeometryHelper.transform(center)
                   view.addHole(tc.x, tc.y, radius)
-                //case _ => () 
+                case _ => ()
+
             case ModelCircle(center, radius) =>
               val tc = GeometryHelper.transform(center)
               view.drawCircle(tc.x, tc.y, radius)
