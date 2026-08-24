@@ -10,9 +10,9 @@ case class Team(soldiers: Vector[Soldier], currentIndex: Int):
   def next(): Team =
     copy(currentIndex = (currentIndex + 1) % soldiers.size)
 
-  def removeDead(): Team =
+  def removeSoldier(s: Soldier): Team =
     val newSoldiers =
-      soldiers.filter(_.isAlive)
+      soldiers.filterNot(_== s)
     copy(
     soldiers = newSoldiers,
     currentIndex =
@@ -48,8 +48,8 @@ case class TurnManager(
         (currentIndex + 1) % teams.size
     )
     
-  def eliminateDeadSoldier: TurnManager =
-    val newTeams = teams.map(t => t.removeDead()).filter(t => !t.isEmpty)
+  def eliminateDeadSoldier(s: Soldier): TurnManager =
+    val newTeams = teams.map(t => t.removeSoldier(s)).filter(t => !t.isEmpty)
     copy(newTeams)
     
 

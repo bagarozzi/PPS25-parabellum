@@ -107,7 +107,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
             playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
 
-      state.projectiles match
+      state.projectile match
         case Some(proj) =>
           val tc = GeometryHelper.transform(proj.pos())
 
