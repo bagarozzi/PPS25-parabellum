@@ -17,7 +17,9 @@ object Obstacle:
 
   def apply(pos: Position, radius: Double): Obstacle =
     ObstacleImpl(pos, Circle(pos, radius))
-
-
+  
   def apply(pos: Position, vertices: Seq[Position]): Obstacle =
     ObstacleImpl(pos, Polygon(vertices))
+    
+  def apply(pos: Position, shape: Shape): Obstacle =
+    ObstacleImpl(pos, shape)

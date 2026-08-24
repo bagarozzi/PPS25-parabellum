@@ -6,6 +6,7 @@ import model.function.Trajectory
 import model.function.FunctionParser
 
 import it.unibo.parabellum.model.collision.ImpactEffect
+import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
 import it.unibo.parabellum.model.function
 
 case class Projectile private (
@@ -35,7 +36,7 @@ object Projectile:
       Trajectory.create(startingPosition, FunctionParser.parse(nonParsedFunction)),
       0.0,
       0.1,
-      null, 
+      normalImpactEffect(), 
       direction
     )
 

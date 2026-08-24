@@ -7,9 +7,7 @@ import util.{BoundingBox, Position}
  * A Shape is an enclosed area where some point's membership can be verified.
  */
 sealed trait Shape:
-
-  def function: Position => Boolean
-
+  
   def bounds: BoundingBox
 
   /**
@@ -18,8 +16,7 @@ sealed trait Shape:
    * @param pos the position to check
    * @return
    */
-  final def belongs(pos: Position): Boolean =
-    function(pos)
+  def belongs: Position => Boolean
 
   final def sample(step: Double): Seq[Position] =
     for
@@ -30,10 +27,20 @@ sealed trait Shape:
       p = Position(x, y)
       if belongs(p)
     yield p
-      
+    
+case class Difference(a: Shape, b: Set[Shape]) extends Shape:
+
+  override def belongs: Position => Boolean = {
+    p =>
+      a.belongs(p) && !b.map(_.belongs(p)).foldLeft(false)(_||_)
+  }
+
+  override def bounds: BoundingBox = ???
+
 
 /**
  * A class representing a Circle with radius and center.
+ *
  * @param center the center of the circle
  * @param radius the radius of the circle
  */
@@ -42,7 +49,7 @@ case class Circle(
                    radius: Double
                  ) extends Shape:
 
-  override val function: Position => Boolean =
+  override val belongs: Position => Boolean =
     p =>
       val dx = p.x - center.x
       val dy = p.y - center.y
@@ -50,8 +57,17 @@ case class Circle(
       dx * dx + dy * dy <= radius * radius
 
   override val bounds: BoundingBox = BoundingBox(center.x - radius, center.x + radius, center.y - radius, center.y + radius)
+
+  /**
+   * Checks if the point belongs (is internal) to the shape.
+   *
+   * @param pos the position to check
+   * @return
+   */
+  
 /**
  * A class representing a Polygon made out of vertices.
+ *
  * @param vertices delimitating the polygon
  */
 case class Polygon(
@@ -67,7 +83,7 @@ case class Polygon(
     BoundingBox(minX, maxX, minY, maxY)
 
   // 2. Algoritmo per capire se un punto p è dentro il poligono
-  override val function: Position => Boolean =
+  override val belongs: Position => Boolean =
     p =>
       var inside = false
       var j = vertices.length - 1
