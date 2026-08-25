@@ -5,12 +5,14 @@ import scalafx.scene.Scene
 import scalafx.scene.paint.Color.*
 import scalafx.scene.layout.BorderPane
 import scalafx.Includes.*
-import it.unibo.parabellum.model.entity.{Player, Obstacle}
+import it.unibo.parabellum.model.entity.{Obstacle, Player}
 import it.unibo.parabellum.model.function.Projectile
 import it.unibo.parabellum.controller.{GameController, GameState}
 import it.unibo.parabellum.model.collision.CollisionDetector
 import it.unibo.parabellum.view.TrajectoryView
-import it.unibo.parabellum.model.shape.{Circle => ModelCircle, Polygon => ModelPolygon, Difference}
+import it.unibo.parabellum.model.shape.{Difference, Circle as ModelCircle, Polygon as ModelPolygon}
+
+import scala.collection.StepperShape.Shape
 
 /**
  * Main GUI of the Parabellum game.
@@ -79,7 +81,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
               baseShape match
                 case ModelCircle(center, radius) =>
                   val tc = GeometryHelper.transform(center)
-                  view.drawCircle(tc.x, tc.y, radius)
+                  view.drawCircle(tc.x, tc.y, GeometryHelper.transform(radius))
                 case ModelPolygon(vertices) =>
                   val screenVertices = vertices.map: v =>
                     val tc = GeometryHelper.transform(v)
@@ -90,12 +92,12 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
               diff.diffSet.foreach:
                 case ModelCircle(center, radius) =>
                   val tc = GeometryHelper.transform(center)
-                  view.addHole(tc.x, tc.y, radius)
+                  view.addHole(tc.x, tc.y, GeometryHelper.transform(radius))
                 case _ => ()
 
             case ModelCircle(center, radius) =>
               val tc = GeometryHelper.transform(center)
-              view.drawCircle(tc.x, tc.y, radius)
+              view.drawCircle(tc.x, tc.y, GeometryHelper.transform(radius))
 
             case ModelPolygon(vertices) =>
               val screenVertices = vertices.map: v =>
@@ -120,7 +122,8 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
           case Some(view) =>
             view.setPosition(tc.x, tc.y)
           case None =>
-            val newView = new PlayerView(soldier.name, tc.x, tc.y)
+            val ModelCircle(pos, radius) = soldier.shape.runtimeChecked   
+            val newView = new PlayerView(soldier.name, tc.x, tc.y, GeometryHelper.transform(radius))
             playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
 
