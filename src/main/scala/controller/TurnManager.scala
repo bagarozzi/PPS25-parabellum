@@ -50,7 +50,7 @@ case class TurnManager(
     
   def eliminateDeadSoldier(s: Soldier): TurnManager =
     val newTeams = teams.map(t => t.removeSoldier(s)).filter(t => !t.isEmpty)
-    copy(newTeams)
+    copy(teams = newTeams, currentIndex = currentIndex % newTeams.size)
     
 
   def winner: Option[Team] =
