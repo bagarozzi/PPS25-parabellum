@@ -3,7 +3,8 @@ package view
 
 import util.{BoundingBox, Position}
 
-case class WindowSize(width: Double, height: Double)
+case class WindowSize(width: Double, height: Double):
+  def ratio: Double = width/height
 
 /**
  * Converts Cartesian coordinates to coordinates usable by the view.
@@ -21,3 +22,6 @@ object GeometryHelper:
         val rx: Double = windowSize.width/boundingBox.hsize
         val ry: Double = -windowSize.height/boundingBox.vsize
         Position(pos.x * rx, pos.y * ry).traslate(windowSize.width/2, windowSize.height/2)
+
+    def transform(dist: Double)(using windowSize: WindowSize, boundingBox: BoundingBox): Double =
+        (windowSize.width/boundingBox.hsize) * dist

@@ -9,7 +9,6 @@ import it.unibo.parabellum.model.entity.Player.PLAYER_RADIUS
 case class Soldier private(val name: String, val pos: Position, val shape: Shape, val state: State, val owner: Player, val facingDirection: Int) extends Figure:
   
   override def belongs(pos: Position): Boolean = shape.belongs(pos)
-  
   def kill(): Unit =
     copy(state = State.dead)
     

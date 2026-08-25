@@ -66,7 +66,6 @@ object GameState:
     GameState(g.manager, g.obstacles + obstacle, g.projectile, None)
 
   def init(): GameState =
-    val circle = Obstacle(Position(5.0, 3.0), 20.0)
     
     // TODO: make this resizable
     val minX = -10.0
@@ -80,7 +79,7 @@ object GameState:
   
     GameState(
       manager,
-      obstacles+circle,
+      obstacles,
       None,
       None
     )
