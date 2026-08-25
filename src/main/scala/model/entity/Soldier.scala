@@ -30,4 +30,4 @@ object Soldier:
       owner,
       facingDirection)
 
-  private val SOLDIER_RADIUS: Double = 0.15
+  private val SOLDIER_RADIUS: Double = 0.50
