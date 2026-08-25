@@ -8,10 +8,10 @@ import scalafx.scene.text.Text
 /**
  * Rappresenta graficamente un giocatore a schermo.
  */
-class PlayerView(playerName: String, initialX: Double, initialY: Double) extends Group:
+class PlayerView(playerName: String, initialX: Double, initialY: Double, shapeRadius: Double) extends Group:
 
   private val ball = new Circle:
-    radius = 20.0
+    radius = shapeRadius
     fill = Black
     stroke = White
     strokeWidth = 2.0
