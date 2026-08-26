@@ -22,22 +22,22 @@ nella riga così che gli altri vedano chi (se) la sta già facendo.
 ### Tasks to be done
 | Task ID | Task Description | Assignee | When it's done | Done |
 | :--- | :--- | :--- | :--- | :---: |
-| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . |
+| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 12 | Line trail in ProjectileView | Sbaraccani | when projectiles leave a trail behind them while moving | yes |
 | 15 | Smaller bullet | Sbaraccani | when the bullet is smaller from the View | yes |
 | 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState | Sbaraccani | when obstacles are implemented and tested | yes |
 | 14 | Obstacles in View | Sbaraccani | when obstacles are correctly displayed | yes |
 | 16 | Map generation: random placement of players and obstacles + Unit testing | Sbaraccani | when a fresh random is generated at each run | yes |
-| 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot | Bagattoni and Venturini |  | no |
+| 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot | Bagattoni and Venturini |  | yes |
 | 18a | New Functions in View | Bagattoni | when the user can type entire functions from the View | yes |
 | 18b | Parsing of New Functions | Bagattoni and Venturini | when New Functions from the View are correctly parsed into Trajectories | yes |
-| 19 | Two players have names | Bagattoni | when each player can choose his/her name and is displayed at their side of the screen | yes |
-| 20 | Soldiers | Venturini | when each player has more than one soldier on the field and the turns are correctly managed | no |
-| 21 | Unit testing of: Map |  | ... | no |
+| 19 | Two players have names | Bagattoni and Sbaraccani | when each player can choose his/her name and is displayed at their side of the screen | yes |
+| 20 | Soldiers | Venturini | when each player has more than one soldier on the field and the turns are correctly managed | yes |
+| 21 | Unit testing of: Map | Sbaraccani | ... | yes |
 | 22 | Unit testing of: ImpactEffect |  | ... | no |
 | 23 | Unit testing of: Trajectory and Projectile (_after task 18_) |  | ... | no |
-| 24 | Unit testing of: CollisionDetector |  | ... | no |
+| 24 | Unit testing of: CollisionDetector | Bagattoni and Venturini | ... | yes |
 
 To ease the workflow the tasks may be divided in the following groups (inside each group, ***task order matters***), and did in the following order:
 1. **Adding players and soldiers**: keep the current View and architecture, just add soldiers, players and turn management
@@ -49,7 +49,7 @@ To ease the workflow the tasks may be divided in the following groups (inside ea
 Keep in mind: ***always merge working code***
 
 
-### Sprint review meeting (24/08/2026)
+### Sprint review meeting (24/08/2026, delayed to )
 
 ___
 ___
