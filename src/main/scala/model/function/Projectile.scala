@@ -42,6 +42,3 @@ object Projectile:
       normalImpactEffect(), 
       direction
     )
-
-  def parseStraightLine(startingPosition: Position, angularCoefficient: Double): Trajectory =
-    Trajectory.create(startingPosition, Function(x => angularCoefficient * x))
