@@ -6,6 +6,9 @@ ThisBuild / assemblyMergeStrategy := {
     case x => MergeStrategy.defaultMergeStrategy(x)
 }
 
+lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+lazy val javaFxVersion = "21.0.1"
+
 lazy val root = rootProject
     .settings(
         name := "parabellum",
@@ -21,6 +24,13 @@ lazy val root = rootProject
             // You can add library dependencies here, for example,
             //"org.scalatest" %% "scalatest" % "3.2.19" % Test,
             //"org.scalameta" %% "munit" % "1.2.3" % Test
-        ),
+        ) ++ javaFXModules.flatMap(m =>
+                Seq(
+                    "org.openjfx" % s"javafx-$m" % javaFxVersion classifier "win",
+                    "org.openjfx" % s"javafx-$m" % javaFxVersion classifier "mac",
+                    "org.openjfx" % s"javafx-$m" % javaFxVersion classifier "mac-aarch64",
+                    "org.openjfx" % s"javafx-$m" % javaFxVersion classifier "linux"
+                )
+            ),
         scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a `using` clause:s"
     )
