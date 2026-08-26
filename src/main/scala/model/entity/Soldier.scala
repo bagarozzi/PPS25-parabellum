@@ -18,6 +18,8 @@ case class Soldier private(val name: String, val pos: Position, val shape: Shape
   def isAlive: Boolean =
     state == State.alive
   
+  override def toString: String =
+    owner.name + "-" + name
     
 
 object Soldier:
