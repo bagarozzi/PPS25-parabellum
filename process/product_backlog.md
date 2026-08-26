@@ -17,22 +17,24 @@
 Most important first.
 | Task ID | Task Description | Assignee | When it's done | Done | First planned in |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | [**Sprint 1**](./sprint_1_backlog.md) |
+| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
-| 12 | Line trail in ProjectileView |  | when projectiles leave a trail behind them while moving | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 15 | Smaller bullet |  | when the bullet is smaller from the View | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 13 | Obstacles basic implementation: rectangles and circles and inserted in GameState |  | when obstacles are implemented and tested | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 14 | Obstacles in View |  | when obstacles are correctly displayed | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 16 | Map generation: random placement of players and obstacles + Unit testing |  | when a fresh random is generated at each run | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 17 | Implementation of ImpactEffect: obstacles have an impact effect when shot |  |  | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 18a | New Functions in View |  | when the user can type entire functions from the View | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 18b | Parsing of New Functions |  | when New Functions from the View are correctly parsed into Trajectories | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 19 | Two players have names |  | when each player can choose his/her name and is displayed at their side of the screen | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 20 | Soldiers |  | when each player has more than one soldier on the field and the turns are correctly managed | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 21 | Unit testing of: Map |  | ... | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 22 | Unit testing of: ImpactEffect |  | ... | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 23 | Unit testing of: Trajectory and Projectile (_after task 18_) |  | ... | no | [**Sprint 3**](./sprint_3_backlog.md) |
-| 24 | Unit testing of: CollisionDetector |  | ... | no | [**Sprint 3**](./sprint_3_backlog.md) |
+| 25 | Map generation using Prolog |  | when the map is correctly check before being generated | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 26a | Map generation refactoring |  | when functions are short and weird polygons are not generated | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 26b | Soldier position generation |  | when soldiers are not in the same "zone" of the map | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 27 | Soldier position generation |  | when soldiers are not in the same "zone" of the map | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 28a | GUI work: soldiers die |  | soldiers disappear when dead | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 28b | GUI work: render |  | when the explosions are not overlapped on players and cartesian axes | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 28c | GUI work: soldier highlight |  | when the soldiers who's shooting is highlighted in some way | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 29 | GameState update refactoring |  | . | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 30 | GameState update refactoring |  | . | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 31 | Global Game paramethers |  | When compile-time paramethers are changed through a unique file | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 32 | Parser: adding logarithm and abs() functions |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) | 
+| 33 | Parser: adding logarithm and abs() functions |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 34 | Shape refactoring |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 35a | Powerups: Ricochet, Piercing, Random, Burden |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 35b | Powerups in View |  | when each powerup is recognizable and appears on the side of the screen for the player who has it | no | [**Sprint 4**](./sprint_4_backlog.md) |
+
 ___
 ___
 
