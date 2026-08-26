@@ -50,7 +50,7 @@ Keep in mind: ***always merge working code***
 
 
 ### Sprint review meeting (24/08/2026, delayed to )
-
+Lo sprint, salvo alcuni ritardi dati da bug imprevisti, è stato un successo e tutte le feature sono state aggiunte correttamente.
 ___
 ___
 
