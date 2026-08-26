@@ -6,9 +6,9 @@ import MultiLineWhitespace._
 
 object FunctionParser:
 
-    def parse(input: String): Function = fastparse.parse(input, p => expr(using p)) match
-        case Parsed.Success(func, _) => func
-        case failure: Parsed.Failure => throw new IllegalArgumentException(s"Parse error: ${failure.trace().longMsg}")
+    def parse(input: String): Either[RuntimeException, Function] = fastparse.parse(input, p => expr(using p)) match
+        case Parsed.Success(func, _) => Right(func)
+        case failure: Parsed.Failure => Left(new IllegalArgumentException(s"Parse error: ${failure.trace().longMsg}"))
 
     private def number[$: P]: P[Function] = P(CharIn("+\\-").? ~ CharIn("0-9").rep(1) ~ CharIn(".").? ~ CharIn("0-9").rep(1).?).!.map(d => Function(x => d.toDouble))
 
