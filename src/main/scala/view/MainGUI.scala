@@ -29,7 +29,9 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
   private val gameView = new GameView(windowSize.width, windowSize.height)
   private val trajectoryView = new TrajectoryView()
-
+  private lazy val controlPanel = new ControlPanelView(userInput =>
+    GameController.addProjectile(userInput)
+  )
   private var playerViews: Map[String, PlayerView] = Map.empty
   private var projectileView: Option[ProjectileView] = None
   private var obstacleViews: Map[Obstacle, ObstacleView] = Map.empty
@@ -38,12 +40,6 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
     gameView.addElements(trajectoryView)
 
-    // --- SETUP DELLA SCENA ---
-    val controlPanel = new ControlPanelView("player 1", "player 2", userImput =>
-      GameController.addProjectile(userImput),
-      userImput =>
-        GameController.addProjectile(userImput)
-    )
 
     val rootPane = new BorderPane:
       center = gameView
@@ -52,8 +48,9 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
     val gameScene = new Scene:
       root = rootPane
 
-    def avviaGioco(): Unit = {
-      GameController.startGame()
+    def avviaGioco(p1Name: String, p2Name: String, soldiers: Int): Unit = {
+      GameController.startGame(p1Name, p2Name, soldiers)
+
       stage.scene = gameScene
       stage.sizeToScene()
       stage.centerOnScreen()
@@ -71,7 +68,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
   override def render(state: GameState): Unit =
     Platform.runLater:
-
+      controlPanel.updateCurrentPlayer(state.manager.current.owner.name)
       state.obstacles.foreach: obs =>
         if !obstacleViews.contains(obs) then
           val view = new ObstacleView()
