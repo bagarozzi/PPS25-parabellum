@@ -32,8 +32,11 @@ object Projectile:
               direction: Int
             ):
       Projectile =
+      val func: Function = FunctionParser.parse(nonParsedFunction) match
+          case Right(func) => func
+          case Left(e) => Function(x => x)
       Projectile(
-      Trajectory.create(startingPosition, FunctionParser.parse(nonParsedFunction)),
+      Trajectory.create(startingPosition, func),
       0.0,
       0.01,
       normalImpactEffect(), 
