@@ -52,21 +52,27 @@ object MapGenerator:
    * @param maxY The maximum Y-coordinate boundary (top edge of the map).
    * @return A Set containing the two initialized Player entities.
    */
-  def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double): Set[Soldier] =
+  def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double, p1name: String, p2name:String, soldier: Int): Set[Soldier] =
+    
     val midX = (minX + maxX) / 2.0
     val safeMargin = 2.0
-
-    val p1X = minX + (midX - safeMargin - minX) * math.random()
-    val p2X = (midX + safeMargin) + (maxX - (midX + safeMargin)) * math.random()
-
-    val p1Y = minY + (maxY - minY) * math.random()
-    val p2Y = minY + (maxY - minY) * math.random()
-
-    val pos1 = Position(p1X, p1Y)
-    val pos2 = Position(p2X, p2Y)
+    val player1: Player = initPlayer(p1name)
+    val player2: Player = initPlayer(p2name)
     
-    val player1: Player = initPlayer("player1")
-    val player2: Player = initPlayer("player2")
+    val team1 = (1 to soldier).map: i =>
+      val p1X = minX + (midX - safeMargin - minX) * math.random()
+      val p1Y = minY + (maxY - minY) * math.random()
+      initSoldier(s"$p1name-soldier$i", Position(p1X,p1Y), player1, 1)
+
+    val team2 = (1 to soldier).map: i =>
+      val p2X = minX + (midX - safeMargin - minX) * math.random()
+      val p2Y = minY + (maxY - minY) * math.random()
+      initSoldier(s"$p2name-soldier$i", Position(p2X, p2Y), player2, -1)
+
+      
+      
     
-    Set(initSoldier("Soldier-2", Position(7.5, 0.0), player2, -1), initSoldier("Soldier-1", Position(-7.5, 0.0), player1, 1))
+      
+    Set(initSoldier(p2name, Position(7.5, 0.0), player2, -1), initSoldier(p1name, Position(-7.5, 0.0), player1, 1))++team1++team2
         
+  

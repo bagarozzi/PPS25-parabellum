@@ -1,49 +1,46 @@
 package it.unibo.parabellum.view
 
-import scalafx.scene.layout.{HBox, Region}
-import scalafx.geometry.Insets
+import scalafx.scene.layout.HBox
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.scene.paint.Color.*
 import scalafx.Includes.*
 import scalafx.event.ActionEvent
-import scalafx.scene.layout.Priority.Always
 
 /**
- * Pannello di controllo in basso con gli input per il tiro.
- *
- * @param onShootLeft Funzione di callback eseguita quando si preme "Spara"
+ * Bottom control panel providing the input area for the active player to shoot.
+ * @param onShoot Callback function executed when the "Shoot" button is pressed,
+ *                passing the user's mathematical function input.
  */
-class ControlPanelView(leftPlayerName: String, rightPlayerName: String, onShootLeft: String => Unit, onShootRight: String => Unit) extends HBox:
+class ControlPanelView(onShoot: String => Unit) extends HBox:
 
-  // Stile del pannello: spaziatura interna e colore di sfondo scuro
   padding = Insets(15)
-  spacing = 15
+  spacing = 20
   style = "-fx-background-color: #222222;"
+  alignment = Pos.Center
 
-  private val spacer = new Region:
-    hgrow = Always
-
-  private val leftLabel = new Label(leftPlayerName):
+  private val turnLabel = new Label("Waiting for game..."):
     textFill = White
-  private val leftField = new TextField:
-    promptText = "sin(x + 2) * 30"
-    prefWidth = 80
-  private val leftButton = new Button("Shoot"):
-    style = "-fx-cursor: hand; -fx-font-weight: bold;"
+    style = "-fx-font-size: 16px; -fx-font-weight: bold;"
+
+  private val inputField = new TextField:
+    promptText = "e.g. sin(x + 2) * 30"
+    prefWidth = 300
+    style = "-fx-font-size: 14px;"
+
+  private val shootButton = new Button("Shoot"):
+    style = "-fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;"
     onAction = (ae: ActionEvent) => {
-     onShootLeft(leftField.text.value)
+      onShoot(inputField.text.value)
+      // Opzionale: svuota il campo dopo aver sparato
+      inputField.clear()
     }
 
-  private val rightLabel = new Label(rightPlayerName):
-    textFill = White
-  private val rightField = new TextField:
-    promptText = "cos(x + 3) * 20"
-    prefWidth = 80
-  private val rightButton = new Button("Shoot"):
-    style = "-fx-cursor: hand; -fx-font-weight: bold;"
-    onAction = () => onShootRight(leftField.text.value)
+  children = List(turnLabel, inputField, shootButton)
 
-
-  children = List(leftLabel, leftField, leftButton,
-    spacer,
-    rightLabel, rightField, rightButton)
+  /**
+   * Updates the UI to show which player is currently playing.
+   * @param playerName The name of the active player.
+   */
+  def updateCurrentPlayer(playerName: String): Unit =
+    turnLabel.text = s"$playerName's turn:"

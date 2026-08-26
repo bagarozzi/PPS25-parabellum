@@ -65,7 +65,7 @@ object GameState:
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.projectile, None)
 
-  def init(): GameState =
+  def init(player1: String, player2: String, soldiers: Int): GameState =
     
     // TODO: make this resizable
     val minX = -10.0
@@ -74,7 +74,7 @@ object GameState:
     val maxY = 5.0
 
  
-    val manager = initTunrManager(MapGenerator.generatePlayers(minX, maxX, minY, maxY))
+    val manager = initTunrManager(MapGenerator.generatePlayers(minX, maxX, minY, maxY, player1, player2, soldiers))
     val obstacles = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY) // Scegli quanti ostacoli generare (es. 5)
   
     GameState(
