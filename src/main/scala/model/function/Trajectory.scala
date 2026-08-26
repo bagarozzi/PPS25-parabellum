@@ -9,9 +9,11 @@ trait Trajectory:
   
 
 object Trajectory:
-  def create(startPosition: Position, function: Function): Trajectory =
+  def create(startPosition: Position, function: Function): Trajectory = {
+    val offset = startPosition.traslate(0, -function(0))
     new Trajectory {
-      override def compute(x: Double): Position = Position(x, function.apply(x)).traslate(startPosition)
+      override def compute(x: Double): Position = Position(x, function.apply(x)).traslate(offset)
     }
+  }
     
           
