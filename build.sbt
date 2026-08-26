@@ -3,6 +3,14 @@ scalaVersion := "3.8.4"
 ThisBuild / assemblyMergeStrategy := {
     case path if path.contains("module-info.class") => MergeStrategy.discard
     case path if path.contains("META-INF/substrate/config") => MergeStrategy.discard
+    case path if path.endsWith(".class") => MergeStrategy.first
+    case path if path.contains("META-INF/substrate/config") => MergeStrategy.discard
+    case path if path.endsWith(".class") => MergeStrategy.first
+    case path if path.endsWith(".bss") => MergeStrategy.first
+    case path if path.endsWith(".dylib") => MergeStrategy.first
+    case path if path.endsWith(".so") => MergeStrategy.first
+    case path if path.endsWith(".dll") => MergeStrategy.first
+    case path if path.contains("javafx-swt.jar") => MergeStrategy.first
     case x => MergeStrategy.defaultMergeStrategy(x)
 }
 
