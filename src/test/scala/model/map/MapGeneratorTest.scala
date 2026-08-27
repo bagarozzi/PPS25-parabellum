@@ -1,5 +1,6 @@
 package it.unibo.parabellum.model.map
 
+import it.unibo.parabellum.model.entity.Player
 import it.unibo.parabellum.model.shape.{Circle, Polygon}
 import it.unibo.parabellum.util.MapGenerator
 import org.scalatest.funsuite.AnyFunSuite
@@ -35,7 +36,7 @@ class MapGeneratorTest extends AnyFunSuite:
     assert(hasPolygons)
 
   test("generatePlayers should create exactly two players with correct names"):
-    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY)
+    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, "player1", "player2", 1)
     assert(players.size == 2)
 
     val names = players.map(_.name)
@@ -43,7 +44,7 @@ class MapGeneratorTest extends AnyFunSuite:
     assert(names.contains("player2"))
 
   test("generatePlayers should place players on opposite sides with a safe margin and within Y bounds"):
-    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY)
+    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, "player1", "player2", 1)
 
     val p1 = players.find(_.name == "player1").get
     val p2 = players.find(_.name == "player2").get
