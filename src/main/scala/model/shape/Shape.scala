@@ -81,3 +81,11 @@ object Polygon:
 
   def create(vertices: Seq[Position]): Polygon =
     Polygon(sortVertices(vertices))
+  
+  def regular(center: Position, radius: Double, sides: Int): Polygon =
+    create(
+      (0 until sides).map { i =>
+        val angle = 2 * math.Pi * i / sides
+        Position(center.x + radius * math.cos(angle), center.y + radius * math.sin(angle))
+      }
+    )

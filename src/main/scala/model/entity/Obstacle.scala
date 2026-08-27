@@ -25,5 +25,8 @@ object Obstacle:
   def apply(pos: Position, vertices: Seq[Position]): Obstacle =
     ObstacleImpl(pos, Polygon.create(vertices))
     
+  def apply(pos: Position, radius: Double, sides: Int): Obstacle =
+    ObstacleImpl(pos, Polygon.regular(pos: Position, radius: Double, sides: Int))
+    
   def apply(pos: Position, shape: Shape): Obstacle =
     ObstacleImpl(pos, shape)
