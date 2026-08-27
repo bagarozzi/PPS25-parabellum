@@ -48,7 +48,7 @@ case class Circle(
  *
  * @param vertices delimitating the polygon
  */
-case class Polygon(
+case class Polygon private(
                     vertices: Seq[Position]
                   ) extends Shape:
 
@@ -64,3 +64,20 @@ case class Polygon(
         ((a.y > p.y) != (b.y > p.y)) &&
           (p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x)
       } % 2 == 1
+
+object Polygon:
+
+  private def sortVertices(vertices: Seq[Position]): Seq[Position] =
+    val center = Position(
+      vertices.map(_.x).sum / vertices.size,
+      vertices.map(_.y).sum / vertices.size
+    )
+    vertices.sortBy { v =>
+      math.atan2(
+        v.y - center.y,
+        v.x - center.x
+      )
+    }
+
+  def create(vertices: Seq[Position]): Polygon =
+    Polygon(sortVertices(vertices))
