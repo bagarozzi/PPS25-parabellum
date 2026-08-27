@@ -58,7 +58,7 @@ case class Polygon(
       vertices.tail :+ vertices.head
     )
 
-  override val belongs: Position => Boolean =
+  override def belongs: Position => Boolean =
     p =>
       edges.count { (a, b) =>
         ((a.y > p.y) != (b.y > p.y)) &&
