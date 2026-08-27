@@ -24,11 +24,13 @@ object MapGenerator:
     (1 to count).map: _ =>
       val pos = RandomGenerator.randomPosition(minX, maxX, minY, maxY)
 
-      if math.random() > 0.5 then
+      if math.random() > 0.33 then
         val radius = 0.5 + math.random()
         Obstacle(pos, radius)
       else
-        val numVertices = 3 + (math.random() * 4).toInt
+        val radius = 0.5 + math.random()
+        Obstacle(pos, radius, 3 + (math.random() * 4).toInt)
+        /*val numVertices = 3 + (math.random() * 4).toInt
         val windowSize = 3 + math.random()
 
         val minVX = pos.x - windowSize
@@ -39,7 +41,7 @@ object MapGenerator:
         val vertices = (1 to numVertices).map: _ =>
           RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
 
-        Obstacle(pos, vertices)
+        Obstacle(pos, vertices)*/
     .toSet
 
   /**
