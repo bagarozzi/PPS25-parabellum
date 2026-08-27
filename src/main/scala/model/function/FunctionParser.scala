@@ -6,6 +6,12 @@ import MultiLineWhitespace._
 
 object FunctionParser:
 
+    /**
+     * Parses a string containing a mathematical function or arithmetic equation, eventually
+     *  returning it as a [[Function]]
+     * @param input the string to parse
+     * @return an [[Either]] containing a [[Function]] or a [[RuntimeException]]
+     */
     def parse(input: String): Either[RuntimeException, Function] = fastparse.parse(input, p => expr(using p)) match
         case Parsed.Success(func, _) => Right(func)
         case failure: Parsed.Failure => Left(new IllegalArgumentException(s"Parse error: ${failure.trace().longMsg}"))
