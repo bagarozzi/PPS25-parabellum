@@ -8,3 +8,5 @@ object Function:
 
 extension (f: Function)
     def apply(x: Double): Double = f(x)
+
+    def shift(x: Double, y: Double): Function = Function(z => f(z + x) + y)
