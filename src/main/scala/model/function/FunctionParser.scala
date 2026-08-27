@@ -4,6 +4,10 @@ package model.function
 import fastparse._
 import MultiLineWhitespace._
 
+/**
+ * The parser parses mathematical function and arithmetic expressions to produce [[Function]]s usable
+ * by the rest of the components.
+ */
 object FunctionParser:
 
     /**
