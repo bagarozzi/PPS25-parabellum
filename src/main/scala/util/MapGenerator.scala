@@ -1,9 +1,10 @@
-package it.unibo.parabellum.util
+package it.unibo.parabellum
+package util
 
-import it.unibo.parabellum.model.entity.{Obstacle, Player, Soldier}
-import it.unibo.parabellum.model.entity.Player.initPlayer
-import it.unibo.parabellum.util.{Position, RandomGenerator}
-import it.unibo.parabellum.model.entity.Soldier.initSoldier
+import model.entity.{Obstacle, Player, Soldier}
+import model.entity.Player.initPlayer
+import util.{Position, RandomGenerator}
+import model.entity.Soldier.initSoldier
 /**
  * Utility object responsible for generating the game map layout.
  * It provides methods to randomly spawn players and obstacles within defined boundaries.
