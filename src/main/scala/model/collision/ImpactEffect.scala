@@ -16,16 +16,25 @@ case class KillSoldier(soldier: Soldier) extends ImpactEvent
 
 case class DamageObstacle(obstacle: Obstacle, hole: Shape) extends ImpactEvent
 
-case object DestroyProjectile extends ImpactEvent
+case class DestroyProjectile() extends ImpactEvent
+
+case class Ricochet() extends ImpactEvent
 
 object ImpactEffect:
-  def normalImpactEffect(): ImpactEffect = 
-    {
-      case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile)
+  def normalImpactEffect(): ImpactEffect = {
+      case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
       case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
-      case BorderImpact() => Set(DestroyProjectile)
+      case BorderImpact() => Set(DestroyProjectile())
       case FigureImpact(Position(_, _), _) => Set()
     }
+
+  def ricochetImpactEffect(): ImpactEffect = {
+      case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
+      case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
+      case BorderImpact() => Set(Ricochet())
+      case FigureImpact(Position(_, _), _) => Set()
+    }
+
 
 sealed trait Impact
 
