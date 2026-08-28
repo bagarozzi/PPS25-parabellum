@@ -8,7 +8,7 @@ import scalafx.animation.AnimationTimer
 
 trait Controller:
 
-    def startGame(player1: String, player2:String, soldiers: Int): Unit
+    def startGame(players: Set[String], soldiers: Int): Unit
 
     def addProjectile(newFunction: String): Unit
 
@@ -23,9 +23,9 @@ object GameController extends Controller:
 
     import Parabellum.given
 
-    def startGame(player1: String, player2:String, soldiers: Int): Unit =
+    def startGame(players: Set[String], soldiers: Int): Unit =
         //given targetFPS: Int = 60
-        gameState = Some(GameState.init(player1,player2,soldiers))
+        gameState = Some(GameState.init(players,soldiers))
 
         lastTime = System.nanoTime()
         val timer = AnimationTimer {
