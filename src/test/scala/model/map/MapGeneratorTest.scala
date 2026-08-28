@@ -36,24 +36,25 @@ class MapGeneratorTest extends AnyFunSuite:
     assert(hasPolygons)
 
   test("generatePlayers should create exactly two players with correct names"):
-    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, "player1", "player2", 1)
+    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, Set("player1", "player2"), 1)
     assert(players.size == 2)
 
-    val names = players.map(_.name)
+    val names = players.keys.map(_.name).toSet
     assert(names.contains("player1"))
     assert(names.contains("player2"))
 
   test("generatePlayers should place players on opposite sides with a safe margin and within Y bounds"):
-    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, "player1", "player2", 1)
+    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, Set("player1", "player2"), 1)
 
-    val p1 = players.find(_.name == "player1").get
-    val p2 = players.find(_.name == "player2").get
-
+    val p1 = players.keys.find(_.name == "player1").get
+    val p2 = players.keys.find(_.name == "player2").get
+    val s1 = players(p1).head
+    val s2 = players(p2).head
     val midX = (minX + maxX) / 2.0
     val safeMargin = 2.0
 
-    assert(p1.pos.x >= minX && p1.pos.x <= (midX - safeMargin))
-    assert(p1.pos.y >= minY && p1.pos.y <= maxY)
+    assert(s1.pos.x >= minX && s1.pos.x <= (midX - safeMargin))
+    assert(s1.pos.y >= minY && s1.pos.y <= maxY)
 
-    assert(p2.pos.x >= (midX + safeMargin) && p2.pos.x <= maxX)
-    assert(p2.pos.y >= minY && p2.pos.y <= maxY)
+    assert(s2.pos.x >= (midX + safeMargin) && s2.pos.x <= maxX)
+    assert(s2.pos.y >= minY && s2.pos.y <= maxY)
