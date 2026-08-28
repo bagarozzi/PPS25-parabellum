@@ -28,9 +28,50 @@ extension (f: Function)
      */
     def apply(x: Double): Double = f(x)
 
-    def +(g: Function): Function = Function(x => f(x) + g(x))
+    /**
+     * Combines the functions
+     * @param g the function to combine
+     * @param op how the functions are to be combined
+     * @return the combined functions
+     */
+    def combine(g: Function)(op: (Function, Function) => Function): Function = op(f, g)
 
-    def *(g: Function): Function = Function(x => f(x) * g(x))
+    /**
+     * Returns a function that applies first [[this]] function and the passed one.
+     * f.concat(g) becomes f(g(x))
+     * @param g the function to apply last
+     * @return the concatenated functions
+     */
+    def concat(g: Function): Function = Function(x => f(g(x)))
+
+    /**
+     * Returns a function that applies first [[this]] function and the passed one.
+     * f.concat(g) becomes f(g(x))
+     * @param g the function to apply last
+     * @return the concatenated functions
+     */
+    def ++(g: Function): Function = Function(x => f(g(x)))
+
+    /**
+     * Returns the sum of this and the new function passed
+     * @param g the [[Function]] to sum
+     * @return the sum of the functions
+     */
+    def +(g: Function): Function = combine(g)((f,g) => Function(x => f(x) + g(x)))
+
+    /**
+     * Returns the product of this and the new function passed
+     *
+     * @param g the [[Function]] to sum
+     * @return the product of the functions
+     */
+    def *(g: Function): Function = combine(g)((f,g) => Function(x => f(x) * g(x)))
+
+    /**
+     * Returns the reversed function
+     * @return the reversed [[Function]]
+     */
+    def reverse(): Function = Function(x => -f(x))
 
     /**
      * Calculate the derivative of the function in a value x and for some
