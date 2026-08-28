@@ -37,7 +37,7 @@ object Projectile:
           case Left(e) => Function(x => x)
       Projectile(
       Trajectory.create(startingPosition, func),
-      0.0,
+          startingPosition.x,
       0.01,
       normalImpactEffect(), 
       direction

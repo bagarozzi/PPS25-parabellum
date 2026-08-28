@@ -10,7 +10,7 @@ trait Trajectory:
 
 object Trajectory:
   def create(startPosition: Position, function: Function): Trajectory = {
-    val offset = startPosition.traslate(0, -function(0))
+    val offset = Position(0, -function(startPosition.x))
     new Trajectory {
       override def compute(x: Double): Position = Position(x, function.apply(x)).traslate(offset)
     }
