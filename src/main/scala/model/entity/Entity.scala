@@ -4,4 +4,4 @@ package model.entity
 import util.Position
 
 trait Entity:
-  val pos: Position
+  def pos: Position
