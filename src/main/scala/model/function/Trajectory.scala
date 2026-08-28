@@ -23,6 +23,8 @@ object Trajectory:
 
   private val INITIAL_SPEED: Double = 0.01
 
+  private val BASE_SPEED: Double = 0.007
+
   def create(startPosition: Position, function: Function, direction: Direction): Trajectory = Trajectory(
     startPosition,
     startPosition,
@@ -35,19 +37,19 @@ object Trajectory:
   extension (t: Trajectory)
 
     def update(dt: Double): Trajectory = Trajectory(
-      newPosition(advance(dt)),
+      newPosition(t.f, advance(dt, t.distance, adjustSpeed(t.f, t.currentPosition, dt).getOrElse(INITIAL_SPEED), t.direction), t.startingPosition),
       t.startingPosition,
       t.f,
-      adjustSpeed(dt),
-      advance(dt),
+      adjustSpeed(t.f, t.currentPosition, dt).getOrElse(INITIAL_SPEED),
+      advance(dt, t.distance, t.speed, t.direction),
       t.direction
     )
 
-    private def advance(dt: Double): Double = t.distance + t.speed * dt * t.direction()
+  private def advance(dt: Double, distance: Double, speed: Double, direction: Direction): Double = distance + speed * dt * direction()
 
-    private def adjustSpeed(h: Double): Double = t.f.derivative(t.currentPosition.x, newPosition(h).x)
+  private def adjustSpeed(f: Function, pos: Position, h: Double): Option[Double] = Some(BASE_SPEED + INITIAL_SPEED / math.sqrt(1 + math.abs(f.derivative(pos.x)) * math.abs(f.derivative(pos.x))))
 
-    private def newPosition(x: Double): Position = Position(x, t.f(x)).traslate(offset(t.f, t.startingPosition))
+  private def newPosition(f: Function, x: Double, s: Position): Position = Position(x, f(x)).traslate(offset(f, s))
 
   private def offset(f: Function, pos: Position): Position = Position(0, -f(pos.x))
 
