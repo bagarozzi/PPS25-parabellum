@@ -28,7 +28,9 @@ extension (f: Function)
      */
     def apply(x: Double): Double = f(x)
 
-    def shift(x: Double, y: Double): Function = Function(z => f(z + x) + y)
+    def +(g: Function): Function = Function(x => f(x) + g(x))
+
+    def *(g: Function): Function = Function(x => f(x) * g(x))
 
     /**
      * Calculate the derivative of the function in a value x and for some
