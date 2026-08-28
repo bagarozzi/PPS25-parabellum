@@ -5,9 +5,9 @@ import util.Position
 import model.function.Trajectory
 import model.function.FunctionParser
 
-import it.unibo.parabellum.model.collision.ImpactEffect
-import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
-import it.unibo.parabellum.model.function
+import model.collision.ImpactEffect
+import model.collision.ImpactEffect.{normalImpactEffect, ricochetImpactEffect}
+import model.function
 
 case class Projectile private (
                                 trajectory: Trajectory,
@@ -23,22 +23,35 @@ case class Projectile private (
   
   def pos(): Position=
     trajectory.compute(distance)
+  
+  def changeFunction(function: Function): Projectile =
+    this.copy(trajectory = Trajectory.create(pos(), function))
+    
 
 object Projectile:
 
-  def createProjectile(
-              startingPosition: Position,
-              nonParsedFunction: String,
-              direction: Int
-            ):
-      Projectile =
-      val func: Function = FunctionParser.parse(nonParsedFunction) match
-          case Right(func) => func
-          case Left(e) => Function(x => x)
-      Projectile(
+  def createProjectile(startingPosition: Position, nonParsedFunction: String, direction: Int): Projectile =
+    val func: Function = FunctionParser.parse(nonParsedFunction) match
+      case Right(func) => func
+      case Left(e) => Function(x => x)
+    Projectile(
       Trajectory.create(startingPosition, func),
       0.0,
       0.01,
       normalImpactEffect(), 
       direction
     )
+      
+  def createRicochetProjectile(startingPosition: Position, nonParsedFunction: String, direction: Int): Projectile =
+    val func: Function = FunctionParser.parse(nonParsedFunction) match
+      case Right(func) => func
+      case Left(e) => Function(x => x)
+    Projectile(
+      Trajectory.create(startingPosition, func),
+      0.0,
+      0.01,
+      ricochetImpactEffect(),
+      direction
+    )
+    
+  
