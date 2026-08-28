@@ -1,12 +1,16 @@
 package it.unibo.parabellum
 package model.function
 
+import model.function.Function.DERIVATIVE_H
+
 /**
  * A mathematical function.
  */
 opaque type Function = Double => Double
 
 object Function:
+
+    val DERIVATIVE_H = 0.0001
 
     /**
      * Create a mathematical function from the one passed as argument
@@ -33,4 +37,4 @@ extension (f: Function)
      * @param h the increment over the value
      * @return
      */
-    def derivative(x: Double, h: Double): Double = (f(x + h) - f(x))/h
+    def derivative(x: Double): Double = (f(x + DERIVATIVE_H) - f(x))/DERIVATIVE_H
