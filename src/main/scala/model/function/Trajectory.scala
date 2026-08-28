@@ -36,6 +36,12 @@ object Trajectory:
 
   extension (t: Trajectory)
 
+    /**
+     * Returns a new [[Trajectory]] with an updated position and eventually a different
+     * speed depending on the function's derivative.
+     * @param dt the time passed since the last update (in milliseconds)
+     * @return a new updated [[Trajectory]]
+     */
     def update(dt: Double): Trajectory = Trajectory(
       newPosition(t.f, advance(dt, t.distance, adjustSpeed(t.f, t.currentPosition, dt).getOrElse(INITIAL_SPEED), t.direction), t.startingPosition),
       t.startingPosition,
