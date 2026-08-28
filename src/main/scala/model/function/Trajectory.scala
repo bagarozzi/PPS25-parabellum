@@ -3,17 +3,49 @@ package model.function
 
 import util.Position
 
-trait Trajectory:
-  def compute(x: Double): Position
-  
-  
+enum Direction:
+  case Negative
+  case Positive
+
+  def apply(): Double = this match
+    case Negative => -1
+    case Positive => 1
+
+case class Trajectory(
+                          currentPosition: Position,
+                          private val startingPosition: Position,
+                          private val f: Function,
+                          private val speed: Double,
+                          private val distance: Double,
+                          private val direction: Direction)
 
 object Trajectory:
-  def create(startPosition: Position, function: Function): Trajectory = {
-    val offset = Position(0, -function(startPosition.x))
-    new Trajectory {
-      override def compute(x: Double): Position = Position(x, function.apply(x)).traslate(offset)
-    }
-  }
-    
+  def create(startPosition: Position, function: Function, direction: Direction): Trajectory = Trajectory(
+    startPosition,
+    startPosition,
+    function,
+    0.01,
+    startPosition.x,
+    direction
+  )
+
+  extension (t: Trajectory)
+
+    def update(dt: Double): Trajectory = Trajectory(
+      newPosition(advance(dt)),
+      t.startingPosition,
+      t.f,
+      t.speed,//adjustSpeed(dt),
+      advance(dt),
+      t.direction
+    )
+
+    private def advance(dt: Double): Double = t.distance + t.speed * dt * t.direction()
+
+    private def adjustSpeed(h: Double): Double = t.f.derivative(t.currentPosition.x, newPosition(h).x)
+
+    private def newPosition(x: Double): Position = Position(x, t.f(x)).traslate(offset(t.f, t.startingPosition))
+
+  private def offset(f: Function, pos: Position): Position = Position(0, -f(pos.x))
+
           
