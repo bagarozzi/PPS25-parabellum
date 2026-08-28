@@ -13,13 +13,13 @@ object CollisionDetector:
   given BoundingBox = border
 
   private def checkCollisionWithBorders(projectile: Projectile): Option[Impact] = 
-    if !CollisionDetector.border.checkBoundary(projectile.pos()) then
+    if !CollisionDetector.border.checkBoundary(projectile.pos) then
       return Some(BorderImpact())
     None
 
 
   private def CheckCollisionWithFigure(entities: Set[Figure], projectile: Projectile): Option[Impact] = 
-    entities.find(f => f.belongs(projectile.pos())).map(FigureImpact(projectile.pos(), _))
+    entities.find(f => f.belongs(projectile.pos)).map(FigureImpact(projectile.pos, _))
 
   def detectCollision(projectile: Projectile, entities: Set[Figure]): Set[ImpactEvent] = 
     (CheckCollisionWithFigure(entities, projectile) ++ checkCollisionWithBorders(projectile)).flatMap(projectile.effect.applyEffect).toSet
