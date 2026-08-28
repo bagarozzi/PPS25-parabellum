@@ -25,6 +25,14 @@ object Trajectory:
 
   private val BASE_SPEED: Double = 0.007
 
+  /**
+   * Creates a new [[Trajectory]] from a starting position and a function governing
+   * its movement.
+   * @param startPosition the position where the trajectory starts
+   * @param function the function used to calculate the next positions
+   * @param direction the direction where the next position has to be calculated
+   * @return a new [[Trajectory]]
+   */
   def create(startPosition: Position, function: Function, direction: Direction): Trajectory = Trajectory(
     startPosition,
     startPosition,
