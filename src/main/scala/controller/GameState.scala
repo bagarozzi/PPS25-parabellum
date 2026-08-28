@@ -1,20 +1,15 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, Player}
+import model.entity.Obstacle
 
-import it.unibo.parabellum.util.{MapGenerator, Position}
-import it.unibo.parabellum.model.entity.Player.initPlayer
-import model.function.{Projectile, Trajectory}
+import util.MapGenerator
+import model.function.{Function, Projectile}
 
-import it.unibo.parabellum.model.collision.CollisionDetector.detectCollision
-import it.unibo.parabellum.model
-import it.unibo.parabellum.model.collision.{CollisionDetector, DamageObstacle, DestroyProjectile, ImpactEffect, ImpactEvent, KillSoldier}
-import it.unibo.parabellum.model.entity.State.dead
-import it.unibo.parabellum.model.shape.{Circle, Difference, Polygon}
-import model.entity.Soldier.initSoldier
+import model.collision.CollisionDetector.detectCollision
+import model.collision.{DamageObstacle, DestroyProjectile, KillSoldier, Ricochet}
+import model.shape
 import controller.TurnManager.initTunrManager
-import model.entity.Figure
 
 
 /**
@@ -36,7 +31,8 @@ object GameState:
       map(_.foldLeft(g.copy(projectile = updatedProjectile))((g,i) => i match
         case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
         case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
-        case DestroyProjectile => g.copy(manager = g.manager.nextTurn, projectile = None)
+        case DestroyProjectile() => g.copy(manager = g.manager.nextTurn, projectile = None)
+        case Ricochet() => g.copy(projectile = Some(g.projectile.get.changeFunction(Function(x => - g.projectile.get.trajectory.compute(x).y))))
       )).getOrElse(g.copy(projectile = updatedProjectile))
 
     val newState = if pendingFunction.isDefined && g.pendingFunction.isEmpty then
@@ -45,7 +41,7 @@ object GameState:
       updatedState
 
     if newState.projectile.isEmpty && newState.pendingFunction.isDefined then
-      newState.copy(projectile = Some(Projectile.createProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection)), pendingFunction = None)
+      newState.copy(projectile = Some(Projectile.createRicochetProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection)), pendingFunction = None)
     else
       newState
 
