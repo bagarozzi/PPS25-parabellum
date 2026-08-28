@@ -25,3 +25,12 @@ extension (f: Function)
     def apply(x: Double): Double = f(x)
 
     def shift(x: Double, y: Double): Function = Function(z => f(z + x) + y)
+
+    /**
+     * Calculate the derivative of the function in a value x and for some
+     * increment h
+     * @param x the value on which calculate the derivative
+     * @param h the increment over the value
+     * @return
+     */
+    def derivative(x: Double, h: Double): Double = (f(x + h) - f(x))/h
