@@ -20,11 +20,14 @@ case class Trajectory(
                           private val direction: Direction)
 
 object Trajectory:
+
+  private val INITIAL_SPEED: Double = 0.01
+
   def create(startPosition: Position, function: Function, direction: Direction): Trajectory = Trajectory(
     startPosition,
     startPosition,
     function,
-    0.01,
+    INITIAL_SPEED,
     startPosition.x,
     direction
   )
@@ -35,7 +38,7 @@ object Trajectory:
       newPosition(advance(dt)),
       t.startingPosition,
       t.f,
-      t.speed,//adjustSpeed(dt),
+      adjustSpeed(dt),
       advance(dt),
       t.direction
     )
