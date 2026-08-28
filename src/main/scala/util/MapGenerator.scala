@@ -1,9 +1,10 @@
-package it.unibo.parabellum.util
+package it.unibo.parabellum
+package util
 
-import it.unibo.parabellum.model.entity.{Obstacle, Player, Soldier}
-import it.unibo.parabellum.model.entity.Player.initPlayer
-import it.unibo.parabellum.util.{Position, RandomGenerator}
-import it.unibo.parabellum.model.entity.Soldier.initSoldier
+import model.entity.{Obstacle, Player, Soldier}
+import model.entity.Player.initPlayer
+import util.{Position, RandomGenerator}
+import model.entity.Soldier.initSoldier
 /**
  * Utility object responsible for generating the game map layout.
  * It provides methods to randomly spawn players and obstacles within defined boundaries.
@@ -24,11 +25,13 @@ object MapGenerator:
     (1 to count).map: _ =>
       val pos = RandomGenerator.randomPosition(minX, maxX, minY, maxY)
 
-      if math.random() > 0.5 then
+      if math.random() > 0.33 then
         val radius = 0.5 + math.random()
         Obstacle(pos, radius)
       else
-        val numVertices = 3 + (math.random() * 4).toInt
+        val radius = 0.5 + math.random()
+        Obstacle(pos, radius, 3 + (math.random() * 4).toInt)
+        /*val numVertices = 3 + (math.random() * 4).toInt
         val windowSize = 3 + math.random()
 
         val minVX = pos.x - windowSize
@@ -39,7 +42,7 @@ object MapGenerator:
         val vertices = (1 to numVertices).map: _ =>
           RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
 
-        Obstacle(pos, vertices)
+        Obstacle(pos, vertices)*/
     .toSet
 
   /**
