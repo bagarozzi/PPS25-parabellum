@@ -126,7 +126,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
       state.projectile match
         case Some(proj) =>
-          val tc = GeometryHelper.transform(proj.pos())
+          val tc = GeometryHelper.transform(proj.pos)
 
           projectileView match
             case Some(view) =>
