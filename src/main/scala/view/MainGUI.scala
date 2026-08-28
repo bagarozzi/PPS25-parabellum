@@ -49,7 +49,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       root = rootPane
 
     def avviaGioco(p1Name: String, p2Name: String, soldiers: Int): Unit = {
-      GameController.startGame(p1Name, p2Name, soldiers)
+      GameController.startGame(Set(p1Name, p2Name), soldiers)
 
       stage.scene = gameScene
       stage.sizeToScene()
@@ -68,7 +68,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
   override def render(state: GameState): Unit =
     Platform.runLater:
-      controlPanel.updateCurrentPlayer(state.manager.current.owner.name)
+      controlPanel.updateCurrentPlayer(state.manager.current.name)
       state.obstacles.foreach: obs =>
         if !obstacleViews.contains(obs) then
           val view = new ObstacleView()

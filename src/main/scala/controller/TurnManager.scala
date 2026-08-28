@@ -1,9 +1,9 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.Soldier
+import model.entity.{Player, PowerUp, Soldier}
 
-case class Team(soldiers: Vector[Soldier], currentIndex: Int):
+case class Team(owner: Player, soldiers: Vector[Soldier], currentIndex: Int):
   def current : Soldier =
     soldiers.apply(currentIndex)
 
@@ -22,10 +22,13 @@ case class Team(soldiers: Vector[Soldier], currentIndex: Int):
     
   def isEmpty: Boolean =
     soldiers.isEmpty
+  
+  def setPlayerPowerUp(powerUp: Option[PowerUp]): Team =
+    copy(owner = owner.setPowerUp(powerUp))
     
 object Team:
-  def initTeam(soldiers: Vector[Soldier]): Team =
-    Team(soldiers, 0)
+  def initTeam(owner: Player, soldiers: Vector[Soldier]): Team =
+    Team(owner, soldiers, 0)
     
   
 
@@ -65,12 +68,20 @@ case class TurnManager(
   def soldiers: Set[Soldier] =
     teams.flatMap(_.soldiers).toSet
 
+  def setPlayerPowerUp(player: Player, powerUp: Option[PowerUp]): TurnManager =
+    copy(
+      teams = teams.map(t => if player.name == t.owner.name then
+          t.setPlayerPowerUp(powerUp)
+        else t
+      )
+    )
+    
+  def currentPlayer: Player =
+    teams(currentIndex).owner
+      
 object TurnManager:
 
   import Team.initTeam
   
-  def initTunrManager(soldiers: Set[Soldier]): TurnManager =
-   TurnManager(soldiers.groupBy(s => s.owner).
-     map((_, soldiers) => initTeam(soldiers.toVector)).
-     toVector,
-     0)
+  def initTurnManager(map: Map[Player, Vector[Soldier]]): TurnManager =
+   TurnManager(map.map((player, soldiers) => initTeam(player, soldiers)).toVector, 0)

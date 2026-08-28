@@ -1,20 +1,13 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, Player}
-
-import it.unibo.parabellum.util.{MapGenerator, Position}
-import it.unibo.parabellum.model.entity.Player.initPlayer
-import model.function.{Projectile, Trajectory}
-
-import it.unibo.parabellum.model.collision.CollisionDetector.detectCollision
-import it.unibo.parabellum.model
-import it.unibo.parabellum.model.collision.{CollisionDetector, DamageObstacle, DestroyProjectile, ImpactEffect, ImpactEvent, KillSoldier}
-import it.unibo.parabellum.model.entity.State.dead
-import it.unibo.parabellum.model.shape.{Circle, Difference, Polygon}
-import model.entity.Soldier.initSoldier
-import controller.TurnManager.initTunrManager
-import model.entity.Figure
+import model.entity.{Obstacle, Player, PowerUp}
+import util.MapGenerator
+import model.function.{Function, Projectile}
+import model.collision.CollisionDetector.detectCollision
+import model.collision.{DamageObstacle, DestroyProjectile, GainPowerUp, KillSoldier, Ricochet}
+import model.shape
+import controller.TurnManager.initTurnManager
 
 
 /**
@@ -22,7 +15,7 @@ import model.entity.Figure
  * @param manager the entity that manage the sequence of turns and the sets of soldiers
  * @param projectile the projectile that are being fired
  */
-case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], val projectile: Option[Projectile], val pendingFunction: Option[String])
+case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[String])
 object GameState:
 
   /**
@@ -32,11 +25,13 @@ object GameState:
    */
   def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState =
     val updatedProjectile = g.projectile.map(p => p.update(dt))
-    val updatedState = updatedProjectile.map(detectCollision(_, g.manager.enemies ++ g.obstacles)).
+    val updatedState = updatedProjectile.map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps)).
       map(_.foldLeft(g.copy(projectile = updatedProjectile))((g,i) => i match
         case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
         case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
-        case DestroyProjectile => g.copy(manager = g.manager.nextTurn, projectile = None)
+        case DestroyProjectile() => g.copy(manager = g.manager.nextTurn, projectile = None)
+        case Ricochet() => g.copy(projectile = Some(g.projectile.get.changeFunction(Function(x => - g.projectile.get.trajectory.compute(x).y))))
+        case GainPowerUp(powerUp) => g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)))
       )).getOrElse(g.copy(projectile = updatedProjectile))
 
     val newState = if pendingFunction.isDefined && g.pendingFunction.isEmpty then
@@ -45,7 +40,7 @@ object GameState:
       updatedState
 
     if newState.projectile.isEmpty && newState.pendingFunction.isDefined then
-      newState.copy(projectile = Some(Projectile.createProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection)), pendingFunction = None)
+      newState.copy(projectile = Some(Projectile.createProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection, newState.manager.currentPlayer.getPowerUp)), pendingFunction = None)
     else
       newState
 
@@ -63,9 +58,9 @@ object GameState:
     
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
-    GameState(g.manager, g.obstacles + obstacle, g.projectile, None)
+    GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)
 
-  def init(player1: String, player2: String, soldiers: Int): GameState =
+  def init(players: Set[String], soldiers: Int): GameState =
     
     // TODO: make this resizable
     val minX = -10.0
@@ -74,12 +69,13 @@ object GameState:
     val maxY = 5.0
 
  
-    val manager = initTunrManager(MapGenerator.generatePlayers(minX, maxX, minY, maxY, player1, player2, soldiers))
+    val manager = initTurnManager(MapGenerator.generatePlayers(minX, maxX, minY, maxY,players, soldiers))
     val obstacles = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY) // Scegli quanti ostacoli generare (es. 5)
   
     GameState(
       manager,
       obstacles,
+      Set(), 
       None,
       None
     )
