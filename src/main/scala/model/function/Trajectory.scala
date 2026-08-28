@@ -11,6 +11,15 @@ enum Direction:
     case Negative => -1
     case Positive => 1
 
+/**
+ * Represents a Trajectory
+ * @param currentPosition the current (and latest) [[Position]] of the trajectory
+ * @param startingPosition the [[Position]] where the trajectory begins
+ * @param f the [[Function]] governing the trajectory's movement
+ * @param speed the speed at which the trajectory is traveling
+ * @param distance the distance, in the X-axis, traveled by the trajectory
+ * @param direction the direction of travel
+ */
 case class Trajectory(
                           currentPosition: Position,
                           private val startingPosition: Position,
