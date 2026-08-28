@@ -7,22 +7,25 @@ import model.function.FunctionParser
 
 import it.unibo.parabellum.model.collision.ImpactEffect
 import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
+import it.unibo.parabellum.model.entity.Entity
 import it.unibo.parabellum.model.function
 
-case class Projectile private (
-                                trajectory: Trajectory,
-                                distance: Double,
-                                speed: Double,
-                                effect: ImpactEffect,
-                                direction: Int
-                              ):
+trait Projectile extends Entity:
+
+    def update(dt: Double): Projectile
+
+    def effect: ImpactEffect
+
+    def pos: Position
+
+private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) extends Projectile:
+
   def update(dt: Double): Projectile =
     copy(
-      distance = distance + speed * dt * direction
+      trajectory = trajectory.update(dt)
     )
-  
-  def pos(): Position=
-    trajectory.compute(distance)
+
+  val pos: Position = trajectory.currentPosition
 
 object Projectile:
 
@@ -35,10 +38,7 @@ object Projectile:
       val func: Function = FunctionParser.parse(nonParsedFunction) match
           case Right(func) => func
           case Left(e) => Function(x => x)
-      Projectile(
-      Trajectory.create(startingPosition, func),
-          startingPosition.x,
-      0.01,
-      normalImpactEffect(), 
-      direction
-    )
+      ProjectileI(
+          Trajectory.create(startingPosition, func, if direction > 0 then Direction.Positive else Direction.Negative),
+          normalImpactEffect()
+      )
