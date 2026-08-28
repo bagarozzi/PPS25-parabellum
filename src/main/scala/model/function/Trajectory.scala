@@ -51,6 +51,6 @@ object Trajectory:
 
   private def newPosition(f: Function, x: Double, s: Position): Position = Position(x, f(x)).traslate(offset(f, s))
 
-  private def offset(f: Function, pos: Position): Position = Position(0, -f(pos.x))
+  private def offset(f: Function, pos: Position): Position = Position(0, -f(pos.x) + pos.y)
 
           
