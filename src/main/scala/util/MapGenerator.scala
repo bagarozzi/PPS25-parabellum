@@ -21,6 +21,7 @@ object MapGenerator:
    * @param maxY  The maximum Y-coordinate boundary for the spawn area.
    * @return A Set containing the newly generated Obstacle entities.
    */
+  //TODO: code looks like C
   def generateObstacles(count: Int, minX: Double, maxX: Double, minY: Double, maxY: Double): Set[Obstacle] =
     var obstacles = Set.empty[Obstacle]
 
