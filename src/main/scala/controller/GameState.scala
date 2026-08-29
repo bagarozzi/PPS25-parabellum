@@ -34,6 +34,10 @@ object GameState:
 
   private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
 
+  private def updateProjectile(g: GameState, dt: Double): Option[Projectile] = g.projectile match
+    case Some(p) => Some(p.update(dt))
+    case None => None
+
   private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
     case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
