@@ -35,14 +35,11 @@ object GameState:
     else
       updatedState
 
-    if newState.projectile.isEmpty && newState.pendingFunction.isDefined then
-      newState.copy(projectile = Some(Projectile.createProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection, newState.manager.currentPlayer.getPowerUp)), pendingFunction = None)
-    else
-      newState
+    spawnProjectile(newState)
 
   private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
 
-  def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
+  private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
     case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
 
