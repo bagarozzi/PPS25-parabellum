@@ -42,9 +42,13 @@ object GameState:
 
   private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
 
-  def processPendingInput(g: GameState): GameState = (g.projectile, g.pendingFunction) match
+  def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
     case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
+
+  def processPendingInput(g: GameState, pendingFunction: Option[String]): GameState = pendingFunction
+      .filter(_ => g.pendingFunction.isEmpty)
+      .fold(g)(pf => g.copy(pendingFunction = Some(pf)))
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)
