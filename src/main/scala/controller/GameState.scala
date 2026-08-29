@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, Player, PowerUp}
+import model.entity.{Obstacle, Player, PowerUp, Soldier}
 import util.MapGenerator
 import model.function.{Function, Projectile, reverse}
 import model.collision.CollisionDetector.detectCollision
@@ -39,18 +39,6 @@ object GameState:
       newState.copy(projectile = Some(Projectile.createProjectile(newState.manager.current.pos, newState.pendingFunction.get, newState.manager.current.facingDirection, newState.manager.currentPlayer.getPowerUp)), pendingFunction = None)
     else
       newState
-
-
-  /*val manager: TurnManager = g.manager.eliminateDeadSoldier
-
-  val updatedProjectile: Option[Projectile] = g.projectiles.map(p => p.update(dt)).
-    flatMap(p => detectCollision(p, manager.enemies ++ g.obstacles))
-
-  if pendingFunction.isDefined && updatedProjectile.isEmpty then
-    val tmpManager = manager.nextTurn
-    GameState(tmpManager, g.obstacles, Some(Projectile.createProjectile(tmpManager.current.pos, pendingFunction.get, tmpManager.current.facingDirection)), None)
-  else
-    GameState(manager, g.obstacles, updatedProjectile, pendingFunction)*/
 
   private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e match
     case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
