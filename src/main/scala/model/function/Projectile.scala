@@ -10,9 +10,8 @@ import model.function
 
 import it.unibo.parabellum.model.collision.ImpactEffect
 import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
-import it.unibo.parabellum.model.entity.Entity
+import it.unibo.parabellum.model.entity.{Burden, Entity, Piercing, Soldier, Player, PowerUp, Random, Ricochet}
 import it.unibo.parabellum.model.function
-import it.unibo.parabellum.model.entity.{Burden, Piercing, PowerUp, Random, Ricochet}
 
 trait Projectile extends Entity:
 
@@ -45,6 +44,8 @@ object Projectile:
       case Right(func) => func
       case Left(e) => Function(x => x)
     createModifiedProjectile(powerUp.fold(normalImpactEffect())(_.impactEffect), startingPosition, direction, powerUp.fold(func)(_.trajectoryDistortion(func)))
+
+  def fromSoldier(p: Player, s: Soldier, nonParsedFunction: String): Projectile = createProjectile(s.pos, nonParsedFunction, s.facingDirection, p.getPowerUp)
 
   private def createModifiedProjectile(impactEffect: ImpactEffect, startingPosition: Position, direction: Int, func: Function): Projectile =
     ProjectileI(
