@@ -3,9 +3,9 @@ package controller
 
 import model.entity.{Obstacle, Player, PowerUp}
 import util.MapGenerator
-import model.function.{Function, Projectile}
+import model.function.{Function, Projectile, reverse}
 import model.collision.CollisionDetector.detectCollision
-import model.collision.{DamageObstacle, DestroyProjectile, GainPowerUp, KillSoldier, Ricochet}
+import model.collision.{DamageObstacle, DestroyProjectile, GainPowerUp, ImpactEvent, KillSoldier, Ricochet}
 import model.shape
 import controller.TurnManager.initTurnManager
 
@@ -25,14 +25,10 @@ object GameState:
    */
   def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState =
     val updatedProjectile = g.projectile.map(p => p.update(dt))
-    val updatedState = updatedProjectile.map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps)).
-      map(_.foldLeft(g.copy(projectile = updatedProjectile))((g,i) => i match
-        case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
-        case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
-        case DestroyProjectile() => g.copy(manager = g.manager.nextTurn, projectile = None)
-        case Ricochet() => g.copy(projectile = Some(g.projectile.get.changeFunction(Function(x => - g.projectile.get.trajectory.compute(x).y))))
-        case GainPowerUp(powerUp) => g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)))
-      )).getOrElse(g.copy(projectile = updatedProjectile))
+    val updatedState = updatedProjectile
+        .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
+        .map(_.foldLeft(g.copy(projectile = updatedProjectile))(consumeImpactEvent))
+        .getOrElse(g.copy(projectile = updatedProjectile))
 
     val newState = if pendingFunction.isDefined && g.pendingFunction.isEmpty then
        updatedState.copy(pendingFunction = pendingFunction)
@@ -55,7 +51,13 @@ object GameState:
     GameState(tmpManager, g.obstacles, Some(Projectile.createProjectile(tmpManager.current.pos, pendingFunction.get, tmpManager.current.facingDirection)), None)
   else
     GameState(manager, g.obstacles, updatedProjectile, pendingFunction)*/
-    
+
+  private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e match
+    case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
+    case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
+    case DestroyProjectile() => g.copy(manager = g.manager.nextTurn, projectile = None)
+    case Ricochet() => g.copy(projectile = Some(g.projectile.get.swapFunction(g.projectile.get.trajectory.function.reverse())))
+    case GainPowerUp(powerUp) => g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)))
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)

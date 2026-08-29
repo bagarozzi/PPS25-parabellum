@@ -4,8 +4,18 @@ package model.function
 import fastparse._
 import MultiLineWhitespace._
 
+/**
+ * The parser parses mathematical function and arithmetic expressions to produce [[Function]]s usable
+ * by the rest of the components.
+ */
 object FunctionParser:
 
+    /**
+     * Parses a string containing a mathematical function or arithmetic equation, eventually
+     *  returning it as a [[Function]]
+     * @param input the string to parse
+     * @return an [[Either]] containing a [[Function]] or a [[RuntimeException]]
+     */
     def parse(input: String): Either[RuntimeException, Function] = fastparse.parse(input, p => expr(using p)) match
         case Parsed.Success(func, _) => Right(func)
         case failure: Parsed.Failure => Left(new IllegalArgumentException(s"Parse error: ${failure.trace().longMsg}"))
@@ -20,7 +30,11 @@ object FunctionParser:
 
     private def cosine[$: P]: P[Function] = P("cos" ~ "(" ~ addSub() ~ ")").map(func => Function(x => math.cos(func(x))))
 
-    private def elemFunc[$: P]: P[Function] = P(sine | cosine)
+    private def log[$: P]: P[Function] = P("log" ~ "(" ~ addSub() ~ ")").map(func => Function(x => math.log(func(x))))
+
+    private def abs[$: P]: P[Function] = P("abs" ~ "(" ~ addSub() ~ ")").map(func => Function(x => math.abs(func(x))))
+
+    private def elemFunc[$: P]: P[Function] = P(sine | cosine | log | abs)
 
     private def factor[$: P]: P[Function] = P(number | variable | parens | elemFunc)
 

@@ -48,3 +48,18 @@ class ParserSpec extends AnyFlatSpec:
         assert(func(2) === (math.cos(2) + 3))
     }
 
+    "A Parser" should "parse a logarithm function" in {
+        val func: Function = FunctionParser.parse("1 - x * log(x)") match
+            case Right(func) => func
+            case Left(e) => Function(x => x)
+        assert(func(5) === (1 - 5 * math.log(5)))
+    }
+
+    "A Parser" should "parse a modulus function" in {
+        val func: Function = FunctionParser.parse("(abs(x + 2) * 5) * sin(x)") match
+            case Right(func) => func
+            case Left(e) => Function(x => x)
+        assert(func(6) === (math.abs(8) * 5) * math.sin(6))
+    }
+
+
