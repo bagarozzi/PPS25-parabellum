@@ -44,7 +44,10 @@ case class Ricochet() extends ImpactEvent:
 
     override def action(g: GameState): GameState = g.copy(projectile = Some(g.projectile.get.swapFunction(g.projectile.get.trajectory.function.reverse())))
 
-
+/**
+ * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
+ * a [[Figure]] or the map's borders.
+ */
 object ImpactEffect:
   def normalImpactEffect(): ImpactEffect = {
       case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
