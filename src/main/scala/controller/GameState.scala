@@ -30,9 +30,7 @@ object GameState:
         .map(_.foldLeft(g.copy(projectile = updatedProjectile))(consumeImpactEvent))
         .getOrElse(g.copy(projectile = updatedProjectile))
 
-    val newState = processPendingInput(updatedState, pendingFunction)
-
-    spawnProjectile(newState)
+    spawnProjectile(processPendingInput(updatedState, pendingFunction))
 
   private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
 
