@@ -29,18 +29,18 @@ il soldato che deve sparare viene evidenziato,
 | :--- | :--- | :--- | :--- | :---: |
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
-| 25 | Map generation using Prolog |  | when the map is correctly check before being generated | no |
-| 26a | Map generation refactoring |  | when functions are short and weird polygons are not generated | no |
-| 26b | Soldier position generation |  | when soldiers are not in the same "zone" of the map | no |
-| 28a | GUI work: soldiers die |  | soldiers disappear when dead | no |
-| 28b | GUI work: render |  | when the explosions are not overlapped on players and cartesian axes | no |
-| 28c | GUI work: soldier highlight |  | when the soldiers who's shooting is highlighted in some way | no |
-| 29 | GameState update refactoring |  | . | no |
-| 31 | Global Game paramethers |  | When compile-time paramethers are changed through a unique file | no |
-| 32 | Parser: adding logarithm and abs() functions |  | this | no |
-| 34 | Shape refactoring |  | this | no |
-| 35a | Powerups: Ricochet, Piercing, Random, Burden |  | this | no |
-| 35b | Powerups in View |  | when each powerup is recognizable and appears on the side of the screen for the player who has it | no |
+| 25 | Map generation using Prolog | Sbaraccani | when the map is correctly check before being generated | yes |
+| 26a | Map generation refactoring | Sbaraccani | when functions are short and weird polygons are not generated | no |
+| 26b | Soldier position generation | Sbaraccani | when soldiers are not in the same "zone" of the map | yes |
+| 28a | GUI work: soldiers die | Sbaraccani | soldiers disappear when dead | no |
+| 28b | GUI work: render | Sbaraccani | when the explosions are not overlapped on players and cartesian axes | no |
+| 28c | GUI work: soldier highlight | Sbaraccani | when the soldiers who's shooting is highlighted in some way | no |
+| 29 | GameState update refactoring | Bagattoni | . | no |
+| 31 | Global Game paramethers | Sbaraccani-Bagattoni | When compile-time paramethers are changed through a unique file | no |
+| 32 | Parser: adding logarithm and abs() functions | Bagattoni | this | yes |
+| 34 | Shape refactoring | Venturini | this | yes |
+| 35a | Powerups: Ricochet, Piercing, Random, Burden | Venturini | this | yes |
+| 35b | Powerups in View | Sbaraccani-Bagattoni | when each powerup is recognizable and appears on the side of the screen for the player who has it | no |
 
 Keep in mind: ***always merge working code***
 
