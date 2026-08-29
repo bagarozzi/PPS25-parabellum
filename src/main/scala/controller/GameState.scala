@@ -40,12 +40,7 @@ object GameState:
     else
       newState
 
-  private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e match
-    case KillSoldier(soldier) => g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
-    case DamageObstacle(obstacle, hole) => g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
-    case DestroyProjectile() => g.copy(manager = g.manager.nextTurn, projectile = None)
-    case Ricochet() => g.copy(projectile = Some(g.projectile.get.swapFunction(g.projectile.get.trajectory.function.reverse())))
-    case GainPowerUp(powerUp) => g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)))
+  private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)

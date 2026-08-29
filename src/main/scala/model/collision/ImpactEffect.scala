@@ -4,23 +4,46 @@ package model.collision
 import model.entity.{Figure, Obstacle, PowerUp, Soldier}
 
 import it.unibo.parabellum.controller.GameState
+import it.unibo.parabellum.model.function.reverse
 import it.unibo.parabellum.model.shape.{Circle, Difference, Shape}
 import it.unibo.parabellum.util.Position 
 
 trait ImpactEffect:
   def applyEffect(impact: Impact): Set[ImpactEvent]
 
-sealed trait ImpactEvent
+/**
+ * An ImpactEvent represents the occurrence of an impact in the game and
+ * it's consequences on the game's state.
+ */
+sealed trait ImpactEvent:
 
-case class KillSoldier(soldier: Soldier) extends ImpactEvent
+    /**
+     * Apply the consequence of the impact to the game's state.
+     * @param g the [[GameState]] where to apply the consequence
+     * @return the new [[GameState]]
+     */
+    def action(g: GameState): GameState
 
-case class DamageObstacle(obstacle: Obstacle, hole: Shape) extends ImpactEvent
+case class KillSoldier(soldier: Soldier) extends ImpactEvent:
 
-case class DestroyProjectile() extends ImpactEvent
+    override def action(g: GameState): GameState = g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
 
-case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent
+case class DamageObstacle(obstacle: Obstacle, hole: Shape) extends ImpactEvent:
 
-case class Ricochet() extends ImpactEvent
+    override def action(g: GameState): GameState = g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
+
+case class DestroyProjectile() extends ImpactEvent:
+
+    override def action(g: GameState): GameState = g.copy(manager = g.manager.nextTurn, projectile = None)
+
+case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent:
+
+    override def action(g: GameState): GameState = g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)))
+
+case class Ricochet() extends ImpactEvent:
+
+    override def action(g: GameState): GameState = g.copy(projectile = Some(g.projectile.get.swapFunction(g.projectile.get.trajectory.function.reverse())))
+
 
 object ImpactEffect:
   def normalImpactEffect(): ImpactEffect = {
