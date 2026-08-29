@@ -30,10 +30,7 @@ object GameState:
         .map(_.foldLeft(g.copy(projectile = updatedProjectile))(consumeImpactEvent))
         .getOrElse(g.copy(projectile = updatedProjectile))
 
-    val newState = if pendingFunction.isDefined && g.pendingFunction.isEmpty then
-       updatedState.copy(pendingFunction = pendingFunction)
-    else
-      updatedState
+    val newState = processPendingInput(updatedState, pendingFunction)
 
     spawnProjectile(newState)
 
@@ -43,9 +40,9 @@ object GameState:
     case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
 
-  def processPendingInput(g: GameState, pendingFunction: Option[String]): GameState = pendingFunction
-      .filter(_ => g.pendingFunction.isEmpty)
-      .fold(g)(pf => g.copy(pendingFunction = Some(pf)))
+  private def processPendingInput(g: GameState, passedFunction: Option[String]): GameState = (g.pendingFunction, passedFunction) match
+    case(None, Some(pf)) => g.copy(pendingFunction = Some(pf))
+    case _ => g
 
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)
