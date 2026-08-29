@@ -3,10 +3,10 @@ package model.collision
 
 import model.entity.{Figure, Obstacle, PowerUp, Soldier}
 
-import it.unibo.parabellum.controller.GameState
-import it.unibo.parabellum.model.function.reverse
-import it.unibo.parabellum.model.shape.{Circle, Difference, Shape}
-import it.unibo.parabellum.util.Position 
+import controller.GameState
+import model.function.reverse
+import model.shape.{Circle, Difference, Shape}
+import util.Position
 
 trait ImpactEffect:
   def applyEffect(impact: Impact): Set[ImpactEvent]
