@@ -22,28 +22,38 @@ object MapGenerator:
    * @return A Set containing the newly generated Obstacle entities.
    */
   def generateObstacles(count: Int, minX: Double, maxX: Double, minY: Double, maxY: Double): Set[Obstacle] =
-    (1 to count).map: _ =>
+    var obstacles = Set.empty[Obstacle]
+
+    var existingData = Seq.empty[(Double, Double, Double)]
+
+    while obstacles.size < count do
       val pos = RandomGenerator.randomPosition(minX, maxX, minY, maxY)
+      val isCircle = math.random() > 0.5
 
-      if math.random() > 0.33 then
-        val radius = 0.5 + math.random()
-        Obstacle(pos, radius)
-      else
-        val radius = 0.5 + math.random()
-        Obstacle(pos, radius, 3 + (math.random() * 4).toInt)
-        /*val numVertices = 3 + (math.random() * 4).toInt
-        val windowSize = 3 + math.random()
+      val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
 
-        val minVX = pos.x - windowSize
-        val maxVX = pos.x + windowSize
-        val minVY = pos.y - windowSize
-        val maxVY = pos.y + windowSize
+      val isOverlapping = PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, existingData)
 
-        val vertices = (1 to numVertices).map: _ =>
-          RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
+      if !isOverlapping then
+        existingData = existingData :+ (pos.x, pos.y, maxRadius)
 
-        Obstacle(pos, vertices)*/
-    .toSet
+        if isCircle then
+          obstacles = obstacles + Obstacle(pos, maxRadius)
+        else
+          val numVertices = 3 + (math.random() * 4).toInt
+          val windowSize = maxRadius
+
+          val minVX = pos.x - windowSize
+          val maxVX = pos.x + windowSize
+          val minVY = pos.y - windowSize
+          val maxVY = pos.y + windowSize
+
+          val vertices = (1 to numVertices).map: _ =>
+            RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
+
+          obstacles = obstacles + Obstacle(pos, vertices)
+
+    obstacles
 
   /**
    * Generates two players placing them on opposite sides of the map (left and right),
