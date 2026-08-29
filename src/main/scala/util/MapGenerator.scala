@@ -56,19 +56,26 @@ object MapGenerator:
    * @return A Set containing the two initialized Player entities.
    */
   def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double, players: Set[String], soldier: Int): Map[Player, Vector[Soldier]] =
-    
+
     val midX = (minX + maxX) / 2.0
     val safeMargin = 2.0
 
-    val soldiers = for
-      playerName <- players
+    val soldiers = for {
+      (playerName, index) <- players.toList.zipWithIndex
       player = initPlayer(playerName)
-      team = (1 to soldier).map: i =>
-        val p1X = minX + (midX - safeMargin - minX) * math.random()
-        val p1Y = minY + (maxY - minY) * math.random()
-        initSoldier(s"$playerName-soldier$i", Position(p1X,p1Y), playerName, 1)
-      .toVector
-    yield (player, team)
+
+      isLeft = index == 0
+      minSpawnX = if isLeft then minX else midX + safeMargin
+      maxSpawnX = if isLeft then midX - safeMargin else maxX
+      direction = if isLeft then 1 else -1
+
+      team = (1 to soldier).map { i =>
+        val pX = minSpawnX + (maxSpawnX - minSpawnX) * math.random()
+        val pY = minY + (maxY - minY) * math.random()
+        initSoldier(s"$playerName-soldier$i", Position(pX, pY), playerName, direction)
+      }.toVector
+    } yield (player, team)
+
     soldiers.toMap
         
   
