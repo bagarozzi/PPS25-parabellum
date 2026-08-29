@@ -44,12 +44,7 @@ object Projectile:
     val func: Function = FunctionParser.parse(nonParsedFunction) match
       case Right(func) => func
       case Left(e) => Function(x => x)
-    powerUp match
-      case None | Some(_) => createModifiedProjectile(normalImpactEffect(), startingPosition, direction, func)
-      case Some(Piercing) => createModifiedProjectile(piercingImpactEffect(), startingPosition, direction, func)
-      case Some(Burden) => createModifiedProjectile(normalImpactEffect(), startingPosition, direction, Function(x => func(x) - (0.05 * x * x)))
-      case Some(Random) => createModifiedProjectile(normalImpactEffect(), startingPosition, direction, Function(x => math.random()*100*func(x)))
-      case Some(Ricochet) => createModifiedProjectile(ricochetImpactEffect(), startingPosition, direction, func)
+    createModifiedProjectile(powerUp.fold(normalImpactEffect())(_.impactEffect), startingPosition, direction, powerUp.fold(func)(_.trajectoryDistortion(func)))
 
   private def createModifiedProjectile(impactEffect: ImpactEffect, startingPosition: Position, direction: Int, func: Function): Projectile =
     ProjectileI(
