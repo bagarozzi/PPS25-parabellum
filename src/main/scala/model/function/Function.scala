@@ -60,6 +60,13 @@ extension (f: Function)
     def +(g: Function): Function = combine(g)((f,g) => Function(x => f(x) + g(x)))
 
     /**
+     * Returns the difference of [[this]] and the new function passed.
+     * @param g the [[Function]] to subtract
+     * @return a [[Function]], difference of the two functions
+     */
+    def -(g: Function): Function = combine(g)((f, g) => Function(x => f(x) - g(x)))
+
+    /**
      * Returns the product of this and the new function passed
      *
      * @param g the [[Function]] to sum
