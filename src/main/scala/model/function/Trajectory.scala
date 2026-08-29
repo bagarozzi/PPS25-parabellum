@@ -15,7 +15,7 @@ enum Direction:
  * Represents a Trajectory
  * @param currentPosition the current (and latest) [[Position]] of the trajectory
  * @param startingPosition the [[Position]] where the trajectory begins
- * @param f the [[Function]] governing the trajectory's movement
+ * @param function the [[Function]] governing the trajectory's movement
  * @param speed the speed at which the trajectory is traveling
  * @param distance the distance, in the X-axis, traveled by the trajectory
  * @param direction the direction of travel
@@ -23,7 +23,7 @@ enum Direction:
 case class Trajectory(
                           currentPosition: Position,
                           private val startingPosition: Position,
-                          private val f: Function,
+                          function: Function,
                           private val speed: Double,
                           private val distance: Double,
                           private val direction: Direction)
@@ -60,13 +60,22 @@ object Trajectory:
      * @return a new updated [[Trajectory]]
      */
     def update(dt: Double): Trajectory = Trajectory(
-      newPosition(t.f, advance(dt, t.distance, adjustSpeed(t.f, t.currentPosition, dt).getOrElse(INITIAL_SPEED), t.direction), t.startingPosition),
+      newPosition(t.function, advance(dt, t.distance, adjustSpeed(t.function, t.currentPosition, dt).getOrElse(INITIAL_SPEED), t.direction), t.startingPosition),
       t.startingPosition,
-      t.f,
-      adjustSpeed(t.f, t.currentPosition, dt).getOrElse(INITIAL_SPEED),
+      t.function,
+      adjustSpeed(t.function, t.currentPosition, dt).getOrElse(INITIAL_SPEED),
       advance(dt, t.distance, t.speed, t.direction),
       t.direction
     )
+    
+    def changeFunction(function: Function): Trajectory = Trajectory(
+        t.currentPosition,
+        t.startingPosition,
+        function,
+        t.speed,
+        t.distance,
+        t.direction
+      )
 
   private def advance(dt: Double, distance: Double, speed: Double, direction: Direction): Double = distance + speed * dt * direction()
 

@@ -22,6 +22,10 @@ trait Projectile extends Entity:
 
     def pos: Position
 
+    def swapFunction(function: Function): Projectile
+
+    def trajectory: Trajectory
+
 private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) extends Projectile:
 
   def update(dt: Double): Projectile =
@@ -31,9 +35,8 @@ private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) ext
 
   val pos: Position = trajectory.currentPosition
 
-  def changeFunction(function: Function): Projectile =
-    this.copy(trajectory = Trajectory.create(pos(), function))
-
+  def swapFunction(function: Function): Projectile =
+    this.copy(trajectory = trajectory.changeFunction(function))
 
 object Projectile:
 
@@ -50,26 +53,7 @@ object Projectile:
       case Some(_) => createModifiedProjectile(normalImpactEffect(), startingPosition, direction, func)
 
   private def createModifiedProjectile(impactEffect: ImpactEffect, startingPosition: Position, direction: Int, func: Function): Projectile =
-    Projectile(
-      Trajectory.create(startingPosition, func),
-      0.0,
-      0.01,
-      impactEffect,
-      direction
+    ProjectileI(
+      Trajectory.create(startingPosition, func, if direction > 0 then Direction.Positive else Direction.Negative),
+        impactEffect
     )
-
-
-
-  def createProjectile(
-              startingPosition: Position,
-              nonParsedFunction: String,
-              direction: Int
-            ):
-      Projectile =
-      val func: Function = FunctionParser.parse(nonParsedFunction) match
-          case Right(func) => func
-          case Left(e) => Function(x => x)
-      ProjectileI(
-          Trajectory.create(startingPosition, func, if direction > 0 then Direction.Positive else Direction.Negative),
-          normalImpactEffect()
-      )
