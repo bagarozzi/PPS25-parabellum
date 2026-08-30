@@ -1,12 +1,11 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, Player, PowerUp, Soldier}
+import model.entity.{Obstacle, PowerUp}
 import util.MapGenerator
-import model.function.{Function, Projectile, reverse}
+import model.function.Projectile
 import model.collision.CollisionDetector.detectCollision
-import model.collision.{DamageObstacle, DestroyProjectile, GainPowerUp, ImpactEvent, KillSoldier, Ricochet}
-import model.shape
+import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
 
 
