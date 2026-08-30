@@ -15,7 +15,9 @@ import controller.TurnManager.initTurnManager
  * @param manager the entity that manage the sequence of turns and the sets of soldiers
  * @param projectile the projectile that are being fired
  */
-case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[String])
+case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[String]):
+
+  def map[B](op: GameState => B): B = op(this)
 object GameState:
 
   /**
@@ -24,19 +26,22 @@ object GameState:
    * @return the new game state
    */
   def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState =
-    val updatedProjectile = g.projectile.map(p => p.update(dt))
-    val updatedState = updatedProjectile
-        .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
-        .map(_.foldLeft(g.copy(projectile = updatedProjectile))(consumeImpactEvent))
-        .getOrElse(g.copy(projectile = updatedProjectile))
-
-    spawnProjectile(processPendingInput(updatedState, pendingFunction))
+    updateProjectile(g, dt).fold(g)(p => g.copy(projectile = Some(p)))
+        .map(resolveCollisions)
+        .map(processPendingInput(_, pendingFunction))
+        .map(spawnProjectile)
 
   private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
 
   private def updateProjectile(g: GameState, dt: Double): Option[Projectile] = g.projectile match
     case Some(p) => Some(p.update(dt))
     case None => None
+
+  private def resolveCollisions(g: GameState): GameState = g
+      .projectile
+      .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
+      .map(_.foldLeft(g)(consumeImpactEvent))
+      .getOrElse(g)
 
   private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
     case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
