@@ -8,6 +8,12 @@ import model.function.reverse
 import model.shape.{Circle, Difference, Shape}
 import util.Position
 
+/**
+ * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
+ * a [[Figure]] or the map's borders.
+ * An ImpactEffect dictates which and what [[ImpactEvent]]s are produced
+ * upon an [[Impact]]
+ */
 trait ImpactEffect:
   def applyEffect(impact: Impact): Set[ImpactEvent]
 
