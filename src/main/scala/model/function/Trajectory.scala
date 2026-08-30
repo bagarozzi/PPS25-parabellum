@@ -22,11 +22,11 @@ enum Direction:
  */
 case class Trajectory(
                           currentPosition: Position,
-                          private val startingPosition: Position,
+                          startingPosition: Position,
                           function: Function,
-                          private val speed: Double,
-                          private val distance: Double,
-                          private val direction: Direction)
+                          speed: Double,
+                          distance: Double,
+                          direction: Direction)
 
 object Trajectory:
 
