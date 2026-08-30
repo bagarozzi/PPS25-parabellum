@@ -30,8 +30,6 @@ object GameState:
         .map(processPendingInput(_, pendingFunction))
         .map(spawnProjectile)
 
-  private def consumeImpactEvent(g: GameState, e: ImpactEvent): GameState = e.action(g)
-
   private def updateProjectile(g: GameState, dt: Double): Option[Projectile] = g.projectile match
     case Some(p) => Some(p.update(dt))
     case None => None
@@ -39,7 +37,7 @@ object GameState:
   private def resolveCollisions(g: GameState): GameState = g
       .projectile
       .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
-      .map(_.foldLeft(g)(consumeImpactEvent))
+      .map(_.foldLeft(g)((g,e) => e.action(g)))
       .getOrElse(g)
 
   private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
