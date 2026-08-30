@@ -25,7 +25,7 @@ trait Projectile extends Entity:
 
     def pos: Position
 
-    def swapFunction(function: Function): Projectile
+    def mapTrajectory(op: Trajectory => Trajectory): Projectile
 
     def trajectory: Trajectory
 
@@ -38,8 +38,8 @@ private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) ext
 
   val pos: Position = trajectory.currentPosition
 
-  def swapFunction(function: Function): Projectile =
-    this.copy(trajectory = trajectory.changeFunction(function))
+  def mapTrajectory(op: Trajectory => Trajectory): Projectile =
+    this.copy(trajectory = op(trajectory))
 
 object Projectile:
 
