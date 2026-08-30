@@ -84,7 +84,9 @@ object ImpactEffect:
     case FigureImpact(Position(_, _), _) => Set()
   }
 
-
+/**
+ * An [[Impact]] is a collision between a [[Projectile]] and something else.
+ */
 sealed trait Impact
 
 case class FigureImpact(
