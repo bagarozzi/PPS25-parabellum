@@ -15,11 +15,16 @@ import util.Position
  * upon an [[Impact]]
  */
 trait ImpactEffect:
+
+    /**
+     * Apply the effect of this [[ImpactEffect]] producing a set of [[ImpactEvent]]s
+     * @param impact the impact to react to
+     * @return Some [[ImpactEvent]]s, consequence of the impact
+     */
   def applyEffect(impact: Impact): Set[ImpactEvent]
 
 /**
- * An ImpactEvent represents the occurrence of an impact in the game and
- * it's consequences on the game's state.
+ * An ImpactEvent represents consequences of an [[Impact]] on the game's state.
  */
 sealed trait ImpactEvent:
 
