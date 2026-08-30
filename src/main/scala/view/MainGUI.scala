@@ -126,6 +126,14 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
             playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
 
+      val currentSoldiers = state.manager.soldiers.map(_.name).toSet
+      val deadSoldiers = playerViews.keys.toSet.diff(currentSoldiers)
+
+      deadSoldiers.foreach: deadName =>
+        val view = playerViews(deadName)
+        gameView.removeElement(view)
+        playerViews -= deadName
+
       state.projectile match
         case Some(proj) =>
           val tc = GeometryHelper.transform(proj.pos)
@@ -146,3 +154,5 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
             gameView.removeElement(view)
           projectileView = None
           trajectoryView.clearTrajectory()
+    trajectoryView.toBack()
+    playerViews.values.foreach(_.toFront())
