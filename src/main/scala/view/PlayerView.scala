@@ -45,5 +45,8 @@ class PlayerView(playerName: String, initialX: Double, initialY: Double, shapeRa
    */
   def setName(newName: String): Unit =
     nameLabel.text = newName
-    // Ricalcola il centro poiché la larghezza del testo è cambiata
     nameLabel.layoutX = -nameLabel.boundsInLocal.value.getWidth / 2.0
+  
+  def setHighlight(isShooting: Boolean): Unit =
+    ball.stroke = if isShooting then Yellow else White
+    ball.strokeWidth = if isShooting then 4.0 else 2.0
