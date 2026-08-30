@@ -1,6 +1,10 @@
 # Parabellum
 The project for Development and Programming Paradigms for a.y. 2025-2026
 
+## Documentation
+The documentation for this project is available on [this page](https://bagarozzi.github.io/PPS25-parabellum/), here you can view both the documentation
+and the development process.
+
 ## Starting the application
 ### Prerequisites
 - Java 21
