@@ -30,7 +30,7 @@ il soldato che deve sparare viene evidenziato,
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 25 | Map generation using Prolog | Sbaraccani | when the map is correctly check before being generated | yes |
-| 26a | Map generation refactoring | Sbaraccani | when functions are short and weird polygons are not generated | no |
+| 26a | Map generation refactoring | Sbaraccani | when functions are short and weird polygons are not generated | yes |
 | 26b | Soldier position generation | Sbaraccani | when soldiers are not in the same "zone" of the map | yes |
 | 28a | GUI work: soldiers die | Sbaraccani | soldiers disappear when dead | yes |
 | 28b | GUI work: render | Sbaraccani | when the explosions are not overlapped on players and cartesian axes | yes |
