@@ -32,8 +32,8 @@ il soldato che deve sparare viene evidenziato,
 | 25 | Map generation using Prolog | Sbaraccani | when the map is correctly check before being generated | yes |
 | 26a | Map generation refactoring | Sbaraccani | when functions are short and weird polygons are not generated | no |
 | 26b | Soldier position generation | Sbaraccani | when soldiers are not in the same "zone" of the map | yes |
-| 28a | GUI work: soldiers die | Sbaraccani | soldiers disappear when dead | no |
-| 28b | GUI work: render | Sbaraccani | when the explosions are not overlapped on players and cartesian axes | no |
+| 28a | GUI work: soldiers die | Sbaraccani | soldiers disappear when dead | yes |
+| 28b | GUI work: render | Sbaraccani | when the explosions are not overlapped on players and cartesian axes | yes |
 | 28c | GUI work: soldier highlight | Sbaraccani | when the soldiers who's shooting is highlighted in some way | yes |
 | 29 | GameState update refactoring | Bagattoni | . | no |
 | 31 | Global Game paramethers | Sbaraccani-Bagattoni | When compile-time paramethers are changed through a unique file | no |
