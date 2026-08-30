@@ -5,14 +5,17 @@ import model.entity.{Obstacle, Player, Soldier}
 import model.entity.Player.initPlayer
 import util.{Position, RandomGenerator}
 import model.entity.Soldier.initSoldier
+import scala.annotation.tailrec
+
 /**
  * Utility object responsible for generating the game map layout.
  * It provides methods to randomly spawn players and obstacles within defined boundaries.
  */
 object MapGenerator:
+
   /**
    * Generates a set of obstacles (a mix of Circles and random Polygons) within the specified area.
-   * Does not currently perform overlap detection.
+   * Uses tail recursion to ensure immutability and prevent overlaps via Prolog integration.
    *
    * @param count The total number of obstacles to generate.
    * @param minX  The minimum X-coordinate boundary for the spawn area.
@@ -21,40 +24,43 @@ object MapGenerator:
    * @param maxY  The maximum Y-coordinate boundary for the spawn area.
    * @return A Set containing the newly generated Obstacle entities.
    */
-  //TODO: code looks like C
   def generateObstacles(count: Int, minX: Double, maxX: Double, minY: Double, maxY: Double): Set[Obstacle] =
-    var obstacles = Set.empty[Obstacle]
 
-    var existingData = Seq.empty[(Double, Double, Double)]
+    @tailrec
+    def generateLoop(obstacles: Set[Obstacle], existingData: Seq[(Double, Double, Double)]): Set[Obstacle] =
+      if obstacles.size >= count then
+        obstacles
+      else
+        val pos = RandomGenerator.randomPosition(minX, maxX, minY, maxY)
+        val isCircle = math.random() > 0.5
+        val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
 
-    while obstacles.size < count do
-      val pos = RandomGenerator.randomPosition(minX, maxX, minY, maxY)
-      val isCircle = math.random() > 0.5
-
-      val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
-
-      val isOverlapping = PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, existingData)
-
-      if !isOverlapping then
-        existingData = existingData :+ (pos.x, pos.y, maxRadius)
-
-        if isCircle then
-          obstacles = obstacles + Obstacle(pos, maxRadius)
+        if PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, existingData) then
+          generateLoop(obstacles, existingData)
         else
-          val numVertices = 3 + (math.random() * 4).toInt
-          val windowSize = maxRadius
+          val newObstacle = if isCircle then
+            Obstacle(pos, maxRadius)
+          else
+            val numVertices = 3 + (math.random() * 4).toInt
+            val windowSize = maxRadius
 
-          val minVX = pos.x - windowSize
-          val maxVX = pos.x + windowSize
-          val minVY = pos.y - windowSize
-          val maxVY = pos.y + windowSize
+            val minVX = pos.x - windowSize
+            val maxVX = pos.x + windowSize
+            val minVY = pos.y - windowSize
+            val maxVY = pos.y + windowSize
 
-          val vertices = (1 to numVertices).map: _ =>
-            RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
+            val vertices = (1 to numVertices).map: _ =>
+              RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
 
-          obstacles = obstacles + Obstacle(pos, vertices)
+            Obstacle(pos, vertices)
 
-    obstacles
+          generateLoop(
+            obstacles + newObstacle,
+            existingData :+ (pos.x, pos.y, maxRadius)
+          )
+
+    generateLoop(Set.empty, Seq.empty)
+
 
   /**
    * Generates two players placing them on opposite sides of the map (left and right),
@@ -64,10 +70,9 @@ object MapGenerator:
    * @param maxX The maximum X-coordinate boundary (right edge of the map).
    * @param minY The minimum Y-coordinate boundary (bottom edge of the map).
    * @param maxY The maximum Y-coordinate boundary (top edge of the map).
-   * @return A Set containing the two initialized Player entities.
+   * @return A Map containing the Player entities and their respective Soldiers.
    */
   def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double, players: Set[String], soldier: Int): Map[Player, Vector[Soldier]] =
-
     val midX = (minX + maxX) / 2.0
     val safeMargin = 2.0
 
@@ -88,5 +93,3 @@ object MapGenerator:
     } yield (player, team)
 
     soldiers.toMap
-        
-  
