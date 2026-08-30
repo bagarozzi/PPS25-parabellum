@@ -13,6 +13,10 @@ import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
 import it.unibo.parabellum.model.entity.{Burden, Entity, Piercing, Soldier, Player, PowerUp, Random, Ricochet}
 import it.unibo.parabellum.model.function
 
+/**
+ * A [[Projectile]] is an [[Entity]] that is shot from a player
+ * and eventually hits something in the map.
+ */
 trait Projectile extends Entity:
 
     def update(dt: Double): Projectile
