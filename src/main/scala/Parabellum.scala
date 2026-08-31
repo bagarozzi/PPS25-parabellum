@@ -1,6 +1,6 @@
 package it.unibo.parabellum
 
-import controller.{Controller, Engine, GameController, GameState}
+import controller.{Controller, GameController, GameState}
 import view.{MainGUI, View}
 
 object Parabellum:
