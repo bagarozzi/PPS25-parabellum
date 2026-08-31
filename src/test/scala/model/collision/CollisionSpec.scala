@@ -11,6 +11,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 
 class CollisionSpec extends AnyFlatSpec:
 
+    import GameController.given
+
     "Collisions" should "detect an out-of-bounds projectile" in {
         val projectile = Projectile.createProjectile(Position(-16, 26), "x", 0, None)
         assert(CollisionDetector.detectCollision(projectile, Set()) === Set(DestroyProjectile()))
