@@ -9,11 +9,9 @@ import model.entity.Soldier
 import model.collision.ImpactEffect
 
 object CollisionDetector:
-  private val border: BoundingBox = BoundingBox(-25, 25, -15, 15)
-  given BoundingBox = border
 
-  private def checkCollisionWithBorders(projectile: Projectile): Option[Impact] = 
-    if !CollisionDetector.border.checkBoundary(projectile.pos) then
+  private def checkCollisionWithBorders(projectile: Projectile)(using border: BoundingBox): Option[Impact] =
+    if !border.checkBoundary(projectile.pos) then
       return Some(BorderImpact())
     None
 
@@ -21,6 +19,6 @@ object CollisionDetector:
   private def CheckCollisionWithFigure(entities: Set[Figure], projectile: Projectile): Option[Impact] = 
     entities.find(f => f.belongs(projectile.pos)).map(FigureImpact(projectile.pos, _))
 
-  def detectCollision(projectile: Projectile, entities: Set[Figure]): Set[ImpactEvent] = 
+  def detectCollision(projectile: Projectile, entities: Set[Figure])(using border: BoundingBox): Set[ImpactEvent] =
     (CheckCollisionWithFigure(entities, projectile) ++ checkCollisionWithBorders(projectile)).flatMap(projectile.effect.applyEffect).toSet
     
