@@ -6,6 +6,7 @@ import model.entity.Player.initPlayer
 import util.{Position, RandomGenerator}
 import model.entity.Soldier.initSoldier
 import scala.annotation.tailrec
+import model.shape.{Circle => ModelCircle}
 
 /**
  * Utility object responsible for generating the game map layout.
@@ -89,7 +90,6 @@ object MapGenerator:
           val newSoldier = initSoldier(s"$teamName-soldier${teamAcc.size + 1}", Position(pX, pY), teamName, direction)
           spawnTeam(teamName, direction, minX, maxX, remaining - 1, teamAcc :+ newSoldier, dataAcc :+ (pX, pY, radius))
 
-    // Scala foldLeft permette di passare accumulare lo stato (la mappa dei team e i dati di overlap) attraverso il Set dei giocatori
     players.toList.zipWithIndex.foldLeft((Map.empty[Player, Vector[Soldier]], initialData)):
       case ((mapAcc, currentData), (playerName, index)) =>
         val player = initPlayer(playerName)
@@ -109,18 +109,21 @@ object MapGenerator:
       else
         val pX = minX + (maxX - minX) * math.random()
         val pY = minY + (maxY - minY) * math.random()
-        val radius = 0.2 // Raggio fisso stabilito nel trait PowerUp
+        val pos = Position(pX, pY)
+
+        val rand = math.random()
+        val pu: PowerUp = if rand < 0.25 then Ricochet(pos)
+        else if rand < 0.50 then Burden(pos)
+        else if rand < 0.75 then Random(pos)
+        else Piercing(pos)
+
+        val radius = pu.shape match
+          case ModelCircle(_, r) => r
+          case _ => 0.2
 
         if PrologMapChecker.hasOverlap(pX, pY, radius, dataAcc) then
           spawnLoop(powerUps, dataAcc)
         else
-          val pos = Position(pX, pY)
-          val rand = math.random()
-          val pu = if rand < 0.25 then Ricochet(pos)
-          else if rand < 0.50 then Burden(pos)
-          else if rand < 0.75 then Random(pos)
-          else Piercing(pos)
-
           spawnLoop(powerUps + pu, dataAcc :+ (pX, pY, radius))
 
     spawnLoop(Set.empty, initialData)
