@@ -13,7 +13,7 @@ trait Controller:
 
     def addProjectile(newFunction: String): Unit
 
-    def updateView(g: GameState)(using view: View): Unit
+    def updateView(g: GameState)(using view: View, border: BoundingBox): Unit
 
 object GameController extends Controller:
 
@@ -46,5 +46,5 @@ object GameController extends Controller:
         pendingFunction = Some(newFunction)
 
 
-    def updateView(g: GameState)(using view: View): Unit =
+    def updateView(g: GameState)(using view: View, border: BoundingBox): Unit =
         view.render(g)
