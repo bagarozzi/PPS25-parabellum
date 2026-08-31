@@ -10,7 +10,7 @@ import it.unibo.parabellum.model.collision.ImpactEffect
 
 
 sealed trait PowerUp(pos: Position) extends Figure:
-  val shape: Shape = Circle(pos, 0.2)
+  val shape: Shape = Circle(pos, 0.4)
 
   override final def belongs(pos: Position): Boolean = shape.belongs(pos)
 

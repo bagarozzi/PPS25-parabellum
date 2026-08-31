@@ -5,7 +5,7 @@ import scalafx.scene.Scene
 import scalafx.scene.paint.Color.*
 import scalafx.scene.layout.BorderPane
 import scalafx.Includes.*
-import it.unibo.parabellum.model.entity.{Obstacle, Player}
+import it.unibo.parabellum.model.entity.{Obstacle, Player, PowerUp}
 import it.unibo.parabellum.model.function.Projectile
 import it.unibo.parabellum.controller.{GameController, GameState}
 import it.unibo.parabellum.model.collision.CollisionDetector
@@ -35,6 +35,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
   private var playerViews: Map[String, PlayerView] = Map.empty
   private var projectileView: Option[ProjectileView] = None
   private var obstacleViews: Map[Obstacle, ObstacleView] = Map.empty
+  private var powerUpViews: Map[PowerUp, PowerUpView] = Map.empty
 
   override def start(): Unit =
 
@@ -125,7 +126,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
             val newView = new PlayerView(soldier.name, tc.x, tc.y, GeometryHelper.transform(radius))
             playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
-
+      //remove players
       val currentSoldiers = state.manager.soldiers.map(_.name).toSet
       val deadSoldiers = playerViews.keys.toSet.diff(currentSoldiers)
 
@@ -133,6 +134,24 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
         val view = playerViews(deadName)
         gameView.removeElement(view)
         playerViews -= deadName
+
+      state.powerUps.foreach: pu =>
+        if !powerUpViews.contains(pu) then
+          val tc = GeometryHelper.transform(pu.pos)
+          val puType = pu.getClass.getSimpleName
+          pu.shape match
+            case ModelCircle(_, radius) =>
+              val view = new PowerUpView(puType, tc.x, tc.y, GeometryHelper.transform(radius))
+              powerUpViews += (pu -> view)
+              gameView.addElements(view)
+            case _ => ()
+
+      //Remove powerup
+      val powerUpsToRemove = powerUpViews.keys.toSet.diff(state.powerUps)
+      powerUpsToRemove.foreach: pu =>
+        val view = powerUpViews(pu)
+        gameView.removeElement(view)
+        powerUpViews -= pu
 
       state.projectile match
         case Some(proj) =>

@@ -59,14 +59,15 @@ object GameState:
     val minY = -5.0
     val maxY = 5.0
 
- 
-    val manager = initTurnManager(MapGenerator.generatePlayers(minX, maxX, minY, maxY,players, soldiers))
-    val obstacles = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY) // Scegli quanti ostacoli generare (es. 5)
-  
+    val (obstacles, data1) = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY)
+    val (playersMap, data2) = MapGenerator.generatePlayers(minX, maxX, minY, maxY, players, soldiers, data1)
+    val manager = initTurnManager(playersMap)
+    val (powerUps,finalData) = MapGenerator.generatePowerUps(3, minX, maxX, minY, maxY, data2)
+
     GameState(
       manager,
       obstacles,
-      Set(), 
+      powerUps,
       None,
       None
     )
