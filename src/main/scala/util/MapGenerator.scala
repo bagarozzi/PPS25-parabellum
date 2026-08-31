@@ -4,7 +4,7 @@ package util
 import model.entity.{Obstacle, Player, Soldier, PowerUp, Ricochet, Burden, Random, Piercing}
 import model.entity.Player.initPlayer
 import util.{Position, RandomGenerator}
-import model.entity.Soldier.initSoldier
+import model.entity.Soldier.*
 import scala.annotation.tailrec
 import model.shape.{Circle => ModelCircle}
 
@@ -82,12 +82,16 @@ object MapGenerator:
       else
         val pX = minX + (maxX - minX) * math.random()
         val pY = minY + (maxY - minY) * math.random()
-        val radius = 0.5 // Raggio di ingombro del soldato
+
+        val newSoldier = initSoldier(s"$teamName-soldier${teamAcc.size + 1}", Position(pX, pY), teamName, direction)
+
+        val radius = newSoldier.shape match
+          case ModelCircle(_, r) => r
+          case _ => 0.5
 
         if PrologMapChecker.hasOverlap(pX, pY, radius, dataAcc) then
           spawnTeam(teamName, direction, minX, maxX, remaining, teamAcc, dataAcc)
         else
-          val newSoldier = initSoldier(s"$teamName-soldier${teamAcc.size + 1}", Position(pX, pY), teamName, direction)
           spawnTeam(teamName, direction, minX, maxX, remaining - 1, teamAcc :+ newSoldier, dataAcc :+ (pX, pY, radius))
 
     players.toList.zipWithIndex.foldLeft((Map.empty[Player, Vector[Soldier]], initialData)):
@@ -100,7 +104,6 @@ object MapGenerator:
 
         val (team, newData) = spawnTeam(playerName, direction, spawnMinX, spawnMaxX, soldierCount, Vector.empty, currentData)
         (mapAcc + (player -> team), newData)
-
   def generatePowerUps(count: Int, minX: Double, maxX: Double, minY: Double, maxY: Double, initialData: Seq[(Double, Double, Double)]): (Set[PowerUp], Seq[(Double, Double, Double)]) =
 
     @tailrec
