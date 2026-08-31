@@ -35,7 +35,7 @@ il soldato che deve sparare viene evidenziato,
 | 28a | GUI work: soldiers die | Sbaraccani | soldiers disappear when dead | yes |
 | 28b | GUI work: render | Sbaraccani | when the explosions are not overlapped on players and cartesian axes | yes |
 | 28c | GUI work: soldier highlight | Sbaraccani | when the soldiers who's shooting is highlighted in some way | yes |
-| 29 | GameState update refactoring | Bagattoni | . | no |
+| 29 | GameState update refactoring | Bagattoni | . | yes |
 | 31 | Global Game paramethers | Sbaraccani-Bagattoni | When compile-time paramethers are changed through a unique file | no |
 | 32 | Parser: adding logarithm and abs() functions | Bagattoni | this | yes |
 | 34 | Shape refactoring | Venturini | this | yes |
