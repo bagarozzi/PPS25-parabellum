@@ -68,7 +68,7 @@ object GameState:
     GameState(
       manager,
       obstacles,
-      Set(), 
+      powerUps,
       None,
       None
     )
