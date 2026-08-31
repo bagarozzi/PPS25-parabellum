@@ -17,7 +17,7 @@ class PowerUpView(powerUpType: String, initialX: Double, initialY: Double, scree
 
   private val (puColor, puLabel) = powerUpType match
     case "Ricochet" => (Orange, "R")
-    case "Burden"   => (Gray, "B")
+    case "Burden"   => (LightSeaGreen, "B")
     case "Random"   => (Magenta, "?")
     case "Piercing" => (Cyan, "P")
     case _          => (Yellow, "*")
@@ -25,12 +25,12 @@ class PowerUpView(powerUpType: String, initialX: Double, initialY: Double, scree
   private val background = new Circle:
     radius = screenRadius
     fill = puColor
-    stroke = White
+    stroke = MediumSlateBlue
     strokeWidth = 1.5
 
   private val textIcon = new Text:
     text = puLabel
-    fill = White
+    fill = MediumSlateBlue
     font = Font.font("Arial", FontWeight.Bold, screenRadius * 1.2)
 
   textIcon.layoutX = -textIcon.boundsInLocal.value.getWidth / 2.0
