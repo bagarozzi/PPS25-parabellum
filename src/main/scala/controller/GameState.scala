@@ -2,7 +2,7 @@ package it.unibo.parabellum
 package controller
 
 import model.entity.{Obstacle, PowerUp}
-import util.MapGenerator
+import util.{BoundingBox, MapGenerator}
 import model.function.Projectile
 import model.collision.CollisionDetector.detectCollision
 import model.collision.ImpactEvent
@@ -24,7 +24,7 @@ object GameState:
    * @param g the game state to update
    * @return the new game state
    */
-  def update(g: GameState, dt: Double, pendingFunction: Option[String]): GameState =
+  def update(g: GameState, dt: Double, pendingFunction: Option[String])(using border: BoundingBox): GameState =
     updateProjectile(g, dt).fold(g)(p => g.copy(projectile = Some(p)))
         .map(resolveCollisions)
         .map(processPendingInput(_, pendingFunction))
@@ -34,7 +34,7 @@ object GameState:
     case Some(p) => Some(p.update(dt))
     case None => None
 
-  private def resolveCollisions(g: GameState): GameState = g
+  private def resolveCollisions(g: GameState)(using border: BoundingBox): GameState = g
       .projectile
       .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
       .map(_.foldLeft(g)((g,e) => e.action(g)))
@@ -51,7 +51,7 @@ object GameState:
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)
 
-  def init(players: Set[String], soldiers: Int): GameState =
+  def init(players: Set[String], soldiers: Int)(using border: BoundingBox): GameState =
     
     // TODO: make this resizable
     val minX = -10.0
@@ -59,11 +59,12 @@ object GameState:
     val minY = -5.0
     val maxY = 5.0
 
-    val (obstacles, data1) = MapGenerator.generateObstacles(5, minX, maxX, minY, maxY)
-    val (playersMap, data2) = MapGenerator.generatePlayers(minX, maxX, minY, maxY, players, soldiers, data1)
-    val manager = initTurnManager(playersMap)
-    val (powerUps,finalData) = MapGenerator.generatePowerUps(3, minX, maxX, minY, maxY, data2)
 
+    val (obstacles, data1) = MapGenerator.generateObstacles(5)
+    val (playersMap, data2) = MapGenerator.generatePlayers(players, soldiers, data1)
+    val manager = initTurnManager(playersMap)
+    val (powerUps, finalData) = MapGenerator.generatePowerUps(3, data2)
+  
     GameState(
       manager,
       obstacles,

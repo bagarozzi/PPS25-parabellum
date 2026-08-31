@@ -11,6 +11,7 @@ import it.unibo.parabellum.controller.{GameController, GameState}
 import it.unibo.parabellum.model.collision.CollisionDetector
 import it.unibo.parabellum.view.TrajectoryView
 import it.unibo.parabellum.model.shape.{Difference, Circle as ModelCircle, Polygon as ModelPolygon}
+import it.unibo.parabellum.util.BoundingBox
 
 import scala.collection.StepperShape.Shape
 
@@ -67,7 +68,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       resizable = false
       scene = menuScene
 
-  override def render(state: GameState): Unit =
+  override def render(state: GameState)(using border: BoundingBox): Unit =
     Platform.runLater:
       controlPanel.updateCurrentPlayer(state.manager.current.name)
       state.obstacles.foreach: obs =>

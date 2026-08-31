@@ -4,6 +4,7 @@ package controller
 import view.View
 
 import it.unibo.parabellum.model.function.{Projectile, Trajectory}
+import it.unibo.parabellum.util.BoundingBox
 import scalafx.animation.AnimationTimer
 
 trait Controller:
@@ -12,7 +13,7 @@ trait Controller:
 
     def addProjectile(newFunction: String): Unit
 
-    def updateView(g: GameState)(using view: View): Unit
+    def updateView(g: GameState)(using view: View, border: BoundingBox): Unit
 
 object GameController extends Controller:
 
@@ -22,6 +23,8 @@ object GameController extends Controller:
     private var pendingFunction: Option[String] = None
 
     import Parabellum.given
+    
+    given border: BoundingBox = BoundingBox(-25, 25, -15, 15)
 
     def startGame(players: Set[String], soldiers: Int): Unit =
         //given targetFPS: Int = 60
@@ -43,5 +46,5 @@ object GameController extends Controller:
         pendingFunction = Some(newFunction)
 
 
-    def updateView(g: GameState)(using view: View): Unit =
+    def updateView(g: GameState)(using view: View, border: BoundingBox): Unit =
         view.render(g)
