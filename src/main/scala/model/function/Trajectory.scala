@@ -3,6 +3,8 @@ package model.function
 
 import util.Position
 
+import it.unibo.parabellum.model.function.Direction.{Negative, Positive}
+
 enum Direction:
   case Negative
   case Positive
@@ -22,11 +24,11 @@ enum Direction:
  */
 case class Trajectory(
                           currentPosition: Position,
-                          private val startingPosition: Position,
+                          startingPosition: Position,
                           function: Function,
-                          private val speed: Double,
-                          private val distance: Double,
-                          private val direction: Direction)
+                          speed: Double,
+                          distance: Double,
+                          direction: Direction)
 
 object Trajectory:
 
@@ -67,6 +69,12 @@ object Trajectory:
       advance(dt, t.distance, t.speed, t.direction),
       t.direction
     )
+
+    def mapFunction[B](op: Function => Function): Trajectory = t.copy(function = op(t.function))
+
+    def reverse(): Trajectory = t.direction match
+      case Negative => t.copy(direction = Positive)
+      case Positive => t.copy(direction = Negative)
     
     def changeFunction(function: Function): Trajectory = Trajectory(
         t.currentPosition,

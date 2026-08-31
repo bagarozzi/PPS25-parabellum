@@ -53,7 +53,7 @@ case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent:
 
 case class Ricochet() extends ImpactEvent:
 
-    override def action(g: GameState): GameState = g.copy(projectile = Some(g.projectile.get.swapFunction(g.projectile.get.trajectory.function.reverse())))
+    override def action(g: GameState): GameState = g.copy(projectile = g.projectile.map(_.mapTrajectory(_.mapFunction(_.reverse()))))
 
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
