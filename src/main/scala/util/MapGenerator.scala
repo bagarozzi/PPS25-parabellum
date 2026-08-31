@@ -25,14 +25,14 @@ object MapGenerator:
    * @param maxY  The maximum Y-coordinate boundary for the spawn area.
    * @return A Set containing the newly generated Obstacle entities.
    */
-  def generateObstacles(count: Int, minX: Double, maxX: Double, minY: Double, maxY: Double): (Set[Obstacle], Seq[(Double, Double, Double)]) =
+  def generateObstacles(count: Int)(using border: BoundingBox): (Set[Obstacle], Seq[(Double, Double, Double)]) =
 
     @tailrec
     def generateLoop(obstacles: Set[Obstacle], existingData: Seq[(Double, Double, Double)]): (Set[Obstacle], Seq[(Double, Double, Double)]) =
       if obstacles.size >= count then
         (obstacles, existingData)
       else
-        val pos = RandomGenerator.randomPosition(minX, maxX, minY, maxY)
+        val pos = RandomGenerator.randomPosition(border.x0, border.x1, border.y0, border.y1)
         val isCircle = math.random() > 0.5
         val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
 
@@ -72,8 +72,8 @@ object MapGenerator:
    * @param maxY The maximum Y-coordinate boundary (top edge of the map).
    * @return A Map containing the Player entities and their respective Soldiers.
    */
-  def generatePlayers(minX: Double, maxX: Double, minY: Double, maxY: Double, players: Set[String], soldierCount: Int, initialData: Seq[(Double, Double, Double)]): (Map[Player, Vector[Soldier]], Seq[(Double, Double, Double)]) =
-    val midX = (minX + maxX) / 2.0
+  def generatePlayers(players: Set[String], soldierCount: Int, initialData: Seq[(Double, Double, Double)])(using border: BoundingBox): (Map[Player, Vector[Soldier]], Seq[(Double, Double, Double)]) =
+    val midX = (border.x0 + border.x1) / 2.0
     val safeMargin = 2.0
 
     @tailrec
@@ -81,7 +81,7 @@ object MapGenerator:
       if remaining == 0 then (teamAcc, dataAcc)
       else
         val pX = minX + (maxX - minX) * math.random()
-        val pY = minY + (maxY - minY) * math.random()
+        val pY = border.y0 + (border.y1 - border.y0) * math.random()
 
         val newSoldier = initSoldier(s"$teamName-soldier${teamAcc.size + 1}", Position(pX, pY), teamName, direction)
 
@@ -98,20 +98,20 @@ object MapGenerator:
       case ((mapAcc, currentData), (playerName, index)) =>
         val player = initPlayer(playerName)
         val isLeft = index == 0
-        val spawnMinX = if isLeft then minX else midX + safeMargin
-        val spawnMaxX = if isLeft then midX - safeMargin else maxX
+        val spawnMinX = if isLeft then border.x0 else midX + safeMargin
+        val spawnMaxX = if isLeft then midX - safeMargin else border.x1
         val direction = if isLeft then 1 else -1
 
         val (team, newData) = spawnTeam(playerName, direction, spawnMinX, spawnMaxX, soldierCount, Vector.empty, currentData)
         (mapAcc + (player -> team), newData)
-  def generatePowerUps(count: Int, minX: Double, maxX: Double, minY: Double, maxY: Double, initialData: Seq[(Double, Double, Double)]): (Set[PowerUp], Seq[(Double, Double, Double)]) =
+  def generatePowerUps(count: Int, initialData: Seq[(Double, Double, Double)])(using border: BoundingBox): (Set[PowerUp], Seq[(Double, Double, Double)]) =
 
     @tailrec
     def spawnLoop(powerUps: Set[PowerUp], dataAcc: Seq[(Double, Double, Double)]): (Set[PowerUp], Seq[(Double, Double, Double)]) =
       if powerUps.size >= count then (powerUps, dataAcc)
       else
-        val pX = minX + (maxX - minX) * math.random()
-        val pY = minY + (maxY - minY) * math.random()
+        val pX = border.x0 + (border.x1 - border.x0) * math.random()
+        val pY = border.y0 + (border.y1 - border.y0) * math.random()
         val pos = Position(pX, pY)
 
         val rand = math.random()
