@@ -7,6 +7,7 @@ import model.function.Projectile
 import model.collision.CollisionDetector.detectCollision
 import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
+import model.function.Function
 
 
 /**
@@ -14,7 +15,7 @@ import controller.TurnManager.initTurnManager
  * @param manager the entity that manage the sequence of turns and the sets of soldiers
  * @param projectile the projectile that are being fired
  */
-case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[String]):
+case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[Function]):
 
   def map[B](op: GameState => B): B = op(this)
 object GameState:
@@ -24,10 +25,10 @@ object GameState:
    * @param g the game state to update
    * @return the new game state
    */
-  def update(g: GameState, dt: Double, pendingFunction: Option[String])(using border: BoundingBox): GameState =
+  def update(g: GameState, dt: Double, passedFunction: Option[Function])(using border: BoundingBox): GameState =
     updateProjectile(g, dt).fold(g)(p => g.copy(projectile = Some(p)))
         .map(resolveCollisions)
-        .map(processPendingInput(_, pendingFunction))
+        .map(processPendingInput(_, passedFunction))
         .map(spawnProjectile)
 
   private def updateProjectile(g: GameState, dt: Double): Option[Projectile] = g.projectile match
@@ -44,7 +45,7 @@ object GameState:
     case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
 
-  private def processPendingInput(g: GameState, passedFunction: Option[String]): GameState = (g.pendingFunction, passedFunction) match
+  private def processPendingInput(g: GameState, passedFunction: Option[Function]): GameState = (g.pendingFunction, passedFunction) match
     case(None, Some(pf)) => g.copy(pendingFunction = Some(pf))
     case _ => g
 
