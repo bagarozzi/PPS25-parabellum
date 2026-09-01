@@ -43,13 +43,10 @@ private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) ext
 
 object Projectile:
 
-  def createProjectile(startingPosition: Position, nonParsedFunction: String, direction: Int, powerUp: Option[PowerUp]): Projectile =
-    val func: Function = FunctionParser.parse(nonParsedFunction) match
-      case Right(func) => func
-      case Left(e) => Function(x => x)
-    createModifiedProjectile(powerUp.fold(normalImpactEffect())(_.impactEffect), startingPosition, direction, powerUp.fold(func)(_.trajectoryDistortion(func)))
+  def createProjectile(startingPosition: Position, function: Function, direction: Int, powerUp: Option[PowerUp]): Projectile =
+    createModifiedProjectile(powerUp.fold(normalImpactEffect())(_.impactEffect), startingPosition, direction, powerUp.fold(function)(_.trajectoryDistortion(function)))
 
-  def fromSoldier(p: Player, s: Soldier, nonParsedFunction: String): Projectile = createProjectile(s.pos, nonParsedFunction, s.facingDirection, p.getPowerUp)
+  def fromSoldier(p: Player, s: Soldier, function: Function): Projectile = createProjectile(s.pos, function, s.facingDirection, p.getPowerUp)
 
   private def createModifiedProjectile(impactEffect: ImpactEffect, startingPosition: Position, direction: Int, func: Function): Projectile =
     ProjectileI(

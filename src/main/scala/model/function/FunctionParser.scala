@@ -4,6 +4,8 @@ package model.function
 import fastparse._
 import MultiLineWhitespace._
 
+case class ParsingError(message: String)
+
 /**
  * The parser parses mathematical function and arithmetic expressions to produce [[Function]]s usable
  * by the rest of the components.
@@ -16,9 +18,9 @@ object FunctionParser:
      * @param input the string to parse
      * @return an [[Either]] containing a [[Function]] or a [[RuntimeException]]
      */
-    def parse(input: String): Either[RuntimeException, Function] = fastparse.parse(input, p => expr(using p)) match
+    def parse(input: String): Either[ParsingError, Function] = fastparse.parse(input, p => expr(using p)) match
         case Parsed.Success(func, _) => Right(func)
-        case failure: Parsed.Failure => Left(new IllegalArgumentException(s"Parse error: ${failure.trace().longMsg}"))
+        case failure: Parsed.Failure => Left(ParsingError(formatUserError(input, failure)))
 
     private def number[$: P]: P[Function] = P(CharIn("+\\-").? ~ CharIn("0-9").rep(1) ~ CharIn(".").? ~ CharIn("0-9").rep(1).?).!.map(d => Function(x => d.toDouble))
 
@@ -58,3 +60,11 @@ object FunctionParser:
             case "/" => Function(x => leftFunc(x) / rightFunc(x))
         }
         }
+
+    private def formatUserError(input: String, failure: Parsed.Failure): String =
+        val pointer = " " * failure.index + "^"
+
+        s"""|Syntax error at position ${failure.index}:
+            |  $input
+            |  $pointer
+            |Expected: ${failure.trace().aggregateMsg}""".stripMargin

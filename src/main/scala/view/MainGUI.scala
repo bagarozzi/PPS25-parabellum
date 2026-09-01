@@ -6,12 +6,15 @@ import scalafx.scene.paint.Color.*
 import scalafx.scene.layout.BorderPane
 import scalafx.Includes.*
 import it.unibo.parabellum.model.entity.{Obstacle, Player, PowerUp}
-import it.unibo.parabellum.model.function.Projectile
+import it.unibo.parabellum.model.function.{ParsingError, Projectile}
 import it.unibo.parabellum.controller.{GameController, GameState}
 import it.unibo.parabellum.model.collision.CollisionDetector
 import it.unibo.parabellum.view.TrajectoryView
 import it.unibo.parabellum.model.shape.{Difference, Circle as ModelCircle, Polygon as ModelPolygon}
 import it.unibo.parabellum.util.BoundingBox
+import scalafx.animation.PauseTransition
+import scalafx.scene.control.Label
+import scalafx.util.Duration
 
 import scala.collection.StepperShape.Shape
 
@@ -28,11 +31,14 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
   given windowSize: WindowSize = WindowSize(width, height)
   import CollisionDetector.given
 
-  private val gameView = new GameView(windowSize.width, windowSize.height)
+  private lazy val gameView = new GameView(windowSize.width, windowSize.height)
   private val trajectoryView = new TrajectoryView()
   private lazy val controlPanel = new ControlPanelView(userInput =>
-    GameController.addProjectile(userInput)
+    GameController.addProjectile(userInput) match
+      case Some(ParsingError(message)) => showParsingError(message)
+      case _ =>
   )
+
   private var playerViews: Map[String, PlayerView] = Map.empty
   private var projectileView: Option[ProjectileView] = None
   private var obstacleViews: Map[Obstacle, ObstacleView] = Map.empty
@@ -176,3 +182,6 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
           trajectoryView.clearTrajectory()
     trajectoryView.toBack()
     playerViews.values.foreach(_.toFront())
+
+  private def showParsingError(message: String): Unit =
+    gameView.showTemporaryError(message)
