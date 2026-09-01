@@ -26,8 +26,8 @@ Most important first.
 | 40b | Powerup: bug fix of Burded | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40c | Powerup: bug fix of Ricochet | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | yes | [**Sprint 5**](./sprint_5_backlog.md) |
+| 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 42 | ImpactEffect refactoring | Venturini | this | no | [**Sprint 5**](./sprint_5_backlog.md) | 
 | 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 44 | Shooting range in the model | unassigned | when the shooting range is available as an alternative initialization of GameState | no | [**Sprint 5**](./sprint_5_backlog.md) |
