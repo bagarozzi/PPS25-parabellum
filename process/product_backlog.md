@@ -19,18 +19,17 @@ Most important first.
 | :--- | :--- | :--- | :--- | :---: | :---: |
 | 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
-| 25 | Map generation using Prolog |  | when the map is correctly check before being generated | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 26a | Map generation refactoring |  | when functions are short and weird polygons are not generated | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 26b | Soldier position generation |  | when soldiers are not in the same "zone" of the map | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 28a | GUI work: soldiers die |  | soldiers disappear when dead | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 28b | GUI work: render |  | when the explosions are not overlapped on players and cartesian axes | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 28c | GUI work: soldier highlight |  | when the soldiers who's shooting is highlighted in some way | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 29 | GameState update refactoring |  | . | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 31 | Global Game paramethers |  | When compile-time paramethers are changed through a unique file | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 32 | Parser: adding logarithm and abs() functions |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) | 
-| 34 | Shape refactoring |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 35a | Powerups: Ricochet, Piercing, Random, Burden |  | this | no | [**Sprint 4**](./sprint_4_backlog.md) |
-| 35b | Powerups in View |  | when each powerup is recognizable and appears on the side of the screen for the player who has it | no | [**Sprint 4**](./sprint_4_backlog.md) |
+| 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 39 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 40 | Powerup: bug fix of Random | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 40b | Powerup: bug fix of Burded | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 40c | Powerup: bug fix of Ricochet | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 42 | ImpactEffect refactoring | Venturini | this | no | [**Sprint 5**](./sprint_5_backlog.md) | 
+| 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | no | [**Sprint 5**](./sprint_5_backlog.md) |
 
 ___
 ___
