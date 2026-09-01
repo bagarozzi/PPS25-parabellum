@@ -36,15 +36,16 @@ il soldato che deve sparare viene evidenziato,
 | 28b | GUI work: render | Sbaraccani | when the explosions are not overlapped on players and cartesian axes | yes |
 | 28c | GUI work: soldier highlight | Sbaraccani | when the soldiers who's shooting is highlighted in some way | yes |
 | 29 | GameState update refactoring | Bagattoni | . | yes |
-| 31 | Global Game paramethers | Sbaraccani-Bagattoni | When compile-time paramethers are changed through a unique file | no |
+| 31 | Global Game paramethers | Sbaraccani-Bagattoni | When compile-time paramethers are changed through a unique file | yes |
 | 32 | Parser: adding logarithm and abs() functions | Bagattoni | this | yes |
 | 34 | Shape refactoring | Venturini | this | yes |
 | 35a | Powerups: Ricochet, Piercing, Random, Burden | Venturini | this | yes |
-| 35b | Powerups in View | Sbaraccani-Bagattoni | when each powerup is recognizable and appears on the side of the screen for the player who has it | no |
+| 35b | Powerups in View | Sbaraccani-Bagattoni | when each powerup is recognizable and appears on the side of the screen for the player who has it | yes |
 
 Keep in mind: ***always merge working code***
 
 ### Sprint review meeting (31/08/2026)
+Lo sprint è stato svolto correttamente anche se a corto di un uomo e con tempo limitato. Si punta ad ultimare il progetto per gli ultimi due sprint.
 ___
 ___
 
