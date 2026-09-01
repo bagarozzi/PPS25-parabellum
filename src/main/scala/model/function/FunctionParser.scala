@@ -64,7 +64,7 @@ object FunctionParser:
     private def formatUserError(input: String, failure: Parsed.Failure): String =
         val pointer = " " * failure.index + "^"
 
-        s"""|Syntax error at position $failure.index:
+        s"""|Syntax error at position ${failure.index}:
             |  $input
             |  $pointer
-            |Expected: $failure.trace().aggregateMsg""".stripMargin
+            |Expected: ${failure.trace().aggregateMsg}""".stripMargin
