@@ -42,8 +42,8 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 | 40b | Powerup: bug fix of Burded | unassigned | this | no |
 | 40c | Powerup: bug fix of Ricochet | unassigned | this | no |
 | 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | no |
-| 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | no |
-| 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | no |
+| 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | yes |
+| 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | yes |
 | 42 | ImpactEffect refactoring | Venturini | this | no |
 | 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | no |
 | 44 | Shooting range in the model | unassigned | when the shooting range is available as an alternative initialization of GameState | no |
