@@ -57,8 +57,6 @@ class GameView(width: Double, height: Double) extends Pane:
     -fx-background-radius: 8px;
     """
     visible = false
-//    layoutX <== (prefWidth - errorLabel.width) / 2
-//    layoutY <== prefHeight - errorLabel.height - 30
 
   children.addAll(xAxis, yAxis, errorLabel)
   /**
@@ -87,6 +85,7 @@ class GameView(width: Double, height: Double) extends Pane:
   def showTemporaryError(message: String): Unit = {
     errorLabel.text = message
     errorLabel.visible = true
+    errorLabel.toFront()
 
     errorTimer.playFromStart()
   }
