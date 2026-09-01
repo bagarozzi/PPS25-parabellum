@@ -2,8 +2,8 @@ package it.unibo.parabellum
 package controller
 
 import view.View
+import model.function.{Function, FunctionParser, ParsingError, Projectile, Trajectory}
 
-import it.unibo.parabellum.model.function.{Projectile, Trajectory}
 import it.unibo.parabellum.util.BoundingBox
 import scalafx.animation.AnimationTimer
 
@@ -11,7 +11,7 @@ trait Controller:
 
     def startGame(players: Set[String], soldiers: Int): Unit
 
-    def addProjectile(newFunction: String): Unit
+    def addProjectile(newFunction: String): Option[ParsingError]
 
     def updateView(g: GameState)(using view: View, border: BoundingBox): Unit
 
@@ -20,7 +20,7 @@ object GameController extends Controller:
     private var gameState: Option[GameState] = None
     private var gameLoop: Option[AnimationTimer] = None
     private var lastTime: Long = System.nanoTime()
-    private var pendingFunction: Option[String] = None
+    private var pendingFunction: Option[Function] = None
 
     import Parabellum.given
     
@@ -42,8 +42,11 @@ object GameController extends Controller:
         gameLoop = Some(timer)
     //Engine.run(gameState.get)
 
-    def addProjectile(newFunction: String): Unit =
-        pendingFunction = Some(newFunction)
+    def addProjectile(newFunction: String): Option[ParsingError] = FunctionParser.parse(newFunction) match
+        case Left(err) => Some(err)
+        case Right(func) =>
+            pendingFunction = Some(func)
+            None
 
 
     def updateView(g: GameState)(using view: View, border: BoundingBox): Unit =
