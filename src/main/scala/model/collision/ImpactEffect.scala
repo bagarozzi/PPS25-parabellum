@@ -7,6 +7,9 @@ import model.function.{Trajectory, reverse}
 import model.shape.{Circle, Difference, Shape}
 import util.Position
 
+import it.unibo.parabellum.model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
+import scalafx.geometry.Orientation.Horizontal
+
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
  * a [[Figure]] or the map's borders.
@@ -63,7 +66,7 @@ object ImpactEffect:
       case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
       case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
       case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
-      case BorderImpact() => Set(DestroyProjectile())
+      case BorderImpact(_) => Set(DestroyProjectile())
       case FigureImpact(Position(_, _), _) => Set()
     }
 
@@ -71,7 +74,8 @@ object ImpactEffect:
       case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
       case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
       case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
-      case BorderImpact() => Set(Ricochet())
+      case BorderImpact(VerticalBorderImpact) => Set(DestroyProjectile())
+      case BorderImpact(HorizontalBorderImpact) => Set(Ricochet())
       case FigureImpact(Position(_, _), _) => Set()
     }
   
@@ -79,26 +83,25 @@ object ImpactEffect:
     case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.1)))
     case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
     case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
-    case BorderImpact() => Set(DestroyProjectile())
+    case BorderImpact(_) => Set(DestroyProjectile())
     case FigureImpact(Position(_, _), _) => Set()
   }
 
 /**
  * An [[Impact]] is a collision between a [[Projectile]] and something else.
  */
-sealed trait Impact
+trait Impact
 
 case class FigureImpact(
                          pos: Position,
                          figure: Figure
                        ) extends Impact
 
-case class BorderImpact() extends Impact
+case class BorderImpact(b: BorderImpactType) extends Impact
 
-case class VerticalBorderImpact() extends Impact
-
-case class HorizontalBorderImpact() extends Impact
-
+enum BorderImpactType:
+    case VerticalBorderImpact
+    case HorizontalBorderImpact
 
 //GameState(gs.manager, gs.obstacles - obs + Obstacle(obs.pos, Difference(obs.shape, Set(Circle(impact.pos, 0.5)))), None, gs.pendingFunction)
 //(gs: GameState) => GameState(gs.manager.eliminateDeadSoldier(sld), gs.obstacles, gs.projectiles, gs.pendingFunction)
