@@ -40,7 +40,7 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 | 39 | Fix: Powerups not disappearing when shot | unassigned | this | no |
 | 40 | Powerup: bug fix of Random | unassigned | this | no |
 | 40b | Powerup: bug fix of Burded | unassigned | this | no |
-| 40c | Powerup: bug fix of Ricochet | unassigned | this | no |
+| 40c | Powerup: bug fix of Ricochet | unassigned | this | yes |
 | 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | yes |
 | 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | yes |
 | 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | yes |
