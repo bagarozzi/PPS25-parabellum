@@ -8,12 +8,16 @@ import util.{BoundingBox, Position}
 import model.entity.Soldier
 import model.collision.ImpactEffect
 
+import it.unibo.parabellum.model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
+
 object CollisionDetector:
 
   private def checkCollisionWithBorders(projectile: Projectile)(using border: BoundingBox): Option[Impact] =
-    if !border.checkBoundary(projectile.pos) then
-      return Some(BorderImpact())
-    None
+    if border.checkSideViolation(projectile.pos) then
+      Some(BorderImpact(HorizontalBorderImpact))
+    else if border.checkTopBottomViolation(projectile.pos) then
+      Some(BorderImpact(VerticalBorderImpact))
+    else None
 
 
   private def CheckCollisionWithFigure(entities: Set[Figure], projectile: Projectile): Option[Impact] = 
