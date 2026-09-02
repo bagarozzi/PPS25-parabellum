@@ -95,6 +95,10 @@ case class FigureImpact(
 
 case class BorderImpact() extends Impact
 
+case class VerticalBorderImpact() extends Impact
+
+case class HorizontalBorderImpact() extends Impact
+
 
 //GameState(gs.manager, gs.obstacles - obs + Obstacle(obs.pos, Difference(obs.shape, Set(Circle(impact.pos, 0.5)))), None, gs.pendingFunction)
 //(gs: GameState) => GameState(gs.manager.eliminateDeadSoldier(sld), gs.obstacles, gs.projectiles, gs.pendingFunction)
