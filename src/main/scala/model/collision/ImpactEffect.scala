@@ -2,9 +2,8 @@ package it.unibo.parabellum
 package model.collision
 
 import model.entity.{Figure, Obstacle, PowerUp, Soldier}
-
 import controller.GameState
-import model.function.reverse
+import model.function.{Trajectory, reverse}
 import model.shape.{Circle, Difference, Shape}
 import util.Position
 
@@ -53,7 +52,7 @@ case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent:
 
 case class Ricochet() extends ImpactEvent:
 
-    override def action(g: GameState): GameState = g.copy(projectile = g.projectile.map(_.mapTrajectory(_.mapFunction(_.reverse()))))
+    override def action(g: GameState): GameState = g.copy(projectile = g.projectile.map(_.mapTrajectory(_.ricochet())))
 
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
