@@ -37,7 +37,7 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no |
 | 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no |
-| 39 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no |
+| 39 | Fix: Powerups not disappearing when shot | unassigned | this | no |
 | 40 | Powerup: bug fix of Random | unassigned | this | no |
 | 40b | Powerup: bug fix of Burded | unassigned | this | no |
 | 40c | Powerup: bug fix of Ricochet | unassigned | this | no |
