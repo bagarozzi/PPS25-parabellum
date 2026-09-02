@@ -49,7 +49,7 @@ case class DestroyProjectile() extends ImpactEvent:
 
 case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent:
 
-    override def action(g: GameState): GameState = g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)))
+    override def action(g: GameState): GameState = g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)), powerUps = g.powerUps - powerUp)
 
 case class Ricochet() extends ImpactEvent:
 
