@@ -14,9 +14,9 @@ object CollisionDetector:
 
   private def checkCollisionWithBorders(projectile: Projectile)(using border: BoundingBox): Option[Impact] =
     if border.checkSideViolation(projectile.pos) then
-      Some(BorderImpact(HorizontalBorderImpact))
-    else if border.checkTopBottomViolation(projectile.pos) then
       Some(BorderImpact(VerticalBorderImpact))
+    else if border.checkTopBottomViolation(projectile.pos) then
+      Some(BorderImpact(HorizontalBorderImpact))
     else None
 
 
