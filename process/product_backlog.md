@@ -24,7 +24,7 @@ Most important first.
 | 39 | Fix: Powerups not disappearing when shot | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40 | Powerup: bug fix of Random | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40b | Powerup: bug fix of Burded | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 40c | Powerup: bug fix of Ricochet | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 40c | Powerup: bug fix of Ricochet | unassigned | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | yes | [**Sprint 5**](./sprint_5_backlog.md) |
