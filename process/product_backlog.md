@@ -21,7 +21,7 @@ Most important first.
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 39 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 39 | Fix: Powerups not disappearing when shot | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40 | Powerup: bug fix of Random | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40b | Powerup: bug fix of Burded | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40c | Powerup: bug fix of Ricochet | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
