@@ -17,7 +17,7 @@
 Most important first.
 | Task ID | Task Description | Assignee | When it's done | Done | First planned in |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | yes | [**Sprint 1**](./sprint_1_backlog.md) |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
 | 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
