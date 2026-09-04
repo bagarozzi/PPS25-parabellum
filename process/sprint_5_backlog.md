@@ -33,7 +33,7 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 ### Tasks to be done
 | Task ID | Task Description | Assignee | When it's done | Done |
 | :--- | :--- | :--- | :--- | :---: |
-| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | no |
+| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | yes |
 | 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no |
 | 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no |
