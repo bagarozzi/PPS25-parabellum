@@ -75,6 +75,19 @@ object Trajectory:
     def reverse(): Trajectory = t.direction match
       case Negative => t.copy(direction = Positive)
       case Positive => t.copy(direction = Negative)
+
+    /**
+     * Returns the Ricochet of this [[Trajectory]] in the current position.
+     * This means as if the underlying function bounces off the boundary in this point,
+     * this is calculated using the reversed function's derivative.
+     * @return
+     */
+    def ricochet(): Trajectory =
+      t.copy(
+        currentPosition = t.currentPosition,
+        startingPosition = t.currentPosition,
+        function = Function(x => - x * t.function.derivative(t.currentPosition.x)),
+      )
     
     def changeFunction(function: Function): Trajectory = Trajectory(
         t.currentPosition,
