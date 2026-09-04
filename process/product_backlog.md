@@ -22,8 +22,8 @@ Most important first.
 | 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 39 | Fix: Powerups not disappearing when shot | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 40 | Powerup: bug fix of Random | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 40b | Powerup: bug fix of Burded | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 40 | Powerup: bug fix of Random | Bagattoni | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
+| 40b | Powerup: bug fix of Burded | Bagattoni | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 40c | Powerup: bug fix of Ricochet | unassigned | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | yes | [**Sprint 5**](./sprint_5_backlog.md) |
 | 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | yes | [**Sprint 5**](./sprint_5_backlog.md) |
