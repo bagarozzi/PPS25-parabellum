@@ -31,7 +31,8 @@ Most important first.
 | 42 | ImpactEffect refactoring | Venturini | this | no | [**Sprint 5**](./sprint_5_backlog.md) | 
 | 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | no | [**Sprint 5**](./sprint_5_backlog.md) |
 | 44 | Shooting range in the model | Bagattoni | when the shooting range is available as an alternative initialization of GameState | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 45 | Shooting range in View | unassigned | when the user can select the Shooting range mode | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 45 | Shooting range in View | Bagattoni | when the user can select the Shooting range mode | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 45 | End game | Venturini | When a message is displayed once only a player is left in the game | no | [**Sprint 5**](./sprint_5_backlog.md) |
 
 ___
 ___
