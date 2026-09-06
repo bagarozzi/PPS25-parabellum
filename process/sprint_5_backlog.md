@@ -46,7 +46,7 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 | 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | yes |
 | 42 | ImpactEffect refactoring | Venturini | this | no |
 | 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | no |
-| 44 | Shooting range in the model | unassigned | when the shooting range is available as an alternative initialization of GameState | no |
+| 44 | Shooting range in the model | unassigned | when the shooting range is available as an alternative initialization of GameState | yes |
 | 45 | Shooting range in View | unassigned | when the user can select the Shooting range mode | no |
 
 
