@@ -46,7 +46,7 @@ object GameState:
       .getOrElse(g)
 
   private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
-    case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
+    case(None, Some(func)) => g.copy(manager = g.manager.removePlayerPowerUp(g.manager.currentPlayer), projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
 
   private def processPendingInput(g: GameState, passedFunction: Option[Function]): GameState = (g.pendingFunction, passedFunction) match
