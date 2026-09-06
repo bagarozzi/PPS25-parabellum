@@ -1,22 +1,17 @@
-package it.unibo.parabellum.view
+package it.unibo.parabellum
+package view
+
+import controller.{GameController, GameState}
+import model.entity.{Obstacle, PowerUp}
+import model.function.ParsingError
+import model.shape.{Difference, Circle as ModelCircle, Polygon as ModelPolygon}
+import util.BoundingBox
+import view.TrajectoryView
 
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
-import scalafx.scene.paint.Color.*
 import scalafx.scene.layout.BorderPane
-import scalafx.Includes.*
-import it.unibo.parabellum.model.entity.{Obstacle, Player, PowerUp}
-import it.unibo.parabellum.model.function.{ParsingError, Projectile}
-import it.unibo.parabellum.controller.{GameController, GameState}
-import it.unibo.parabellum.model.collision.CollisionDetector
-import it.unibo.parabellum.view.TrajectoryView
-import it.unibo.parabellum.model.shape.{Difference, Circle as ModelCircle, Polygon as ModelPolygon}
-import it.unibo.parabellum.util.BoundingBox
-import scalafx.animation.PauseTransition
-import scalafx.scene.control.Label
-import scalafx.util.Duration
-
-import scala.collection.StepperShape.Shape
+import scalafx.scene.paint.Color.*
 
 /**
  * Main GUI of the Parabellum game.
@@ -29,7 +24,6 @@ import scala.collection.StepperShape.Shape
 class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
   given windowSize: WindowSize = WindowSize(width, height)
-  import CollisionDetector.given
 
   private lazy val gameView = new GameView(windowSize.width, windowSize.height)
   private val trajectoryView = new TrajectoryView()
@@ -74,6 +68,24 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       resizable = false
       scene = menuScene
 
+  override def showEndGame(winner: String): Unit =
+    def restartGame(): Unit =
+      playerViews = Map.empty
+      projectileView = None
+      obstacleViews = Map.empty
+      powerUpViews = Map.empty
+      gameView.clear()
+      start()
+    val winnerPane = new EndGameView(() => restartGame(), height, width, winner)
+    
+      
+      
+    val winnerScene = new Scene:
+      root = winnerPane
+      
+    stage.scene = winnerScene
+    
+      
   override def render(state: GameState)(using border: BoundingBox): Unit =
     Platform.runLater:
       controlPanel.updateCurrentPlayer(state.manager.current.name)
@@ -134,7 +146,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
             playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
       //remove players
-      val currentSoldiers = state.manager.soldiers.map(_.name).toSet
+      val currentSoldiers = state.manager.soldiers.map(_.name)
       val deadSoldiers = playerViews.keys.toSet.diff(currentSoldiers)
 
       deadSoldiers.foreach: deadName =>

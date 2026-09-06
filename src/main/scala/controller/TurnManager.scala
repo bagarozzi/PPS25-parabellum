@@ -73,8 +73,8 @@ case class TurnManager(
     copy(teams = newTeams, currentIndex = currentIndex % newTeams.size)
     
 
-  def winner: Option[Team] =
-    if teams.size == 1 then Some(teams.head)
+  def winner: Option[Player] =
+    if teams.size == 1 then Some(teams.head.owner)
     else None
 
   def enemies: Set[Soldier] =

@@ -8,5 +8,5 @@ import it.unibo.parabellum.util.BoundingBox
  */
 trait View:
   def render(state: GameState)(using border: BoundingBox): Unit
-  
+  def showEndGame(winner: String): Unit
   def start(): Unit

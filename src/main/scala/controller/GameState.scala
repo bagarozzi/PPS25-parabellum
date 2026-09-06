@@ -20,6 +20,8 @@ import util.{BoundingBox, MapGenerator, Position}
 case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[Function]):
 
   def map[B](op: GameState => B): B = op(this)
+
+  def winner: Option[Player] = manager.winner
 object GameState:
 
   /**
