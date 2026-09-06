@@ -1,7 +1,6 @@
 package it.unibo.parabellum
 package view
 
-import scalafx.Includes.*
 import scalafx.geometry.Pos
 import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout.VBox
@@ -14,7 +13,7 @@ class EndGameView(onClick: () => Unit, height: Double, width: Double, winner: St
   prefHeight = height
   
   private val button = new Button("Back to Menu")
-  button.onAction = _ => onClick()
+  button.onAction =_ => onClick()
 
   children = Seq(
     new Label(s"Winner: $winner"),
