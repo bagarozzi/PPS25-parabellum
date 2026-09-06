@@ -67,13 +67,11 @@ object GameState:
   def init(players: Set[String], soldiers: Int)(using border: BoundingBox): GameState =
 
     val emptyManager = TurnManager(Vector.empty, 0)
-    val emptyState = GameState(emptyManager, Set.empty, Set.empty, None, None)
 
-    val stateWithObstacles = MapGenerator.generateObstacles(5, emptyState)
-    val stateWithPlayers = MapGenerator.generatePlayers(players, soldiers, stateWithObstacles)
-    val finalState = MapGenerator.generatePowerUps(3, stateWithPlayers)
-
-    finalState
+    GameState(emptyManager, Set.empty, Set.empty, None, None)
+      .map(MapGenerator.generateObstacles(5, _))
+      .map(MapGenerator.generatePlayers(players, soldiers, _))
+      .map(MapGenerator.generatePowerUps(3, _))
 
   def testInit(): GameState =
     GameState(
