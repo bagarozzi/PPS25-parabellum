@@ -9,6 +9,7 @@ import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
 import model.function.Function
 
+import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
 import it.unibo.parabellum.model.entity.Player.initPlayer
 import it.unibo.parabellum.model.entity.Soldier.initSoldier
 
@@ -75,9 +76,16 @@ object GameState:
 
   def testInit(): GameState =
     GameState(
-      initTurnManager(Map((initPlayer("giorgio"), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", 1))))),
+      initTurnManager(Map((initPlayer("giorgio", normalImpactEffect()), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", 1))))),
       Set(),
       Set(Ricochet(Position(7.5, 0))),
       None,
       None
     )
+
+//  def initShootingRange(): GameState = {
+//    given BoundingBox()
+//    GameState(
+//      initTurnManager
+//    )
+//  }

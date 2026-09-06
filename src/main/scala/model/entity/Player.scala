@@ -4,19 +4,21 @@ package model.entity
 import util.Position
 import model.shape.{Circle, Shape}
 
+import it.unibo.parabellum.model.collision.ImpactEffect
 import it.unibo.parabellum.model.function.Trajectory
 
 trait Player:
   val name: String
   def setPowerUp(powerUp: Option[PowerUp]): Player
   def getPowerUp: Option[PowerUp]
+  def impactEffect: ImpactEffect
 
 enum State:
   case alive, dead
   
-class PlayerImpl(val name: String, val powerUp: Option[PowerUp]) extends Player:
+class PlayerImpl(val name: String, val powerUp: Option[PowerUp], val impactEffect: ImpactEffect) extends Player:
   override def setPowerUp(powerUp: Option[PowerUp]): PlayerImpl =
-    PlayerImpl(name, powerUp)
+    PlayerImpl(name, powerUp, impactEffect)
 
   override def getPowerUp: Option[PowerUp] = powerUp
     
@@ -24,5 +26,5 @@ object Player:
 
   private val PLAYER_RADIUS: Double = 0.15
 
-  def initPlayer(name: String): Player = PlayerImpl(name, None)
+  def initPlayer(name: String, impactEffect: ImpactEffect): Player = PlayerImpl(name, None, impactEffect)
   
