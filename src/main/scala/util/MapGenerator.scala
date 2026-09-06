@@ -1,12 +1,15 @@
 package it.unibo.parabellum
 package util
 
-import model.entity.{Obstacle, Player, Soldier, PowerUp, Ricochet, Burden, Random, Piercing}
+import model.entity.{Burden, Obstacle, Piercing, Player, PowerUp, Random, Ricochet, Soldier}
 import model.entity.Player.initPlayer
 import model.entity.Soldier.*
 import controller.GameState
+
 import scala.annotation.tailrec
-import model.shape.{Circle => ModelCircle}
+import model.shape.Circle as ModelCircle
+
+import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
 
 /**
  * Utility object responsible for the procedural generation of the game map.
@@ -174,7 +177,7 @@ object MapGenerator:
       val direction = if isLeft then 1 else -1
 
       // Add the empty player shell to the TurnManager first
-      val stateWithPlayer = GameState.addPlayer(stateAcc, initPlayer(playerName))
+      val stateWithPlayer = GameState.addPlayer(stateAcc, initPlayer(playerName, normalImpactEffect()))
 
       // Fold over the required soldier count, adding them one by one to the specific player's team
       (1 to soldierCount).foldLeft(stateWithPlayer): (teamAcc, _) =>

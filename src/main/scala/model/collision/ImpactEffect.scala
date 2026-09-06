@@ -5,7 +5,7 @@ import model.entity.{Figure, Obstacle, PowerUp, Soldier}
 import controller.GameState
 import model.function.{Trajectory, reverse}
 import model.shape.{Circle, Difference, Shape}
-import util.Position
+import util.{BoundingBox, MapGenerator, Position}
 
 import it.unibo.parabellum.model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
 import scalafx.geometry.Orientation.Horizontal
@@ -57,6 +57,16 @@ case class Ricochet() extends ImpactEvent:
 
     override def action(g: GameState): GameState = g.copy(projectile = g.projectile.map(_.mapTrajectory(_.ricochet())))
 
+case class DestroyObstacle(obstacle: Obstacle) extends ImpactEvent:
+
+    override def action(g: GameState): GameState = g.copy(obstacles = g.obstacles - obstacle)
+
+case class SpawnNewObstacle() extends ImpactEvent:
+
+    override def action(g: GameState): GameState =
+        import controller.GameController.given
+        MapGenerator.spawnObstacle(g)(using BoundingBox(0, border.x1, border.y0, border.y1))
+
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
  * a [[Figure]] or the map's borders.
@@ -85,6 +95,12 @@ object ImpactEffect:
     case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
     case BorderImpact(_) => Set(DestroyProjectile())
     case FigureImpact(Position(_, _), _) => Set()
+  }
+
+  def shootingRangeImpactEffect(): ImpactEffect = {
+      case FigureImpact(pos, obs: Obstacle) => Set(DestroyObstacle(obs), SpawnNewObstacle())
+      case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
+      case i => normalImpactEffect().applyEffect(i)
   }
 
 /**
