@@ -1,13 +1,16 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, PowerUp}
-import util.{BoundingBox, MapGenerator}
+import model.entity.{Obstacle, PowerUp, Ricochet}
+import util.{BoundingBox, MapGenerator, Position}
 import model.function.Projectile
 import model.collision.CollisionDetector.detectCollision
 import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
 import model.function.Function
+
+import it.unibo.parabellum.model.entity.Player.initPlayer
+import it.unibo.parabellum.model.entity.Soldier.initSoldier
 
 
 /**
@@ -70,6 +73,15 @@ object GameState:
       manager,
       obstacles,
       powerUps,
+      None,
+      None
+    )
+
+  def testInit(): GameState =
+    GameState(
+      initTurnManager(Map((initPlayer("giorgio"), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", 1))))),
+      Set(),
+      Set(Ricochet(Position(7.5, 0))),
       None,
       None
     )
