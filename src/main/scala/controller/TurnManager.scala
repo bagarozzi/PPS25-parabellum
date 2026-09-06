@@ -25,6 +25,9 @@ case class Team(owner: Player, soldiers: Vector[Soldier], currentIndex: Int):
   
   def setPlayerPowerUp(powerUp: Option[PowerUp]): Team =
     copy(owner = owner.setPowerUp(powerUp))
+
+  def removePlayerPowerUp(): Team =
+    copy(owner = owner.setPowerUp(None))
     
 object Team:
   def initTeam(owner: Player, soldiers: Vector[Soldier]): Team =
@@ -87,6 +90,14 @@ case class TurnManager(
       teams = teams.map(t => if player.name == t.owner.name then
           t.setPlayerPowerUp(powerUp)
         else t
+      )
+    )
+
+  def removePlayerPowerUp(player: Player): TurnManager =
+    copy(
+      teams = teams.map(t => if player.name == t.owner.name then
+        t.removePlayerPowerUp()
+      else t
       )
     )
     

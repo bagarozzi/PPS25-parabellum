@@ -1,16 +1,15 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, Player, PowerUp, Ricochet, Soldier}
-import util.{BoundingBox, MapGenerator, Position}
-import model.function.Projectile
-import model.collision.CollisionDetector.detectCollision
-import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
-import model.function.Function
-
-import it.unibo.parabellum.model.entity.Player.initPlayer
-import it.unibo.parabellum.model.entity.Soldier.initSoldier
+import model.collision.CollisionDetector.detectCollision
+import model.collision.ImpactEffect.{normalImpactEffect, shootingRangeImpactEffect}
+import model.entity.Player.initPlayer
+import model.entity.Soldier.initSoldier
+import model.entity.*
+import model.function.{Function, Projectile}
+import util.MapGenerator.{spawnObstacle, spawnPowerUp, spawnSoldier}
+import util.{BoundingBox, MapGenerator, Position}
 
 
 /**
@@ -47,7 +46,7 @@ object GameState:
       .getOrElse(g)
 
   private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
-    case(None, Some(func)) => g.copy(projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
+    case(None, Some(func)) => g.copy(manager = g.manager.removePlayerPowerUp(g.manager.currentPlayer), projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
 
   private def processPendingInput(g: GameState, passedFunction: Option[Function]): GameState = (g.pendingFunction, passedFunction) match
@@ -77,12 +76,18 @@ object GameState:
 
   def testInit(): GameState =
     GameState(
-      initTurnManager(Map((initPlayer("giorgio"), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", 1))))),
+      initTurnManager(Map((initPlayer("giorgio", normalImpactEffect()), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", 1))))),
       Set(),
       Set(Ricochet(Position(7.5, 0))),
       None,
       None
     )
-    
-  
-    
+
+  def initShootingRange(): GameState =
+    import controller.GameController.given
+    val shapesSpawnArea: BoundingBox = BoundingBox(0, border.x1, border.y0, border.y1)
+    val shootingRangeName = "Ryan"
+    GameState(initTurnManager(Map((initPlayer(shootingRangeName, shootingRangeImpactEffect()), Vector.empty))), Set(), Set(), None, None)
+        .map(spawnSoldier(_, shootingRangeName, 1, border.x0, 0)(using shapesSpawnArea))
+        .map(spawnPowerUp(_)(using shapesSpawnArea))
+        .map(spawnObstacle(_)(using shapesSpawnArea))
