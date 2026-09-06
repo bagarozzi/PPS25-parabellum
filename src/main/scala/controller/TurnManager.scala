@@ -64,6 +64,7 @@ case class TurnManager(
         (currentIndex + 1) % teams.size
     )
     
+  
   def eliminateDeadSoldier(s: Soldier): TurnManager =
     val newTeams = teams.map(t => t.removeSoldier(s)).filter(t => !t.isEmpty)
     copy(teams = newTeams, currentIndex = currentIndex % newTeams.size)
@@ -98,3 +99,15 @@ object TurnManager:
   
   def initTurnManager(map: Map[Player, Vector[Soldier]]): TurnManager =
    TurnManager(map.map((player, soldiers) => initTeam(player, soldiers)).toVector, 0)
+
+  def addPlayer(tm: TurnManager, player: Player): TurnManager =
+    val newTeam = Team.initTeam(player, Vector.empty)
+    tm.copy(teams = tm.teams :+ newTeam)
+  
+  def addSoldier(tm: TurnManager, playerName: String, soldier: Soldier): TurnManager =
+    val updatedTeams = tm.teams.map: team =>
+      if team.owner.name == playerName then
+        team.copy(soldiers = team.soldiers :+ soldier)
+      else
+        team
+    tm.copy(teams = updatedTeams)

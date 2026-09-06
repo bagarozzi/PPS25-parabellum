@@ -3,130 +3,179 @@ package util
 
 import model.entity.{Obstacle, Player, Soldier, PowerUp, Ricochet, Burden, Random, Piercing}
 import model.entity.Player.initPlayer
-import util.{Position, RandomGenerator}
 import model.entity.Soldier.*
+import controller.GameState
 import scala.annotation.tailrec
 import model.shape.{Circle => ModelCircle}
 
 /**
- * Utility object responsible for generating the game map layout.
- * It provides methods to randomly spawn players and obstacles within defined boundaries.
+ * Utility object responsible for the procedural generation of the game map.
+ * It uses a functional State pattern (GameState => GameState) to ensure immutability,
+ * where each generation step reads the occupied spaces from the current state and returns an updated one.
  */
 object MapGenerator:
 
   /**
-   * Generates a set of obstacles (a mix of Circles and random Polygons) within the specified area.
-   * Uses tail recursion to ensure immutability and prevent overlaps via Prolog integration.
+   * Dynamically extracts the spatial footprint (X, Y, Radius) of all entities
+   * currently present in the given GameState.
    *
-   * @param count The total number of obstacles to generate.
-   * @param minX  The minimum X-coordinate boundary for the spawn area.
-   * @param maxX  The maximum X-coordinate boundary for the spawn area.
-   * @param minY  The minimum Y-coordinate boundary for the spawn area.
-   * @param maxY  The maximum Y-coordinate boundary for the spawn area.
-   * @return A Set containing the newly generated Obstacle entities.
+   * @param g The current GameState.
+   * @return A sequence of tuples representing the occupied areas to be passed to Prolog.
    */
-  def generateObstacles(count: Int)(using border: BoundingBox): (Set[Obstacle], Seq[(Double, Double, Double)]) =
+  private def getOccupiedSpaces(g: GameState): Seq[(Double, Double, Double)] =
+    val obsSpaces = g.obstacles.toSeq.map: o =>
+      val r = o.shape match
+        case ModelCircle(_, radius) => radius
+        case _ => 4.0
+      (o.pos.x, o.pos.y, r)
 
-    @tailrec
-    def generateLoop(obstacles: Set[Obstacle], existingData: Seq[(Double, Double, Double)]): (Set[Obstacle], Seq[(Double, Double, Double)]) =
-      if obstacles.size >= count then
-        (obstacles, existingData)
+    val puSpaces = g.powerUps.toSeq.map: pu =>
+      val r = pu.shape match
+        case ModelCircle(_, radius) => radius
+        case _ => 0.2
+      (pu.pos.x, pu.pos.y, r)
+
+    val soldierSpaces = g.manager.soldiers.toSeq.map: s =>
+      val r = s.shape match
+        case ModelCircle(_, radius) => radius
+        case _ => 0.15
+      (s.pos.x, s.pos.y, r)
+
+    obsSpaces ++ puSpaces ++ soldierSpaces
+
+
+  // --- SINGULAR SPAWN FUNCTIONS (Generate and append exactly 1 entity) ---
+
+  /**
+   * Spawns a single random obstacle (Circle or Polygon) avoiding collisions.
+   * Uses tail recursion to retry upon overlap detection.
+   *
+   * @param g The current GameState.
+   * @param border The implicit bounding box of the map.
+   * @return The updated GameState containing the new obstacle.
+   */
+  @tailrec
+  def spawnObstacle(g: GameState)(using border: BoundingBox): GameState =
+    val pos = RandomGenerator.randomPosition(border.x0, border.x1, border.y0, border.y1)
+    val isCircle = math.random() > 0.5
+    val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
+
+    if PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, getOccupiedSpaces(g)) then
+      spawnObstacle(g) // Collision detected, retry
+    else
+      val newObstacle = if isCircle then Obstacle(pos, maxRadius)
       else
-        val pos = RandomGenerator.randomPosition(border.x0, border.x1, border.y0, border.y1)
-        val isCircle = math.random() > 0.5
-        val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
+        val numVertices = 3 + (math.random() * 4).toInt
+        val vertices = (1 to numVertices).map: _ =>
+          RandomGenerator.randomPosition(pos.x - maxRadius, pos.x + maxRadius, pos.y - maxRadius, pos.y + maxRadius)
+        Obstacle(pos, vertices)
 
-        if PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, existingData) then
-          generateLoop(obstacles, existingData)
-        else
-          val newObstacle = if isCircle then
-            Obstacle(pos, maxRadius)
-          else
-            val numVertices = 3 + (math.random() * 4).toInt
-            val windowSize = maxRadius
-            val minVX = pos.x - windowSize
-            val maxVX = pos.x + windowSize
-            val minVY = pos.y - windowSize
-            val maxVY = pos.y + windowSize
-
-            val vertices = (1 to numVertices).map: _ =>
-              RandomGenerator.randomPosition(minVX, maxVX, minVY, maxVY)
-
-            Obstacle(pos, vertices)
-
-          generateLoop(
-            obstacles + newObstacle,
-            existingData :+ (pos.x, pos.y, maxRadius)
-          )
-
-    generateLoop(Set.empty, Seq.empty)
+      GameState.addObstacle(g, newObstacle)
 
 
   /**
-   * Generates two players placing them on opposite sides of the map (left and right),
-   * ensuring a safe margin from the center, with random Y-coordinates.
+   * Spawns a single random power-up in a free space.
    *
-   * @param minX The minimum X-coordinate boundary (left edge of the map).
-   * @param maxX The maximum X-coordinate boundary (right edge of the map).
-   * @param minY The minimum Y-coordinate boundary (bottom edge of the map).
-   * @param maxY The maximum Y-coordinate boundary (top edge of the map).
-   * @return A Map containing the Player entities and their respective Soldiers.
+   * @param g The current GameState.
+   * @param border The implicit bounding box of the map.
+   * @return The updated GameState containing the new power-up.
    */
-  def generatePlayers(players: Set[String], soldierCount: Int, initialData: Seq[(Double, Double, Double)])(using border: BoundingBox): (Map[Player, Vector[Soldier]], Seq[(Double, Double, Double)]) =
+  @tailrec
+  def spawnPowerUp(g: GameState)(using border: BoundingBox): GameState =
+    val pX = border.x0 + (border.x1 - border.x0) * math.random()
+    val pY = border.y0 + (border.y1 - border.y0) * math.random()
+    val pos = Position(pX, pY)
+
+    val rand = math.random()
+    val pu: PowerUp =
+      if rand < 0.25 then Ricochet(pos)
+      else if rand < 0.50 then Burden(pos)
+      else if rand < 0.75 then Random(pos)
+      else Piercing(pos)
+
+    val radius = pu.shape match
+      case ModelCircle(_, r) => r
+      case _ => 0.2
+
+    if PrologMapChecker.hasOverlap(pX, pY, radius, getOccupiedSpaces(g)) then
+      spawnPowerUp(g)
+    else
+      GameState.addPowerUp(g, pu)
+
+
+  /**
+   * Spawns a single soldier for a specific team within the designated map segment.
+   *
+   * @param g The current GameState.
+   * @param playerName The name of the player owning this soldier.
+   * @param direction The facing direction of the soldier (1 for right, -1 for left).
+   * @param spawnMinX The minimum X boundary for this specific team's spawn area.
+   * @param spawnMaxX The maximum X boundary for this specific team's spawn area.
+   * @param border The implicit bounding box of the map.
+   * @return The updated GameState containing the newly assigned soldier.
+   */
+  @tailrec
+  def spawnSoldier(g: GameState, playerName: String, direction: Int, spawnMinX: Double, spawnMaxX: Double)(using border: BoundingBox): GameState =
+    val pX = spawnMinX + (spawnMaxX - spawnMinX) * math.random()
+    val pY = border.y0 + (border.y1 - border.y0) * math.random()
+
+    val teamCurrentSize = g.manager.teams.find(_.owner.name == playerName).map(_.soldiers.size).getOrElse(0)
+    val newSoldier = initSoldier(s"$playerName-soldier${teamCurrentSize + 1}", Position(pX, pY), playerName, direction)
+
+    val radius = newSoldier.shape match
+      case ModelCircle(_, r) => r
+      case _ => 0.15
+
+    if PrologMapChecker.hasOverlap(pX, pY, radius, getOccupiedSpaces(g)) then
+      spawnSoldier(g, playerName, direction, spawnMinX, spawnMaxX)
+    else
+      GameState.addSoldier(g, playerName, newSoldier)
+
+
+  // --- PLURAL GENERATION FUNCTIONS (Folds over the state) ---
+
+  /**
+   * Generates a specified number of obstacles by folding over the GameState.
+   *
+   * @param count The amount of obstacles to generate.
+   * @param initialGameState The starting GameState.
+   * @return The resulting GameState populated with obstacles.
+   */
+  def generateObstacles(count: Int, initialGameState: GameState)(using border: BoundingBox): GameState =
+    (1 to count).foldLeft(initialGameState)((acc, _) => spawnObstacle(acc))
+
+  /**
+   * Generates a specified number of power-ups by folding over the GameState.
+   *
+   * @param count The amount of power-ups to generate.
+   * @param initialGameState The starting GameState.
+   * @return The resulting GameState populated with power-ups.
+   */
+  def generatePowerUps(count: Int, initialGameState: GameState)(using border: BoundingBox): GameState =
+    (1 to count).foldLeft(initialGameState)((acc, _) => spawnPowerUp(acc))
+
+  /**
+   * Divides the map, initializes the players, and generates their respective teams of soldiers.
+   *
+   * @param players A Set containing the names of the players.
+   * @param soldierCount The number of soldiers per team.
+   * @param initialGameState The starting GameState (usually already containing obstacles).
+   * @return The resulting GameState populated with players and soldiers.
+   */
+  def generatePlayers(players: Set[String], soldierCount: Int, initialGameState: GameState)(using border: BoundingBox): GameState =
     val midX = (border.x0 + border.x1) / 2.0
     val safeMargin = 2.0
 
-    @tailrec
-    def spawnTeam(teamName: String, direction: Int, minX: Double, maxX: Double, remaining: Int, teamAcc: Vector[Soldier], dataAcc: Seq[(Double, Double, Double)]): (Vector[Soldier], Seq[(Double, Double, Double)]) =
-      if remaining == 0 then (teamAcc, dataAcc)
-      else
-        val pX = minX + (maxX - minX) * math.random()
-        val pY = border.y0 + (border.y1 - border.y0) * math.random()
+    players.toList.zipWithIndex.foldLeft(initialGameState): (stateAcc, playerWithIndex) =>
+      val (playerName, index) = playerWithIndex
+      val isLeft = index == 0
+      val spawnMinX = if isLeft then border.x0 else midX + safeMargin
+      val spawnMaxX = if isLeft then midX - safeMargin else border.x1
+      val direction = if isLeft then 1 else -1
 
-        val newSoldier = initSoldier(s"$teamName-soldier${teamAcc.size + 1}", Position(pX, pY), teamName, direction)
+      // Add the empty player shell to the TurnManager first
+      val stateWithPlayer = GameState.addPlayer(stateAcc, initPlayer(playerName))
 
-        val radius = newSoldier.shape match
-          case ModelCircle(_, r) => r
-          case _ => 0.5
-
-        if PrologMapChecker.hasOverlap(pX, pY, radius, dataAcc) then
-          spawnTeam(teamName, direction, minX, maxX, remaining, teamAcc, dataAcc)
-        else
-          spawnTeam(teamName, direction, minX, maxX, remaining - 1, teamAcc :+ newSoldier, dataAcc :+ (pX, pY, radius))
-
-    players.toList.zipWithIndex.foldLeft((Map.empty[Player, Vector[Soldier]], initialData)):
-      case ((mapAcc, currentData), (playerName, index)) =>
-        val player = initPlayer(playerName)
-        val isLeft = index == 0
-        val spawnMinX = if isLeft then border.x0 else midX + safeMargin
-        val spawnMaxX = if isLeft then midX - safeMargin else border.x1
-        val direction = if isLeft then 1 else -1
-
-        val (team, newData) = spawnTeam(playerName, direction, spawnMinX, spawnMaxX, soldierCount, Vector.empty, currentData)
-        (mapAcc + (player -> team), newData)
-  def generatePowerUps(count: Int, initialData: Seq[(Double, Double, Double)])(using border: BoundingBox): (Set[PowerUp], Seq[(Double, Double, Double)]) =
-
-    @tailrec
-    def spawnLoop(powerUps: Set[PowerUp], dataAcc: Seq[(Double, Double, Double)]): (Set[PowerUp], Seq[(Double, Double, Double)]) =
-      if powerUps.size >= count then (powerUps, dataAcc)
-      else
-        val pX = border.x0 + (border.x1 - border.x0) * math.random()
-        val pY = border.y0 + (border.y1 - border.y0) * math.random()
-        val pos = Position(pX, pY)
-
-        val rand = math.random()
-        val pu: PowerUp = if rand < 0.25 then Ricochet(pos)
-        else if rand < 0.50 then Burden(pos)
-        else if rand < 0.75 then Random(pos)
-        else Piercing(pos)
-
-        val radius = pu.shape match
-          case ModelCircle(_, r) => r
-          case _ => 0.2
-
-        if PrologMapChecker.hasOverlap(pX, pY, radius, dataAcc) then
-          spawnLoop(powerUps, dataAcc)
-        else
-          spawnLoop(powerUps + pu, dataAcc :+ (pX, pY, radius))
-
-    spawnLoop(Set.empty, initialData)
+      // Fold over the required soldier count, adding them one by one to the specific player's team
+      (1 to soldierCount).foldLeft(stateWithPlayer): (teamAcc, _) =>
+        spawnSoldier(teamAcc, playerName, direction, spawnMinX, spawnMaxX)
