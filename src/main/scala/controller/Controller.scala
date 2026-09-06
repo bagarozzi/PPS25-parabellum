@@ -4,6 +4,7 @@ package controller
 import view.View
 import model.function.{Function, FunctionParser, ParsingError, Projectile, Trajectory}
 
+import it.unibo.parabellum.model.entity.Player
 import it.unibo.parabellum.util.BoundingBox
 import scalafx.animation.AnimationTimer
 
@@ -34,8 +35,13 @@ object GameController extends Controller:
         val timer = AnimationTimer {
             time =>
                 gameState = Some(GameState.update(gameState.get, (time - lastTime)/1_000_000, pendingFunction))
+                val winner = gameState.flatMap(_.winner)
+                winner match
+                    case Some(p: Player) =>
+                        gameLoop.foreach(_.stop())
+                        view.showEndGame(p.name)
+                    case None => updateView(gameState.get)
                 lastTime = time
-                updateView(gameState.get)
                 pendingFunction = None
         }
         timer.start()
@@ -51,3 +57,5 @@ object GameController extends Controller:
 
     def updateView(g: GameState)(using view: View, border: BoundingBox): Unit =
         view.render(g)
+        
+    def showEndGame(): Unit = ???
