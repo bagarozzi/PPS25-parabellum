@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, PowerUp, Ricochet}
+import model.entity.{Obstacle, Player, PowerUp, Ricochet, Soldier}
 import util.{BoundingBox, MapGenerator, Position}
 import model.function.Projectile
 import model.collision.CollisionDetector.detectCollision
@@ -55,27 +55,25 @@ object GameState:
   def addObstacle(g: GameState, obstacle: Obstacle): GameState =
     GameState(g.manager, g.obstacles + obstacle, g.powerUps, g.projectile, None)
 
+  def addPowerUp(g: GameState, pu: PowerUp): GameState =
+    g.copy(powerUps = g.powerUps + pu)
+
+  def addPlayer(g: GameState, player: Player): GameState =
+    g.copy(manager = TurnManager.addPlayer(g.manager, player))
+
+  def addSoldier(g: GameState, playerName: String, soldier: Soldier): GameState =
+    g.copy(manager = TurnManager.addSoldier(g.manager, playerName, soldier))
+
   def init(players: Set[String], soldiers: Int)(using border: BoundingBox): GameState =
-    
-    // TODO: make this resizable
-    val minX = -10.0
-    val maxX = 10.0
-    val minY = -5.0
-    val maxY = 5.0
 
+    val emptyManager = TurnManager(Vector.empty, 0)
+    val emptyState = GameState(emptyManager, Set.empty, Set.empty, None, None)
 
-    val (obstacles, data1) = MapGenerator.generateObstacles(5)
-    val (playersMap, data2) = MapGenerator.generatePlayers(players, soldiers, data1)
-    val manager = initTurnManager(playersMap)
-    val (powerUps, finalData) = MapGenerator.generatePowerUps(3, data2)
-  
-    GameState(
-      manager,
-      obstacles,
-      powerUps,
-      None,
-      None
-    )
+    val stateWithObstacles = MapGenerator.generateObstacles(5, emptyState)
+    val stateWithPlayers = MapGenerator.generatePlayers(players, soldiers, stateWithObstacles)
+    val finalState = MapGenerator.generatePowerUps(3, stateWithPlayers)
+
+    finalState
 
   def testInit(): GameState =
     GameState(
