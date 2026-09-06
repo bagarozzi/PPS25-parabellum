@@ -9,9 +9,11 @@ import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
 import model.function.Function
 
-import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
+import it.unibo.parabellum.controller.GameController.border
+import it.unibo.parabellum.model.collision.ImpactEffect.{normalImpactEffect, shootingRangeImpactEffect}
 import it.unibo.parabellum.model.entity.Player.initPlayer
 import it.unibo.parabellum.model.entity.Soldier.initSoldier
+import it.unibo.parabellum.util.MapGenerator.{spawnObstacle, spawnSoldier}
 
 
 /**
@@ -83,9 +85,10 @@ object GameState:
       None
     )
 
-//  def initShootingRange(): GameState = {
-//    given BoundingBox()
-//    GameState(
-//      initTurnManager
-//    )
-//  }
+  def initShootingRange(): GameState =
+    import controller.GameController.border
+    given border: BoundingBox = summon[BoundingBox]
+    val shootingRangeName = "Ryan"
+    GameState(initTurnManager(Map((initPlayer(shootingRangeName, shootingRangeImpactEffect()), Vector.empty))), Set(), Set(), None, None)
+        .map(spawnSoldier(_, shootingRangeName, 1, border.x0, 0))
+        .map(spawnObstacle(_)(using BoundingBox(0, border.x1, border.y0, border.y1)))
