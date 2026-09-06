@@ -1,19 +1,15 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Obstacle, Player, PowerUp, Ricochet, Soldier}
-import util.{BoundingBox, MapGenerator, Position}
-import model.function.Projectile
-import model.collision.CollisionDetector.detectCollision
-import model.collision.ImpactEvent
 import controller.TurnManager.initTurnManager
-import model.function.Function
-
-import it.unibo.parabellum.controller.GameController.border
-import it.unibo.parabellum.model.collision.ImpactEffect.{normalImpactEffect, shootingRangeImpactEffect}
-import it.unibo.parabellum.model.entity.Player.initPlayer
-import it.unibo.parabellum.model.entity.Soldier.initSoldier
-import it.unibo.parabellum.util.MapGenerator.{spawnObstacle, spawnSoldier}
+import model.collision.CollisionDetector.detectCollision
+import model.collision.ImpactEffect.{normalImpactEffect, shootingRangeImpactEffect}
+import model.entity.Player.initPlayer
+import model.entity.Soldier.initSoldier
+import model.entity.*
+import model.function.{Function, Projectile}
+import util.MapGenerator.{spawnObstacle, spawnPowerUp, spawnSoldier}
+import util.{BoundingBox, MapGenerator, Position}
 
 
 /**
@@ -86,9 +82,10 @@ object GameState:
     )
 
   def initShootingRange(): GameState =
-    import controller.GameController.border
-    given border: BoundingBox = summon[BoundingBox]
+    import controller.GameController.given
+    val shapesSpawnArea: BoundingBox = BoundingBox(0, border.x1, border.y0, border.y1)
     val shootingRangeName = "Ryan"
     GameState(initTurnManager(Map((initPlayer(shootingRangeName, shootingRangeImpactEffect()), Vector.empty))), Set(), Set(), None, None)
-        .map(spawnSoldier(_, shootingRangeName, 1, border.x0, 0))
-        .map(spawnObstacle(_)(using BoundingBox(0, border.x1, border.y0, border.y1)))
+        .map(spawnSoldier(_, shootingRangeName, 1, border.x0, 0)(using shapesSpawnArea))
+        .map(spawnPowerUp(_)(using shapesSpawnArea))
+        .map(spawnObstacle(_)(using shapesSpawnArea))
