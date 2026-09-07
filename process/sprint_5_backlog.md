@@ -53,7 +53,12 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 
 Keep in mind: ***always merge working code***
 
-### Sprint review meeting (06/08/2026)
+### Sprint review meeting (07/09/2026)
+Lo sprint ha portato i risultati previsti a livello progettuale ma non ha prodotto la documentazione che doveva essere prodotta.
+Le task vengono rimandate al prossimo, ed ultimo, sprint.
+
+Il gioco è da considerarsi completato con la release della versione 4 (v4.0). Mancano però unit testing, refactoring e commenti
+che verranno aggiunti nel prossimo sprint e rilasciati sotto forma di una minor release (v4.1).
 
 ___
 ___
