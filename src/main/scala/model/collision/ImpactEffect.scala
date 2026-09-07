@@ -7,7 +7,7 @@ import model.function.Trajectory
 import model.shape.{Circle, Shape}
 import util.{BoundingBox, MapGenerator, Position}
 
-import model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
+import BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
 
 
 /**

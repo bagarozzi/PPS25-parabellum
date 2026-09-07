@@ -3,15 +3,10 @@ package model.function
 
 import util.Position
 import model.function.Trajectory
-import model.function.FunctionParser
-import model.collision.ImpactEffect
-import model.collision.ImpactEffect.{normalImpactEffect, piercingImpactEffect, ricochetImpactEffect}
-import model.function
 
-import it.unibo.parabellum.model.collision.ImpactEffect
-import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
-import it.unibo.parabellum.model.entity.{Burden, Entity, Piercing, Soldier, Player, PowerUp, Random, Ricochet}
-import it.unibo.parabellum.model.function
+import model.collision.ImpactEffect
+import model.entity.{Entity, Soldier, Player, PowerUp}
+import model.function
 
 /**
  * A [[Projectile]] is an [[Entity]] that is shot from a player

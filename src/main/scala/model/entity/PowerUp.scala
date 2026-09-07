@@ -7,8 +7,8 @@ import model.collision.ImpactEffect.*
 
 import scala.util.Random as RandomGen
 
-import it.unibo.parabellum.model.function.*
-import it.unibo.parabellum.model.collision.ImpactEffect
+import model.function.*
+import model.collision.ImpactEffect
 
 
 sealed trait PowerUp(pos: Position) extends Figure:

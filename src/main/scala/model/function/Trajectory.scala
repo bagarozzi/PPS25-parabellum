@@ -3,7 +3,7 @@ package model.function
 
 import util.Position
 
-import it.unibo.parabellum.model.function.Direction.{Negative, Positive}
+import model.function.Direction.{Negative, Positive}
 
 enum Direction:
   case Negative

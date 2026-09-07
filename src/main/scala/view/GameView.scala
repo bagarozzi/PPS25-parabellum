@@ -1,8 +1,7 @@
-package it.unibo.parabellum.view
+package it.unibo.parabellum
+package view
 
 import scalafx.animation.PauseTransition
-import scalafx.beans.property.{ReadOnlyDoubleProperty, ReadOnlyProperty}
-import scalafx.beans.value.ObservableValue
 import scalafx.scene.layout.Pane
 import scalafx.scene.Node
 import scalafx.scene.control.Label
@@ -65,7 +64,7 @@ class GameView(width: Double, height: Double) extends Pane:
    * @param nodes Elementi grafici da aggiungere (Player, Obstacle, Projectile, ecc.)
    */
   def addElements(nodes: Node*): Unit =
-  //estrarre l'oggetto JavaFX originale (usando la proprietà .delegate che ogni oggetto ScalaFX possiede)
+  //Estrarre l'oggetto JavaFX originale (usando la proprietà. Delegate che ogni oggetto ScalaFX possiede)
     children.addAll(nodes.map(_.delegate))
 
   /**
