@@ -30,7 +30,8 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
   private lazy val controlPanel = new ControlPanelView(userInput =>
     GameController.addProjectile(userInput) match
       case Some(ParsingError(message)) => showParsingError(message)
-      case _ =>
+      case _ =>,
+    () => endShootingMode()
   )
 
   private var playerViews: Map[String, PlayerView] = Map.empty
@@ -69,23 +70,24 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       scene = menuScene
 
   override def showEndGame(winner: String): Unit =
-    def restartGame(): Unit =
-      playerViews = Map.empty
-      projectileView = None
-      obstacleViews = Map.empty
-      powerUpViews = Map.empty
-      gameView.clear()
-      start()
     val winnerPane = new EndGameView(() => restartGame(), height, width, winner)
-    
-      
-      
     val winnerScene = new Scene:
       root = winnerPane
       
     stage.scene = winnerScene
-    
-      
+
+  def endShootingMode(): Unit =
+    restartGame()
+
+  private def restartGame(): Unit =
+    playerViews = Map.empty
+    projectileView = None
+    obstacleViews = Map.empty
+    powerUpViews = Map.empty
+    gameView.clear()
+    start()
+
+
   override def render(state: GameState)(using border: BoundingBox): Unit =
     Platform.runLater:
       controlPanel.updateCurrentPlayer(state.manager.current.name)
