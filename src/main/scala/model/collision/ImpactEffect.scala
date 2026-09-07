@@ -3,12 +3,12 @@ package model.collision
 
 import model.entity.{Figure, Obstacle, PowerUp, Soldier}
 import controller.GameState
-import model.function.{Trajectory, reverse}
-import model.shape.{Circle, Difference, Shape}
+import model.function.Trajectory
+import model.shape.{Circle, Shape}
 import util.{BoundingBox, MapGenerator, Position}
 
-import it.unibo.parabellum.model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
-import scalafx.geometry.Orientation.Horizontal
+import model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
+
 
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
