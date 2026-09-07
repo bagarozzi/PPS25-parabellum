@@ -12,7 +12,7 @@ import scalafx.Includes.*
  * @param onPlayClicked Callback function executed when the "Play" button is clicked.
  *                      It provides Player 1's name, Player 2's name, and the number of soldiers.
  */
-class MenuView(onPlayClicked: (String, String, Int) => Unit) extends StackPane:
+class MenuView(onPlayClicked: (String, String, Int) => Unit, onShootingRangeClicked: () => Unit) extends StackPane:
 
   private val p1Label = new Label("Player 1 Name:")
   private val p1Input = new TextField:
@@ -40,6 +40,10 @@ class MenuView(onPlayClicked: (String, String, Int) => Unit) extends StackPane:
       onPlayClicked(name1, name2, soldiersCount)
     }
 
+  private val shootingRangeButton = new Button("Shooting range"):
+    style = "-fx-font-size: 24pt; -fx-padding: 10 40 10 40; -fx-cursor: hand;"
+    onAction = _ => onShootingRangeClicked()
+
   private val menuLayout = new VBox:
     alignment = Pos.Center
     spacing = 15
@@ -47,7 +51,8 @@ class MenuView(onPlayClicked: (String, String, Int) => Unit) extends StackPane:
       p1Label, p1Input,
       p2Label, p2Input,
       soldiersLabel, soldiersInput,
-      playButton
+      playButton,
+      shootingRangeButton
     )
 
   children = menuLayout
