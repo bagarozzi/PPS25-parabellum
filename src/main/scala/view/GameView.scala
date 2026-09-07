@@ -2,9 +2,12 @@ package it.unibo.parabellum
 package view
 
 import scalafx.animation.PauseTransition
+import scalafx.beans.property.{ReadOnlyDoubleProperty, ReadOnlyProperty}
+import scalafx.beans.value.ObservableValue
+import scalafx.event.ActionEvent
 import scalafx.scene.layout.Pane
 import scalafx.scene.Node
-import scalafx.scene.control.Label
+import scalafx.scene.control.{Button, Label}
 import scalafx.scene.paint.Color.{Black, White}
 import scalafx.scene.shape.Line
 import scalafx.util.Duration
@@ -80,6 +83,7 @@ class GameView(width: Double, height: Double) extends Pane:
    */
   def clear(): Unit =
     children.clear()
+    children.addAll(xAxis, yAxis, errorLabel)
 
   def showTemporaryError(message: String): Unit = {
     errorLabel.text = message

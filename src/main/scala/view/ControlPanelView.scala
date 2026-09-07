@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package view
 
-import scalafx.scene.layout.HBox
+import scalafx.scene.layout.{HBox, Priority, Region}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.scene.paint.Color.*
@@ -13,7 +13,11 @@ import scalafx.event.ActionEvent
  * @param onShoot Callback function executed when the "Shoot" button is pressed,
  *                passing the user's mathematical function input.
  */
-class ControlPanelView(onShoot: String => Unit) extends HBox:
+class ControlPanelView(onShoot: String => Unit, quitAction: () => Unit) extends HBox:
+
+  // Create a spacer that grows horizontally to fill empty space
+  val spacer = new Region:
+    hgrow = Priority.Always
 
   padding = Insets(15)
   spacing = 20
@@ -37,7 +41,12 @@ class ControlPanelView(onShoot: String => Unit) extends HBox:
       inputField.clear()
     }
 
-  children = List(turnLabel, inputField, shootButton)
+  private val quitButton = new Button("Quit"):
+    style = "-fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 14px;"
+
+    onAction = (ae: ActionEvent) => quitAction()
+
+  children = List(quitButton, spacer, turnLabel, inputField, shootButton)
 
   /**
    * Updates the UI to show which player is currently playing.

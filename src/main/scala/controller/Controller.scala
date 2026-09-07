@@ -28,25 +28,29 @@ object GameController extends Controller:
     given border: BoundingBox = BoundingBox(-25, 25, -15, 15)
 
     def startGame(players: Set[String], soldiers: Int): Unit =
-        //given targetFPS: Int = 60
-        gameState = Some(GameState.init(players,soldiers))
+        gameState = Some(GameState.init(players, soldiers))
+        startSession(g => g.winner.isDefined, g => view.showEndGame(g.winner.get.name))
 
+    def startShootingRange(): Unit =
+        gameState = Some(GameState.initShootingRange())
+        startSession(_ => false, _ => ())
+
+    private def startSession(endGamePredicate: GameState => Boolean, endGameAction: GameState => Unit): Unit =
         lastTime = System.nanoTime()
-        val timer = AnimationTimer {
+        lazy val timer: AnimationTimer = AnimationTimer {
             time =>
-                gameState = Some(GameState.update(gameState.get, (time - lastTime)/1_000_000, pendingFunction))
-                val winner = gameState.flatMap(_.winner)
-                winner match
-                    case Some(p: Player) =>
-                        gameLoop.foreach(_.stop())
-                        view.showEndGame(p.name)
-                    case None => updateView(gameState.get)
-                lastTime = time
-                pendingFunction = None
+                gameState = Some(GameState.update(gameState.get, (time - lastTime) / 1_000_000, pendingFunction))
+                if endGamePredicate(gameState.get) then
+                    timer.stop()
+                    endGameAction(gameState.get)
+                else
+                    lastTime = time
+                    pendingFunction = None
+                    updateView(gameState.get)
         }
         timer.start()
         gameLoop = Some(timer)
-    //Engine.run(gameState.get)
+
 
     def addProjectile(newFunction: String): Option[ParsingError] = FunctionParser.parse(newFunction) match
         case Left(err) => Some(err)
