@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package controller
 
-import controller.TurnManager.initTurnManager
+import controller.TeamManager.initTurnManager
 import model.collision.CollisionDetector.detectCollision
 import model.collision.ImpactEffect.{normalImpactEffect, shootingRangeImpactEffect}
 import model.entity.Player.initPlayer
@@ -17,7 +17,7 @@ import util.{BoundingBox, MapGenerator, Position}
  * @param manager the entity that manage the sequence of turns and the sets of soldiers
  * @param projectile the projectile that are being fired
  */
-case class GameState(val manager: TurnManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[Function]):
+case class GameState(manager: TeamManager, obstacles: Set[Obstacle], powerUps: Set[PowerUp], projectile: Option[Projectile], pendingFunction: Option[Function]):
 
   def map[B](op: GameState => B): B = op(this)
 
@@ -46,7 +46,7 @@ object GameState:
       .getOrElse(g)
 
   private def spawnProjectile(g: GameState): GameState = (g.projectile, g.pendingFunction) match
-    case(None, Some(func)) => g.copy(manager = g.manager.removePlayerPowerUp(g.manager.currentPlayer), projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
+    case(None, Some(func)) => g.copy(manager = g.manager.updatePlayer(g.manager.currentPlayer)(_.setPowerUp(None)), projectile = Some(Projectile.fromSoldier(g.manager.currentPlayer, g.manager.current, func)), pendingFunction = None)
     case _ => g
 
   private def processPendingInput(g: GameState, passedFunction: Option[Function]): GameState = (g.pendingFunction, passedFunction) match
@@ -60,14 +60,14 @@ object GameState:
     g.copy(powerUps = g.powerUps + pu)
 
   def addPlayer(g: GameState, player: Player): GameState =
-    g.copy(manager = TurnManager.addPlayer(g.manager, player))
+    g.copy(manager = TeamManager.addPlayer(g.manager, player))
 
   def addSoldier(g: GameState, playerName: String, soldier: Soldier): GameState =
-    g.copy(manager = TurnManager.addSoldier(g.manager, playerName, soldier))
+    g.copy(manager = TeamManager.addSoldier(g.manager, playerName, soldier))
 
   def init(players: Set[String], soldiers: Int)(using border: BoundingBox): GameState =
 
-    val emptyManager = TurnManager(Vector.empty, 0)
+    val emptyManager = TeamManager(Vector.empty, 0)
 
     GameState(emptyManager, Set.empty, Set.empty, None, None)
       .map(MapGenerator.generateObstacles(5, _))

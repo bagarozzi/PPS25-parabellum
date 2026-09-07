@@ -3,12 +3,12 @@ package model.collision
 
 import model.entity.{Figure, Obstacle, PowerUp, Soldier}
 import controller.GameState
-import model.function.{Trajectory, reverse}
-import model.shape.{Circle, Difference, Shape}
+import model.function.Trajectory
+import model.shape.{Circle, Shape}
 import util.{BoundingBox, MapGenerator, Position}
 
-import it.unibo.parabellum.model.collision.BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
-import scalafx.geometry.Orientation.Horizontal
+import BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
+
 
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
@@ -39,7 +39,7 @@ sealed trait ImpactEvent:
 
 case class KillSoldier(soldier: Soldier) extends ImpactEvent:
 
-    override def action(g: GameState): GameState = g.copy(manager = g.manager.eliminateDeadSoldier(soldier))
+    override def action(g: GameState): GameState = g.copy(manager = g.manager.updateSoldier(soldier)(_ => None))
 
 case class DamageObstacle(obstacle: Obstacle, hole: Shape) extends ImpactEvent:
 
@@ -51,7 +51,7 @@ case class DestroyProjectile() extends ImpactEvent:
 
 case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent:
 
-    override def action(g: GameState): GameState = g.copy(manager = g.manager.setPlayerPowerUp(g.manager.currentPlayer, Some(powerUp)), powerUps = g.powerUps - powerUp)
+    override def action(g: GameState): GameState = g.copy(manager = g.manager.updatePlayer(g.manager.currentPlayer)(_.setPowerUp(Some(powerUp))), powerUps = g.powerUps - powerUp)
 
 case class Ricochet() extends ImpactEvent:
 

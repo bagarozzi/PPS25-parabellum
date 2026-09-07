@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package util
 
-import model.entity.{Burden, Obstacle, Piercing, Player, PowerUp, Random, Ricochet, Soldier}
+import model.entity.{Burden, Obstacle, Piercing, PowerUp, Random, Ricochet}
 import model.entity.Player.initPlayer
 import model.entity.Soldier.*
 import controller.GameState
@@ -9,7 +9,7 @@ import controller.GameState
 import scala.annotation.tailrec
 import model.shape.Circle as ModelCircle
 
-import it.unibo.parabellum.model.collision.ImpactEffect.normalImpactEffect
+import model.collision.ImpactEffect.normalImpactEffect
 
 /**
  * Utility object responsible for the procedural generation of the game map.

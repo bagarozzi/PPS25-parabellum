@@ -1,6 +1,7 @@
-package it.unibo.parabellum.util
+package it.unibo.parabellum
+package util
 
-import alice.tuprolog.{Prolog, Struct, Theory}
+import alice.tuprolog.{Prolog, Theory}
 
 object PrologMapChecker:
 

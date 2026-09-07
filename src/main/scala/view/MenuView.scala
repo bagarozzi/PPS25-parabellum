@@ -1,9 +1,9 @@
-package it.unibo.parabellum.view
+package it.unibo.parabellum
+package view
 
 import scalafx.scene.layout.{StackPane, VBox}
 import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.geometry.Pos
-import scalafx.Includes.*
 
 /**
  * Represents the Main Menu scene of the game.

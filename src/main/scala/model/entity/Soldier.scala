@@ -7,14 +7,6 @@ import util.Position
 case class Soldier private(name: String, pos: Position, shape: Shape, state: State, facingDirection: Int) extends Figure:
   
   override def belongs(pos: Position): Boolean = shape.belongs(pos)
-  def kill(): Unit =
-    copy(state = State.dead)
-    
-  def isDead: Boolean =
-    state == State.dead
-
-  def isAlive: Boolean =
-    state == State.alive
   
   override def toString: String =
     name

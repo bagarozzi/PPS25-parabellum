@@ -1,11 +1,8 @@
 package it.unibo.parabellum
 package model.entity
 
-import util.Position
-import model.shape.{Circle, Shape}
+import model.collision.ImpactEffect
 
-import it.unibo.parabellum.model.collision.ImpactEffect
-import it.unibo.parabellum.model.function.Trajectory
 
 trait Player:
   val name: String

@@ -1,4 +1,5 @@
-package it.unibo.parabellum.view
+package it.unibo.parabellum
+package view
 
 import scalafx.scene.paint.Color._
 import scalafx.scene.shape.Circle

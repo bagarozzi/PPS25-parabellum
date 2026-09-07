@@ -1,4 +1,5 @@
-package it.unibo.parabellum.util
+package it.unibo.parabellum
+package util
 
 import scala.util.Random
 

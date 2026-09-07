@@ -84,7 +84,6 @@ extension (f: Function)
      * Calculate the derivative of the function in a value x and for some
      * increment h
      * @param x the value on which calculate the derivative
-     * @param h the increment over the value
      * @return
      */
     def derivative(x: Double): Double = (f(x + DERIVATIVE_H) - f(x))/DERIVATIVE_H
