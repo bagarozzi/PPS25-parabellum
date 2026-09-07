@@ -48,7 +48,7 @@ Per quanto riguarda la documentazione vengono scritte le seguenti sezioni:
 | 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | no |
 | 44 | Shooting range in the model | Bagattoni | when the shooting range is available as an alternative initialization of GameState | yes |
 | 45 | Shooting range in View | Bagattoni | when the user can select the Shooting range mode | no |
-| 45 | End game | Venturini | When a message is displayed once only a player is left in the game | no |
+| 46 | End game | Venturini | When a message is displayed once only a player is left in the game | no |
 
 
 Keep in mind: ***always merge working code***
