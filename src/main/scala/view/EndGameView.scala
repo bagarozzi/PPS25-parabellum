@@ -1,21 +1,40 @@
 package it.unibo.parabellum
 package view
 
-import scalafx.geometry.Pos
+import scalafx.scene.layout.{StackPane, VBox}
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.VBox
+import scalafx.geometry.Pos
+import scalafx.scene.image.{Image, ImageView}
 
-class EndGameView(onClick: () => Unit, height: Double, width: Double, winner: String) extends VBox:
+class EndGameView(onClick: () => Unit, viewHeight: Double, viewWidth: Double, winner: String) extends StackPane:
 
-  spacing = 20
-  alignment = Pos.Center
-  prefWidth = width
-  prefHeight = height
-  
-  private val button = new Button("Back to Menu")
-  button.onAction =_ => onClick()
+  private val backgroundUrl = getClass.getResource("/Victory.jpeg")
+  if backgroundUrl == null then
+    throw new RuntimeException("File /Victory.jpeg not found in resources")
 
-  children = Seq(
-    new Label(s"Winner: $winner"),
-    button
-  )
+  private val backgroundImage = new Image(backgroundUrl.toExternalForm)
+
+  private val backgroundView = new ImageView(backgroundImage):
+    fitWidth <== EndGameView.this.width
+    fitHeight <== EndGameView.this.height
+    preserveRatio = false
+
+  prefWidth = viewWidth
+  prefHeight = viewHeight
+
+  private val winnerLabel = new Label(s"Winner: $winner"):
+    style = "-fx-text-fill: white; -fx-font-size: 32pt; -fx-font-weight: bold;"
+
+  private val button = new Button("Back to Menu"):
+    style = "-fx-font-size: 20pt; -fx-font-weight: bold; -fx-padding: 10 40 10 40; -fx-cursor: hand;"
+    onAction = _ => onClick()
+
+  private val uiLayout = new VBox:
+    alignment = Pos.Center
+    spacing = 30
+    children = Seq(
+      winnerLabel,
+      button
+    )
+
+  children = Seq(backgroundView, uiLayout)
