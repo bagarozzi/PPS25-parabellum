@@ -9,33 +9,15 @@ case class Team(owner: Player, soldiers: Vector[Soldier], currentIndex: Int):
 
   def next(): Team =
     copy(currentIndex = (currentIndex + 1) % soldiers.size)
-
-  def removeSoldier(s: Soldier): Team =
-    val newSoldiers =
-      soldiers.filterNot(_== s)
-    copy(
-    soldiers = newSoldiers,
-    currentIndex =
-      if newSoldiers.isEmpty then 0
-      else currentIndex % newSoldiers.size
-  )
     
   def isEmpty: Boolean =
     soldiers.isEmpty
-  
-  def setPlayerPowerUp(powerUp: Option[PowerUp]): Team =
-    copy(owner = owner.setPowerUp(powerUp))
 
-  def removePlayerPowerUp(): Team =
-    copy(owner = owner.setPowerUp(None))
-    
 object Team:
   def initTeam(owner: Player, soldiers: Vector[Soldier]): Team =
     Team(owner, soldiers, 0)
-    
-  
 
-case class TurnManager(
+case class TeamManager(
                         teams: Vector[Team],
                         currentIndex: Int
                       ):
@@ -44,19 +26,35 @@ case class TurnManager(
    * Updates the state of the TurnManager, returning a new one.
    * @return a new TurnManager
    */
-  def update(situation: Map[Player, Vector[Soldier]]): TurnManager =
+  /*def update(situation: Map[Player, Vector[Soldier]]): TeamManager =
     (for
       team <- teams.toSet
       newSoldiers = situation(team.owner)
       deadSoldier <- team.soldiers.diff(newSoldiers)
     yield deadSoldier)
-      .foldLeft(this)((tm, s) => tm.eliminateDeadSoldier(s))
+      .foldLeft(this)((tm, s) => tm.eliminateDeadSoldier(s))*/
 
-  
+  def updateSoldier(soldier: Soldier)(f: Soldier => Option[Soldier]): TeamManager =
+    copy(
+      teams = teams.map(team =>
+        team.copy(
+          soldiers = team.soldiers.flatMap(s =>
+            if s == soldier then f(s)
+            else Some(s)
+          )
+        )
+      ).filter(!_.isEmpty)
+    )
+
+  def updatePlayer(player: Player)(f: Player => Player): TeamManager =
+    copy(
+      teams = teams.map(team => team.copy(owner = if player == team.owner then f(player) else player))
+    )
+
   def current: Soldier =
     teams(currentIndex).current
 
-  def nextTurn: TurnManager =
+  def nextTurn: TeamManager =
     val updatedTeam =
     teams(currentIndex).next()
 
@@ -66,15 +64,9 @@ case class TurnManager(
       currentIndex =
         (currentIndex + 1) % teams.size
     )
-    
-  
-  def eliminateDeadSoldier(s: Soldier): TurnManager =
-    val newTeams = teams.map(t => t.removeSoldier(s)).filter(t => !t.isEmpty)
-    copy(teams = newTeams, currentIndex = currentIndex % newTeams.size)
-    
 
   def winner: Option[Player] =
-    if teams.size == 1 then Some(teams.head.owner)
+    if teams.size == 1 then Some(teams.filterNot(_.isEmpty).head.owner)
     else None
 
   def enemies: Set[Soldier] =
@@ -84,38 +76,22 @@ case class TurnManager(
       
   def soldiers: Set[Soldier] =
     teams.flatMap(_.soldiers).toSet
-
-  def setPlayerPowerUp(player: Player, powerUp: Option[PowerUp]): TurnManager =
-    copy(
-      teams = teams.map(t => if player.name == t.owner.name then
-          t.setPlayerPowerUp(powerUp)
-        else t
-      )
-    )
-
-  def removePlayerPowerUp(player: Player): TurnManager =
-    copy(
-      teams = teams.map(t => if player.name == t.owner.name then
-        t.removePlayerPowerUp()
-      else t
-      )
-    )
     
   def currentPlayer: Player =
     teams(currentIndex).owner
       
-object TurnManager:
+object TeamManager:
 
   import Team.initTeam
   
-  def initTurnManager(map: Map[Player, Vector[Soldier]]): TurnManager =
-   TurnManager(map.map((player, soldiers) => initTeam(player, soldiers)).toVector, 0)
+  def initTurnManager(map: Map[Player, Vector[Soldier]]): TeamManager =
+   TeamManager(map.map((player, soldiers) => initTeam(player, soldiers)).toVector, 0)
 
-  def addPlayer(tm: TurnManager, player: Player): TurnManager =
+  def addPlayer(tm: TeamManager, player: Player): TeamManager =
     val newTeam = Team.initTeam(player, Vector.empty)
     tm.copy(teams = tm.teams :+ newTeam)
   
-  def addSoldier(tm: TurnManager, playerName: String, soldier: Soldier): TurnManager =
+  def addSoldier(tm: TeamManager, playerName: String, soldier: Soldier): TeamManager =
     val updatedTeams = tm.teams.map: team =>
       if team.owner.name == playerName then
         team.copy(soldiers = team.soldiers :+ soldier)
