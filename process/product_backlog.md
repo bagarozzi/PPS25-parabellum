@@ -17,22 +17,19 @@
 Most important first.
 | Task ID | Task Description | Assignee | When it's done | Done | First planned in |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| 05 | Write [**Processo**](../docs/1-processo.md) section of the report | Bagattoni | . | yes | [**Sprint 1**](./sprint_1_backlog.md) |
-| 06 | Write the Domain modeling sections of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
-| 37 | Write [**Design**](../docs/3-design.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 38 | Write [**Detailed design**](../docs/4-dettaglio.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
-| 39 | Fix: Powerups not disappearing when shot | Bagattoni | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 40 | Powerup: bug fix of Random | Bagattoni | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 40b | Powerup: bug fix of Burded | Bagattoni | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 40c | Powerup: bug fix of Ricochet | unassigned | this | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 41 | Parser: move parsing to controller | Bagattoni | when GameState receives a type Function from the Controller | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 41b | Parser: return a readable error | Bagattoni | when a custom error is returned by the parser | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 41c | Parser: return error to user | Bagattoni | when the user receives an understandable error if a malformed function is shot | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 42 | ImpactEffect refactoring | Venturini | this | no | [**Sprint 5**](./sprint_5_backlog.md) | 
-| 43 | MapGenerator refactoring | Sbaraccani | complete overhaul of MapGenerator | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 44 | Shooting range in the model | Bagattoni | when the shooting range is available as an alternative initialization of GameState | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 45 | Shooting range in View | Bagattoni | when the user can select the Shooting range mode | yes | [**Sprint 5**](./sprint_5_backlog.md) |
-| 46 | End game | Venturini | When a message is displayed once only a player is left in the game | yes | [**Sprint 5**](./sprint_5_backlog.md) |
+| 06 | Docs - correction of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no | [**Sprint 1**](./sprint_1_backlog.md) |
+| 37 | Docs - [**Design**](../docs/3-design.md) | unassigned | this | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 38 | Docs - [**Detailed design**](../docs/4-dettaglio.md) | unassigned | each member writes its own section | no | [**Sprint 5**](./sprint_5_backlog.md) |
+| 42 | ImpactEffect refactoring | Venturini | separation in multiple files (Impact, ImpactEvent, ImpactEffect), Refactoring of ImpactEffect | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 47 | Obstacle refactoring | Sbaraccani | Rename the companion object's methods | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 49 | Projectile refactoring | Bagattoni | Companion object's refactoring | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 50 | Trajectory refactoring | Bagattoni | Use the "Direction" enum everywhere instead of Ints | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 51 | Comments on BoundingBox | Bagattoni | this | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 52 | GUI refactoring | Sbaraccani | Better reuse of code in render() method | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 53 | Docs - [**Implementation**](../docs/5-implementazione.md)| everyone | each member writes its own section | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 54 | Docs - [**Testing**](../docs/6-testing.md) | someone | write Testing section | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 55 | Docs - [**Retrospettiva**](../docs/7-retrospettiva.md) | someone | write Retrospettiva section | no | [**Sprint 6**](./sprint_6_backlog.md) |
 
 ___
 ___
