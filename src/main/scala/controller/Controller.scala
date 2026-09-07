@@ -28,13 +28,18 @@ object GameController extends Controller:
     given border: BoundingBox = BoundingBox(-25, 25, -15, 15)
 
     def startGame(players: Set[String], soldiers: Int): Unit =
-        //given targetFPS: Int = 60
-        gameState = Some(GameState.init(players,soldiers))
+        gameState = Some(GameState.init(players, soldiers))
+        startSession()
 
+    def startShootingRange(players: Set[String], soldiers: Int): Unit =
+        gameState = Some(GameState.initShootingRange())
+        startSession()
+
+    private def startSession(): Unit =
         lastTime = System.nanoTime()
         val timer = AnimationTimer {
             time =>
-                gameState = Some(GameState.update(gameState.get, (time - lastTime)/1_000_000, pendingFunction))
+                gameState = Some(GameState.update(gameState.get, (time - lastTime) / 1_000_000, pendingFunction))
                 val winner = gameState.flatMap(_.winner)
                 winner match
                     case Some(p: Player) =>
@@ -46,7 +51,7 @@ object GameController extends Controller:
         }
         timer.start()
         gameLoop = Some(timer)
-    //Engine.run(gameState.get)
+
 
     def addProjectile(newFunction: String): Option[ParsingError] = FunctionParser.parse(newFunction) match
         case Left(err) => Some(err)
