@@ -84,8 +84,12 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
       stage.scene = winnerScene
     })
-  def endShootingMode(): Unit =
-    Platform.runLater(() => restartGame())
+
+  private def endShootingMode(): Unit =
+    Platform.runLater(() =>
+      GameController.stopSession()
+      restartGame()
+    )
 
   private def restartGame(): Unit =
     playerViews = Map.empty

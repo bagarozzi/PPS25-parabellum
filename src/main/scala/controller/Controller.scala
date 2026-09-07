@@ -50,6 +50,9 @@ object GameController extends Controller:
         }
         timer.start()
         gameLoop = Some(timer)
+        
+    def stopSession(): Unit =
+        gameLoop.foreach(_.stop())
 
 
     def addProjectile(newFunction: String): Option[ParsingError] = FunctionParser.parse(newFunction) match
