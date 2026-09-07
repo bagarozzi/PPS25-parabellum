@@ -45,6 +45,7 @@ object GameController extends Controller:
                     case Some(p: Player) =>
                         gameLoop.foreach(_.stop())
                         view.showEndGame(p.name)
+                        gameState = None
                     case None => updateView(gameState.get)
                 lastTime = time
                 pendingFunction = None
