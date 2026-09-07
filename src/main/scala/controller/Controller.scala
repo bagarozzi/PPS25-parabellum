@@ -31,7 +31,7 @@ object GameController extends Controller:
         gameState = Some(GameState.init(players, soldiers))
         startSession()
 
-    def startShootingRange(players: Set[String], soldiers: Int): Unit =
+    def startShootingRange(): Unit =
         gameState = Some(GameState.initShootingRange())
         startSession()
 
