@@ -29,26 +29,24 @@ object GameController extends Controller:
 
     def startGame(players: Set[String], soldiers: Int): Unit =
         gameState = Some(GameState.init(players, soldiers))
-        startSession()
+        startSession(g => g.winner.isDefined, g => view.showEndGame(g.winner.get.name))
 
     def startShootingRange(): Unit =
         gameState = Some(GameState.initShootingRange())
-        startSession()
+        startSession(_ => false, _ => ())
 
-    private def startSession(): Unit =
+    private def startSession(endGamePredicate: GameState => Boolean, endGameAction: GameState => Unit): Unit =
         lastTime = System.nanoTime()
-        val timer = AnimationTimer {
+        lazy val timer: AnimationTimer = AnimationTimer {
             time =>
                 gameState = Some(GameState.update(gameState.get, (time - lastTime) / 1_000_000, pendingFunction))
-                val winner = gameState.flatMap(_.winner)
-                winner match
-                    case Some(p: Player) =>
-                        gameLoop.foreach(_.stop())
-                        view.showEndGame(p.name)
-                        gameState = None
-                    case None => updateView(gameState.get)
-                lastTime = time
-                pendingFunction = None
+                if endGamePredicate(gameState.get) then
+                    timer.stop()
+                    endGameAction(gameState.get)
+                else
+                    lastTime = time
+                    pendingFunction = None
+                    updateView(gameState.get)
         }
         timer.start()
         gameLoop = Some(timer)
