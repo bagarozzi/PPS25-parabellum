@@ -22,18 +22,6 @@ case class TeamManager(
                         currentIndex: Int
                       ):
 
-  /**
-   * Updates the state of the TurnManager, returning a new one.
-   * @return a new TurnManager
-   */
-  /*def update(situation: Map[Player, Vector[Soldier]]): TeamManager =
-    (for
-      team <- teams.toSet
-      newSoldiers = situation(team.owner)
-      deadSoldier <- team.soldiers.diff(newSoldiers)
-    yield deadSoldier)
-      .foldLeft(this)((tm, s) => tm.eliminateDeadSoldier(s))*/
-
   def updateSoldier(soldier: Soldier)(f: Soldier => Option[Soldier]): TeamManager =
     copy(
       teams = teams.map(team =>
