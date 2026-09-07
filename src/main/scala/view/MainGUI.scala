@@ -77,14 +77,15 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
 
 
   override def showEndGame(winner: String): Unit =
-    val winnerPane = new EndGameView(() => restartGame(), height, width, winner)
-    val winnerScene = new Scene:
-      root = winnerPane
-      
-    stage.scene = winnerScene
+    Platform.runLater(() => {
+      val winnerPane = new EndGameView(() => restartGame(), height, width, winner)
+      val winnerScene = new Scene:
+        root = winnerPane
 
+      stage.scene = winnerScene
+    })
   def endShootingMode(): Unit =
-    restartGame()
+    Platform.runLater(() => restartGame())
 
   private def restartGame(): Unit =
     playerViews = Map.empty
