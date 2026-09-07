@@ -1,4 +1,4 @@
-# Sprint Backlog - Sprint 3
+# Sprint Backlog - Sprint 1
 
 **Sprint goal**: sprint goals in short
 

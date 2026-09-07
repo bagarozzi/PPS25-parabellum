@@ -1,4 +1,4 @@
-# Sprint Backlog - Sprint 4
+# Sprint Backlog - Sprint 5
 
 **Sprint goal**: refactoring and finishing touch in all the classes, bug fixing and documentation
 
