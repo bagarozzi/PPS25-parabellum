@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package controller
 
-import model.entity.{Player, PowerUp, Soldier}
+import model.entity.{Player, Soldier}
 
 case class Team(owner: Player, soldiers: Vector[Soldier], currentIndex: Int):
   def current : Soldier =

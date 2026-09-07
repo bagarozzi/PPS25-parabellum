@@ -2,10 +2,10 @@ package it.unibo.parabellum
 package controller
 
 import view.View
-import model.function.{Function, FunctionParser, ParsingError, Projectile, Trajectory}
+import model.function.{Function, FunctionParser, ParsingError}
 
-import it.unibo.parabellum.model.entity.Player
-import it.unibo.parabellum.util.BoundingBox
+import model.entity.Player
+import util.BoundingBox
 import scalafx.animation.AnimationTimer
 
 trait Controller:
@@ -57,5 +57,3 @@ object GameController extends Controller:
 
     def updateView(g: GameState)(using view: View, border: BoundingBox): Unit =
         view.render(g)
-        
-    def showEndGame(): Unit = ???

@@ -17,7 +17,7 @@ import util.{BoundingBox, MapGenerator, Position}
  * @param manager the entity that manage the sequence of turns and the sets of soldiers
  * @param projectile the projectile that are being fired
  */
-case class GameState(val manager: TeamManager, val obstacles: Set[Obstacle], powerUps: Set[PowerUp], val projectile: Option[Projectile], val pendingFunction: Option[Function]):
+case class GameState(manager: TeamManager, obstacles: Set[Obstacle], powerUps: Set[PowerUp], projectile: Option[Projectile], pendingFunction: Option[Function]):
 
   def map[B](op: GameState => B): B = op(this)
 
