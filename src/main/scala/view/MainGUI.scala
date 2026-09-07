@@ -59,7 +59,13 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       stage.centerOnScreen()
     }
 
-    val menuPane = new MenuView(avviaGioco)
+    def startShootingRange(): Unit =
+      GameController.startShootingRange()
+      stage.scene = gameScene
+      stage.sizeToScene()
+      stage.centerOnScreen()
+
+    val menuPane = new MenuView(avviaGioco, startShootingRange)
     val menuScene = new Scene(windowSize.width, windowSize.height):
       fill = White
       root = menuPane
@@ -68,6 +74,7 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
       title = "Parabellum"
       resizable = false
       scene = menuScene
+
 
   override def showEndGame(winner: String): Unit =
     val winnerPane = new EndGameView(() => restartGame(), height, width, winner)
