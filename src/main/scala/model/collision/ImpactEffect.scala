@@ -37,20 +37,14 @@ object ImpactEffect:
     }
 
   def ricochetImpactEffect(): ImpactEffect = {
-      case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
-      case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
-      case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
       case BorderImpact(VerticalBorderImpact) => Set(DestroyProjectile())
       case BorderImpact(HorizontalBorderImpact) => Set(Ricochet())
-      case FigureImpact(Position(_, _), _) => Set()
+      case i => normalImpactEffect().applyEffect(i)
     }
   
   def piercingImpactEffect(): ImpactEffect = {
-    case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.1)))
-    case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
-    case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
-    case BorderImpact(_) => Set(DestroyProjectile())
-    case FigureImpact(Position(_, _), _) => Set()
+    case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.2)))
+    case i => normalImpactEffect().applyEffect(i)
   }
 
   def shootingRangeImpactEffect(): ImpactEffect = {
