@@ -3,19 +3,29 @@ package view
 
 import scalafx.scene.Group
 import scalafx.scene.paint.Color._
+import javafx.scene.paint.ImagePattern 
+import scalafx.scene.image.Image
 import scalafx.scene.shape.{Circle, Polygon}
-
+import scalafx.Includes._
 /**
  * Visual presentation of an Obstacle on the map.
  */
 class ObstacleView extends Group:
+
+  private val textureUrl = getClass.getResource("/Trench_blurred.jpeg")
+  if textureUrl == null then
+    throw new RuntimeException("File /Trench_blurred.jpeg not found in resources!")
+
+  private val textureImage = new Image(textureUrl.toExternalForm)
+
+  private val obstaclePattern = new ImagePattern(textureImage)
 
   def drawCircle(cx: Double, cy: Double, rad: Double): Unit =
     val circleShape = new Circle:
       this.centerX = cx
       this.centerY = cy
       this.radius = rad
-      fill = SaddleBrown
+      fill = obstaclePattern
       stroke = Black
       strokeWidth = 2.0
 
@@ -23,7 +33,7 @@ class ObstacleView extends Group:
 
   def drawPolygon(vertices: Seq[(Double, Double)]): Unit =
     val shapePolygon = new Polygon:
-      fill = SaddleBrown
+      fill = obstaclePattern
       stroke = Black
       strokeWidth = 2.0
 
@@ -35,6 +45,6 @@ class ObstacleView extends Group:
     children = List(shapePolygon)
 
   def addHole(cx: Double, cy: Double, rad: Double): Unit =
-      val hole = new HoleView()
-      hole.drawHole(cx, cy, rad)
-      this.children.add(hole)
+    val hole = new HoleView()
+    hole.drawHole(cx, cy, rad)
+    this.children.add(hole)
