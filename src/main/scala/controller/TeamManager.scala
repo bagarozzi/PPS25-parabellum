@@ -62,7 +62,7 @@ case class TeamManager(
    */
   def updatePlayer(player: Player)(f: Player => Player): TeamManager =
     copy(
-      teams = teams.map(team => team.copy(owner = if player == team.owner then f(player) else player))
+      teams = teams.map(team => team.copy(owner = if player == team.owner then f(player) else team.owner))
     )
 
   /**
