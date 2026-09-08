@@ -1,11 +1,9 @@
 package it.unibo.parabellum
 package model.collision
 
-import model.entity.{Figure, Obstacle, PowerUp, Soldier}
-import controller.GameState
-import model.function.Trajectory
-import model.shape.{Circle, Shape}
-import util.{BoundingBox, MapGenerator, Position}
+import model.entity.{Obstacle, PowerUp, Soldier}
+import model.shape.Circle
+import util.Position
 
 import BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
 
@@ -24,49 +22,7 @@ trait ImpactEffect:
      * @return Some [[ImpactEvent]]s, consequence of the impact
      */
   def applyEffect(impact: Impact): Set[ImpactEvent]
-
-/**
- * An ImpactEvent represents consequences of an [[Impact]] on the game's state.
- */
-sealed trait ImpactEvent:
-
-    /**
-     * Apply the consequence of the impact to the game's state.
-     * @param g the [[GameState]] where to apply the consequence
-     * @return the new [[GameState]]
-     */
-    def action(g: GameState): GameState
-
-case class KillSoldier(soldier: Soldier) extends ImpactEvent:
-
-    override def action(g: GameState): GameState = g.copy(manager = g.manager.updateSoldier(soldier)(_ => None))
-
-case class DamageObstacle(obstacle: Obstacle, hole: Shape) extends ImpactEvent:
-
-    override def action(g: GameState): GameState = g.copy(obstacles = g.obstacles - obstacle + obstacle.addExplosion(hole))
-
-case class DestroyProjectile() extends ImpactEvent:
-
-    override def action(g: GameState): GameState = g.copy(manager = g.manager.nextTurn, projectile = None)
-
-case class GainPowerUp(powerUp: PowerUp) extends ImpactEvent:
-
-    override def action(g: GameState): GameState = g.copy(manager = g.manager.updatePlayer(g.manager.currentPlayer)(_.setPowerUp(Some(powerUp))), powerUps = g.powerUps - powerUp)
-
-case class Ricochet() extends ImpactEvent:
-
-    override def action(g: GameState): GameState = g.copy(projectile = g.projectile.map(_.mapTrajectory(_.ricochet())))
-
-case class DestroyObstacle(obstacle: Obstacle) extends ImpactEvent:
-
-    override def action(g: GameState): GameState = g.copy(obstacles = g.obstacles - obstacle)
-
-case class SpawnNewObstacle() extends ImpactEvent:
-
-    override def action(g: GameState): GameState =
-        import controller.GameController.given
-        MapGenerator.spawnObstacle(g)(using BoundingBox(0, border.x1, border.y0, border.y1))
-
+    
 /**
  * An ImpactEffect is the behavior of a [[Projectile]] when it impacts
  * a [[Figure]] or the map's borders.
@@ -103,21 +59,3 @@ object ImpactEffect:
       case i => normalImpactEffect().applyEffect(i)
   }
 
-/**
- * An [[Impact]] is a collision between a [[Projectile]] and something else.
- */
-trait Impact
-
-case class FigureImpact(
-                         pos: Position,
-                         figure: Figure
-                       ) extends Impact
-
-case class BorderImpact(b: BorderImpactType) extends Impact
-
-enum BorderImpactType:
-    case VerticalBorderImpact
-    case HorizontalBorderImpact
-
-//GameState(gs.manager, gs.obstacles - obs + Obstacle(obs.pos, Difference(obs.shape, Set(Circle(impact.pos, 0.5)))), None, gs.pendingFunction)
-//(gs: GameState) => GameState(gs.manager.eliminateDeadSoldier(sld), gs.obstacles, gs.projectiles, gs.pendingFunction)
