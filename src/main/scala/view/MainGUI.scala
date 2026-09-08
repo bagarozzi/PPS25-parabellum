@@ -155,8 +155,9 @@ class MainGUI(width: Double, height: Double) extends JFXApp3 with View:
             val isHisTurn = soldier == state.manager.current
             view.setHighlight(isHisTurn)
           case None =>
-            val ModelCircle(pos, radius) = soldier.shape.runtimeChecked   
-            val newView = new PlayerView(soldier.name, tc.x, tc.y, GeometryHelper.transform(radius))
+            val ModelCircle(pos, radius) = soldier.shape.runtimeChecked
+            val teamIndex = state.manager.teams.indexWhere(_.soldiers.contains(soldier))
+            val newView = new PlayerView(soldier.name, tc.x, tc.y, GeometryHelper.transform(radius), teamIndex)
             playerViews += (soldier.name -> newView)
             gameView.addElements(newView)
       //remove players
