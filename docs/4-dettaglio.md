@@ -1,23 +1,20 @@
 # Design di dettaglio
 ## MapGenerator
-Il modulo MapGenerator gestisce la creazione procedurale della mappa trattando le coordinate occupate come un flusso di dati immutabile, passato esplicitamente tra le fasi di generazione senza ricorrere a stati globali. Le dimensioni dell'area di gioco (	`BoundingBox`) vengono fornite implicitamente ai metodi tramite la clausola using, disaccoppiando l'algoritmo di posizionamento dalla grandezza specifica del livello.
+Il modulo MapGenerator gestisce la creazione procedurale della mappa adottando un pattern architetturale basato sull'evoluzione dello stato (`GameState => GameState`). Abbandonando l'uso di variabili globali o stati mutabili, l'algoritmo mappa il posizionamento spaziale come un flusso di dati continuo. La generazione multipla delle entità (ostacoli, power-up e soldati) è orchestrata tramite operazioni di `foldLeft`, che propagano esplicitamente lo stato aggiornato e immutabile da una fase di generazione alla successiva. Le dimensioni fisiche dell'area di gioco vengono totalmente disaccoppiate dalla logica di posizionamento tramite l'iniezione implicita della `BoundingBox` (`using border`), garantendo scalabilità su mappe di qualsiasi proporzione.
 
-### generateEntities
-Astrae il loop di posizionamento e validazione spaziale. Interroga 	`PrologMapChecker` per ogni coordinata: se rileva una collisione ricalcola il punto, altrimenti salva l'entità e il suo ingombro.
+### Propagazione dello Spazio e Validazione Incrementale
+Per evitare compenetrazioni (es. power-up generati sopra ostacoli o soldati), la gestione delle collisioni si affida a una mappatura dinamica degli ingombri fisici. Prima di ogni singolo spawn, il metodo `getOccupiedSpaces` interroga lo snapshot del `GameState` corrente per estrarre il footprint spaziale (coordinate X, Y e Raggio) di tutte le entità già posizionate.
 
-### Propagazione dello Spazio
-Per evitare compenetrazioni (es. power-up generati sopra i soldati), ogni fase restituisce gli oggetti creati e la lista aggiornata delle coordinate occupate (X, Y, Raggio). Questo storico fa da base per la fase di posizionamento successiva.
+Questo tracciato storico viene passato al motore logico esterno (`PrologMapChecker`), il quale esegue una validazione spaziale incrementale. Questo approccio risolve i colli di bottiglia tipici degli algoritmi "Dart Throwing" tradizionali: anziché calcolare e validare l'intera mappa in blocco (con il rischio di doverla scartare e ricalcolare interamente per una singola sovrapposizione), il sistema interroga Prolog per singola coordinata. Se viene rilevata un'intersezione, la funzione di spawn sfrutta la ricorsione in coda (`@tailrec`) per scartare e rigenerare esclusivamente quel singolo punto, azzerando i tempi morti di inizializzazione.
 
 ### Specializzazione delle Entità
+La logica di istanziazione si adatta proceduralmente alle caratteristiche geometriche e tattiche delle singole categorie di entità:
 
-- Ostacoli: Spawn casuale all'interno dei confini della mappa (50% cerchio, 50% poligono). Ai poligoni è assegnato un raggio di circoscrizione calcolato per coprire l'intera area dei vertici.
+Ostacoli: Generati in modo interamente casuale all'interno dei limiti della mappa, con una suddivisione statistica paritaria (50% cerchi, 50% poligoni). I poligoni generano dinamicamente dai 3 ai 7 vertici; a questi viene assegnato un raggio di circoscrizione calcolato in fase di spawn per coprire preventivamente l'intera area che andranno a occupare prima del check di validazione.
 
-- Giocatori: Suddivisione in due segmenti laterali con margine centrale. Il posizionamento avviene in sequenza: l'ingombro del primo team viene trasmesso al calcolo del secondo. Il raggio di collisione viene letto dinamicamente dalla proprietà shape del singolo soldato.
+Power-up: Ripartiti in modo statisticamente omogeneo (25% di probabilità per tipologia: `Ricochet`, `Burden`, `Random`, `Piercing`) negli spazi vuoti residui della mappa. Il raggio di validazione spaziale non è hardcoded, ma viene estratto polimorficamente dalla `Shape` dell'istanza appena creata.
 
-- Power-up: Ripartizione statistica omogenea (25% per tipologia) negli spazi vuoti residui. Il raggio di validazione viene estratto dall'istanza appena creata.
-
-### Validazione Incrementale (Prolog)
-L'interrogazione elemento per elemento aggira i colli di bottiglia del Dart Throwing. Invece di validare l'intera mappa in blocco — con il rischio di doverla rigettare per una singola sovrapposizione — il sistema ricalcola unicamente la coordinata non valida, minimizzando i tempi di inizializzazione.
+Giocatori e Squadre: La mappa viene divisa strategicamente in due segmenti laterali (destro e sinistro), mantenendo un margine centrale di sicurezza (`safeMargin`) per evitare il corpo a corpo al primo turno. Il posizionamento avviene sequenzialmente: l'algoritmo istanzia i soldati del primo team, integrandoli nel `GameState`, e successivamente utilizza i loro stessi ingombri per validare gli spazi disponibili al posizionamento della squadra avversaria. Il raggio di collisione di ogni unità viene letto dinamicamente dalla relativa proprietà `shape`.
 ___
 ___
 [**&larr; Design del sistema** ](./3-design.md) | **Design di dettaglio** | [ **Implementazione &rarr;**](./5-implementazione.md)
