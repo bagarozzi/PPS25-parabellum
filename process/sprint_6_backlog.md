@@ -53,9 +53,9 @@ e di come l'ha pensato. Si fa un introduzione per tutti su come, assieme, abbiam
 | 06 | Docs - correction of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
 | 37 | Docs - [**Design**](../docs/3-design.md) | unassigned | this | no |
 | 38 | Docs - [**Detailed design**](../docs/4-dettaglio.md) | unassigned | each member writes its own section | no |
-| 42 | ImpactEffect refactoring | Venturini | separation in multiple files (Impact, ImpactEvent, ImpactEffect), Refactoring of ImpactEffect | no |
+| 42 | ImpactEffect refactoring | Venturini | separation in multiple files (Impact, ImpactEvent, ImpactEffect), Refactoring of ImpactEffect | yes |
 | 47 | Obstacle refactoring | Sbaraccani | Rename the companion object's methods | yes |
-| 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | no |
+| 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | yes |
 | 49 | Projectile refactoring | Bagattoni | Companion object's refactoring | yes |
 | 50 | Trajectory refactoring | Bagattoni | Use the "Direction" enum everywhere instead of Ints | yes |
 | 51 | Comments on BoundingBox | Bagattoni | this | yes |
