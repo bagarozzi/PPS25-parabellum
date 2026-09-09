@@ -66,12 +66,12 @@ object MapGenerator:
     if PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, getOccupiedSpaces(g)) then
       spawnObstacle(g) // Collision detected, retry
     else
-      val newObstacle = if isCircle then Obstacle(pos, maxRadius)
+      val newObstacle = if isCircle then Obstacle.setCircle(pos, maxRadius)
       else
         val numVertices = 3 + (math.random() * 4).toInt
         val vertices = (1 to numVertices).map: _ =>
           RandomGenerator.randomPosition(pos.x - maxRadius, pos.x + maxRadius, pos.y - maxRadius, pos.y + maxRadius)
-        Obstacle(pos, vertices)
+        Obstacle.setPolygon(pos, vertices)
 
       GameState.addObstacle(g, newObstacle)
 

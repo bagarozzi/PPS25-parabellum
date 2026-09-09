@@ -18,15 +18,12 @@ private class ObstacleImpl(val pos: Position, val shape: Shape) extends Obstacle
 
 object Obstacle:
 
-
-  def apply(pos: Position, radius: Double): Obstacle =
-    ObstacleImpl(pos, Circle(pos, radius))
-  
-  def apply(pos: Position, vertices: Seq[Position]): Obstacle =
-    ObstacleImpl(pos, Polygon.create(vertices))
-    
-  def apply(pos: Position, radius: Double, sides: Int): Obstacle =
-    ObstacleImpl(pos, Polygon.regular(pos: Position, radius: Double, sides: Int))
-    
   def apply(pos: Position, shape: Shape): Obstacle =
     ObstacleImpl(pos, shape)
+
+  def setCircle(pos: Position, radius: Double): Obstacle =
+    ObstacleImpl(pos, Circle(pos, radius))
+  
+  def setPolygon(pos: Position, vertices: Seq[Position]): Obstacle =
+    ObstacleImpl(pos, Polygon.create(vertices))
+
