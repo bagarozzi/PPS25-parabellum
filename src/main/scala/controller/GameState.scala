@@ -7,7 +7,7 @@ import model.collision.ImpactEffect.{normalImpactEffect, shootingRangeImpactEffe
 import model.entity.Player.initPlayer
 import model.entity.Soldier.initSoldier
 import model.entity.*
-import model.function.{Function, Projectile}
+import model.function.{Direction, Function, Projectile}
 import util.MapGenerator.{spawnObstacle, spawnPowerUp, spawnSoldier}
 import util.{BoundingBox, MapGenerator, Position}
 
@@ -76,7 +76,7 @@ object GameState:
 
   def testInit(): GameState =
     GameState(
-      initTurnManager(Map((initPlayer("giorgio", normalImpactEffect()), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", 1))))),
+      initTurnManager(Map((initPlayer("giorgio", normalImpactEffect()), Vector(initSoldier("giorgio-1", Position(-7.5, 0), "giorgio", Direction.Positive))))),
       Set(),
       Set(Ricochet(Position(7.5, 0))),
       None,
@@ -88,6 +88,6 @@ object GameState:
     val shapesSpawnArea: BoundingBox = BoundingBox(0, border.x1, border.y0, border.y1)
     val shootingRangeName = "Ryan"
     GameState(initTurnManager(Map((initPlayer(shootingRangeName, shootingRangeImpactEffect()), Vector.empty))), Set(), Set(), None, None)
-        .map(spawnSoldier(_, shootingRangeName, 1, border.x0, 0)(using shapesSpawnArea))
+        .map(spawnSoldier(_, shootingRangeName, Direction.Positive, border.x0, 0)(using shapesSpawnArea))
         .map(spawnPowerUp(_)(using shapesSpawnArea))
         .map(spawnObstacle(_)(using shapesSpawnArea))
