@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package model.shape
 
-import it.unibo.parabellum.util.Position
+import util.Position
 import org.scalatest.flatspec.AnyFlatSpec
 
 class ShapeSpec extends AnyFlatSpec:
