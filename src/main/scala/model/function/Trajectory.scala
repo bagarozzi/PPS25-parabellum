@@ -5,13 +5,40 @@ import util.Position
 
 import model.function.Direction.{Negative, Positive}
 
+/**
+ * The direction of travel of a mathematical function
+ * along the x coordinate.
+ */
 enum Direction:
+
+  /**
+   * The negative direction, traveling towards the
+   * negative x-coordinate.
+   */
   case Negative
+
+  /**
+   * The positive direction, traveling towards the
+   * positive x-coordinate.
+   */
   case Positive
 
+  /**
+   * Returns the [[Double]] value of this direction.
+   * @return `-1` for Negative or `1` for Positive
+   */
   def apply(): Double = this match
     case Negative => -1
     case Positive => 1
+
+  /**
+   * Returns a new [[Direction]] based on the passed value.
+   * @param d the value to derive the direction from.
+   * @return [[Negative]] if `d` is negative, [[Positive]] otherwise
+   */
+  def fromDouble(d: Double): Direction = d match
+    case x if x < 0 => Negative
+    case x if x > 0 => Positive
 
 /**
  * Represents a Trajectory
@@ -70,8 +97,19 @@ object Trajectory:
       t.direction
     )
 
-    def mapFunction[B](op: Function => Function): Trajectory = t.copy(function = op(t.function))
+    /**
+     * Applies the passed operation to the [[Function]] that this
+     * [[Trajectory]] is following, returning a new one.
+     * @param op the operation to apply to the [[Function]]
+     * @return a new [[Trajectory]] with the modified [[Function]]
+     */
+    def mapFunction(op: Function => Function): Trajectory = t.copy(function = op(t.function))
 
+    /**
+     * Reverses the direction of this Trajectory, returning a
+     * new one that will travel the function in the other direction.
+     * @return a new, reversed [[Trajectory]]
+     */
     def reverse(): Trajectory = t.direction match
       case Negative => t.copy(direction = Positive)
       case Positive => t.copy(direction = Negative)
@@ -87,15 +125,6 @@ object Trajectory:
         currentPosition = t.currentPosition,
         startingPosition = t.currentPosition,
         function = Function(x => - x * t.function.derivative(t.currentPosition.x)),
-      )
-    
-    def changeFunction(function: Function): Trajectory = Trajectory(
-        t.currentPosition,
-        t.startingPosition,
-        function,
-        t.speed,
-        t.distance,
-        t.direction
       )
 
   private def advance(dt: Double, distance: Double, speed: Double, direction: Direction): Double = distance + speed * dt * direction()

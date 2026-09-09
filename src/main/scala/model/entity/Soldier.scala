@@ -4,7 +4,9 @@ package model.entity
 import model.shape.{Circle, Shape}
 import util.Position
 
-case class Soldier private(name: String, pos: Position, shape: Shape, state: State, facingDirection: Int) extends Figure:
+import it.unibo.parabellum.model.function.Direction
+
+case class Soldier private(name: String, pos: Position, shape: Shape, state: State, facingDirection: Direction) extends Figure:
   
   override def belongs(pos: Position): Boolean = shape.belongs(pos)
   
@@ -13,7 +15,7 @@ case class Soldier private(name: String, pos: Position, shape: Shape, state: Sta
     
 
 object Soldier:
-  def initSoldier(name: String, pos: Position, ownerId: String, facingDirection: Int): Soldier =
+  def initSoldier(name: String, pos: Position, ownerId: String, facingDirection: Direction): Soldier =
     Soldier(name,
       pos,
       Circle(pos, SOLDIER_RADIUS),

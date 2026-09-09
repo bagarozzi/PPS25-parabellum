@@ -26,25 +26,39 @@ trait Projectile extends Entity:
 
 private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) extends Projectile:
 
-  def update(dt: Double): Projectile =
-    copy(
-      trajectory = trajectory.update(dt)
-    )
+    def update(dt: Double): Projectile =
+        copy(
+          trajectory = trajectory.update(dt)
+        )
 
-  val pos: Position = trajectory.currentPosition
+    val pos: Position = trajectory.currentPosition
 
-  def mapTrajectory(op: Trajectory => Trajectory): Projectile =
-    this.copy(trajectory = op(trajectory))
+    def mapTrajectory(op: Trajectory => Trajectory): Projectile =
+        this.copy(trajectory = op(trajectory))
 
 object Projectile:
 
-  def createProjectile(startingPosition: Position, function: Function, direction: Int, impactEffect: ImpactEffect, powerUp: Option[PowerUp]): Projectile =
-    createModifiedProjectile(powerUp.fold(impactEffect)(_.impactEffect), startingPosition, direction, powerUp.fold(function)(_.trajectoryDistortion(function)))
+    /**
+     * Creates a [[Projectile]] from the passed arguments
+     * @param startingPosition the position where it will start moving from
+     * @param function the mathematical [[Function]] that it will follow
+     * @param direction the direction of travel of the [[Function]]
+     * @param impactEffect the [[ImpactEffect]] that the Projectile will have
+     * @param powerUp the eventual [[PowerUp]] that is to be applied to this Projectile
+     * @return a new [[Projectile]]
+     */
+    def createProjectile(startingPosition: Position, function: Function, direction: Direction, impactEffect: ImpactEffect, powerUp: Option[PowerUp]): Projectile =
+        ProjectileI(
+            Trajectory.create(startingPosition, powerUp.fold(function)(_.trajectoryDistortion(function)), direction),
+            powerUp.fold(impactEffect)(_.impactEffect)
+        )
 
-  def fromSoldier(p: Player, s: Soldier, function: Function): Projectile = createProjectile(s.pos, function, s.facingDirection, p.impactEffect, p.getPowerUp)
-
-  private def createModifiedProjectile(impactEffect: ImpactEffect, startingPosition: Position, direction: Int, func: Function): Projectile =
-    ProjectileI(
-      Trajectory.create(startingPosition, func, if direction > 0 then Direction.Positive else Direction.Negative),
-        impactEffect
-    )
+    /**
+     * Convenience method that builds a [[Projectile]] using the
+     * data from a [[Player]] and it's [[Soldier]].
+     * @param p the [[Player]] shooting the Projectile
+     * @param s the [[Soldier]] where the Projectile will start from
+     * @param function the [[Function]] that the Projectile will follow
+     * @return a new [[Projectile]]
+     */
+    def fromSoldier(p: Player, s: Soldier, function: Function): Projectile = createProjectile(s.pos, function, s.facingDirection, p.impactEffect, p.getPowerUp)
