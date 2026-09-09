@@ -56,7 +56,7 @@ e di come l'ha pensato. Si fa un introduzione per tutti su come, assieme, abbiam
 | 42 | ImpactEffect refactoring | Venturini | separation in multiple files (Impact, ImpactEvent, ImpactEffect), Refactoring of ImpactEffect | no |
 | 47 | Obstacle refactoring | Sbaraccani | Rename the companion object's methods | yes |
 | 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | no |
-| 49 | Projectile refactoring | Bagattoni | Companion object's refactoring | no |
+| 49 | Projectile refactoring | Bagattoni | Companion object's refactoring | yes |
 | 50 | Trajectory refactoring | Bagattoni | Use the "Direction" enum everywhere instead of Ints | yes |
 | 51 | Comments on BoundingBox | Bagattoni | this | no |
 | 52 | GUI refactoring | Sbaraccani | Better reuse of code in render() method | yes |
