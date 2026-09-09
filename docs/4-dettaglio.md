@@ -1,4 +1,40 @@
 # Design di dettaglio
+In questo capitolo viene approfondito il design del sistema, toccando gli aspetti fondamentali del Model menzionato al [Capitolo 3](3-design.md).
+
+## GameState
+Questo è il concetto fondante dell'intera architettura. Mantenere lo stato globale del gioco all'interno di una sola struttura dati immutabile si favorisce l'utilizzo funzionale del Model da parte dei suoi utenti.
+Considerando la dimensione del dominio, questo concetto rimane comunque gestibile senza un'*esplosione*
+di stati o sacrificarne la gestibilità.
+
+## Parliamo di sta roba
+Il dominio include le seguenti entità:
+- **Entity**: una generica entità con una posizione
+- **Figure**: certe entità sono delle figure, cioè delle forme geometriche con una **Shape** (*forma*) e di si può determinare
+l'appartenenza di un punto
+- **Bullet**: un proiettile, appartenente ad un giocatore, che si muove lungo una traitettoria
+- **Shape**: una forma geometrica che potrebbe essere espressa come un insieme di funzioni matematiche (equazioni, disequazioni... etc)
+- **Trajectory**: la traitettoria di un proiettile
+- **Position**: the position of an entity
+
+Una *Figure* può essere di 3 tipi diversi: 
+- **Obstacle**: una particolare figura geometrica che, quando colpita, possiede dei buchi generati dall'impatto con i proiettili
+- **Player**: un giocatore
+- **Power-up**: un particolare entità che, quando colpita, dona un effetto a chi la colpisce e scompare immediatamente
+
+- La **partita** può essere avviata con una composizione variabile di giocatori:
+    - 1 vs. 1: Possono essere presenti due giocatori umani che giocano dalla stessa macchina
+    - 1 vs. CPU: Può essere presente un giocatore umanno che gioca contro un giocatore controllato dal computer
+- Le **funzioni**:
+    - Continuano per la loro traiettoria una volta colpito un giocatore
+    - Si fermano quando colpiscono gli ostacoli o i bordi della mappa
+- Quando una funzione colpisce un'ostacolo, parte di esso viene rimosso (esplosione)
+- La **mappa** (posizione e dimensione di ostacoli, posizione dei giocatori) deve essere generata casualmente e 
+rispettare certi vincoli di usabilità:
+    - I giocatori non devono essere troppo vicini agli ostacoli, al punto da rendere complicata la generazione di una 
+    funzione che li possa aggirare
+    - I giocatori non devono essere vicini tra di loro per non rischiare di essere colpiti dalla stessa funzione
+- I **potenziamenti** (o *power-up*) sono ostacoli che, se colpiti da una funzione, si distruggono e donano al giocatore che li ha colpiti un'abilità speciale.
+
 ## MapGenerator
 Il modulo MapGenerator gestisce la creazione procedurale della mappa adottando un pattern architetturale basato sull'evoluzione dello stato (`GameState => GameState`). Abbandonando l'uso di variabili globali o stati mutabili, l'algoritmo mappa il posizionamento spaziale come un flusso di dati continuo. La generazione multipla delle entità (ostacoli, power-up e soldati) è orchestrata tramite operazioni di `foldLeft`, che propagano esplicitamente lo stato aggiornato e immutabile da una fase di generazione alla successiva. Le dimensioni fisiche dell'area di gioco vengono totalmente disaccoppiate dalla logica di posizionamento tramite l'iniezione implicita della `BoundingBox` (`using border`), garantendo scalabilità su mappe di qualsiasi proporzione.
 
