@@ -26,22 +26,22 @@ trait Projectile extends Entity:
 
 private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) extends Projectile:
 
-  def update(dt: Double): Projectile =
-    copy(
-      trajectory = trajectory.update(dt)
-    )
+    def update(dt: Double): Projectile =
+        copy(
+          trajectory = trajectory.update(dt)
+        )
 
-  val pos: Position = trajectory.currentPosition
+    val pos: Position = trajectory.currentPosition
 
-  def mapTrajectory(op: Trajectory => Trajectory): Projectile =
-    this.copy(trajectory = op(trajectory))
+    def mapTrajectory(op: Trajectory => Trajectory): Projectile =
+        this.copy(trajectory = op(trajectory))
 
 object Projectile:
 
-  def createProjectile(startingPosition: Position, function: Function, direction: Direction, impactEffect: ImpactEffect, powerUp: Option[PowerUp]): Projectile =
-    ProjectileI(
-        Trajectory.create(startingPosition, powerUp.fold(function)(_.trajectoryDistortion(function)), direction),
-        powerUp.fold(impactEffect)(_.impactEffect)
-    )
+    def createProjectile(startingPosition: Position, function: Function, direction: Direction, impactEffect: ImpactEffect, powerUp: Option[PowerUp]): Projectile =
+        ProjectileI(
+            Trajectory.create(startingPosition, powerUp.fold(function)(_.trajectoryDistortion(function)), direction),
+            powerUp.fold(impactEffect)(_.impactEffect)
+        )
 
-  def fromSoldier(p: Player, s: Soldier, function: Function): Projectile = createProjectile(s.pos, function, s.facingDirection, p.impactEffect, p.getPowerUp)
+    def fromSoldier(p: Player, s: Soldier, function: Function): Projectile = createProjectile(s.pos, function, s.facingDirection, p.impactEffect, p.getPowerUp)
