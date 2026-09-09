@@ -54,12 +54,12 @@ e di come l'ha pensato. Si fa un introduzione per tutti su come, assieme, abbiam
 | 37 | Docs - [**Design**](../docs/3-design.md) | unassigned | this | no |
 | 38 | Docs - [**Detailed design**](../docs/4-dettaglio.md) | unassigned | each member writes its own section | no |
 | 42 | ImpactEffect refactoring | Venturini | separation in multiple files (Impact, ImpactEvent, ImpactEffect), Refactoring of ImpactEffect | no |
-| 47 | Obstacle refactoring | Sbaraccani | Rename the companion object's methods | no |
+| 47 | Obstacle refactoring | Sbaraccani | Rename the companion object's methods | yes |
 | 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | no |
 | 49 | Projectile refactoring | Bagattoni | Companion object's refactoring | no |
 | 50 | Trajectory refactoring | Bagattoni | Use the "Direction" enum everywhere instead of Ints | no |
 | 51 | Comments on BoundingBox | Bagattoni | this | no |
-| 52 | GUI refactoring | Sbaraccani | Better reuse of code in render() method | no |
+| 52 | GUI refactoring | Sbaraccani | Better reuse of code in render() method | yes |
 | 53 | Docs - [**Implementation**](../docs/5-implementazione.md)| everyone | each member writes its own section | no |
 | 54 | Docs - [**Testing**](../docs/6-testing.md) | someone | write Testing section | no |
 | 55 | Docs - [**Retrospettiva**](../docs/7-retrospettiva.md) | someone | write Retrospettiva section | no |
