@@ -111,6 +111,13 @@ case class TeamManager(
    */
   def currentPlayer: Player =
     teams(currentIndex).owner
+
+  /**
+   *
+   * @return the player that own the current soldier
+   */
+  def getAllPlayers: Set[Player] =
+    teams.map(_.owner).toSet
       
 object TeamManager:
 
