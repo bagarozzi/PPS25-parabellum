@@ -25,7 +25,7 @@ Most important first.
 | 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | no | [**Sprint 6**](./sprint_6_backlog.md) |
 | 49 | Projectile refactoring | Bagattoni | Companion object's refactoring | yes | [**Sprint 6**](./sprint_6_backlog.md) |
 | 50 | Trajectory refactoring | Bagattoni | Use the "Direction" enum everywhere instead of Ints | yes | [**Sprint 6**](./sprint_6_backlog.md) |
-| 51 | Comments on BoundingBox | Bagattoni | this | no | [**Sprint 6**](./sprint_6_backlog.md) |
+| 51 | Comments on BoundingBox | Bagattoni | this | yes | [**Sprint 6**](./sprint_6_backlog.md) |
 | 52 | GUI refactoring | Sbaraccani | Better reuse of code in render() method | no | [**Sprint 6**](./sprint_6_backlog.md) |
 | 53 | Docs - [**Implementation**](../docs/5-implementazione.md)| everyone | each member writes its own section | no | [**Sprint 6**](./sprint_6_backlog.md) |
 | 54 | Docs - [**Testing**](../docs/6-testing.md) | someone | write Testing section | no | [**Sprint 6**](./sprint_6_backlog.md) |
