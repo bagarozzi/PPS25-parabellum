@@ -1,7 +1,6 @@
 package it.unibo.parabellum
 package model.function
 
-import org.scalatest.PrivateMethodTester
 import org.scalatest.flatspec.AnyFlatSpec
 
 class ParserSpec extends AnyFlatSpec:
