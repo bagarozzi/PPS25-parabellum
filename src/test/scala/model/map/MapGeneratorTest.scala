@@ -1,25 +1,29 @@
 package it.unibo.parabellum.model.map
 
+import it.unibo.parabellum.controller.{GameState, TeamManager}
 import it.unibo.parabellum.model.entity.Player
 import it.unibo.parabellum.model.shape.{Circle, Polygon}
 import it.unibo.parabellum.util.MapGenerator
 import org.scalatest.funsuite.AnyFunSuite
 
 class MapGeneratorTest extends AnyFunSuite:
-
   val minX = -20.0
   val maxX = 20.0
   val minY = 0.0
   val maxY = 15.0
 
+  val gs: GameState = GameState(TeamManager(Vector.empty, 0), Set.empty, Set.empty, None, None)
+    .map(MapGenerator.generateObstacles(5, _))
+    .map(MapGenerator.generatePlayers(Set("player1", "player2"), 2, _))
+    .map(MapGenerator.generatePowerUps(3, _))
+
   test("generateObstacles should create exactly the requested number of obstacles"):
-    val count = 10
-    val obstacles = MapGenerator.generateObstacles(count, minX, maxX, minY, maxY)
-    assert(obstacles.size == count)
+    val count = 5
+    assert(gs.obstacles.size == count)
 
   test("generateObstacles should place the center of all obstacles within the specified boundaries"):
     val count = 50
-    val obstacles = MapGenerator.generateObstacles(count, minX, maxX, minY, maxY)
+    val obstacles = gs.obstacles
 
     obstacles.foreach: obs =>
       assert(obs.pos.x >= minX && obs.pos.x <= maxX, s"X position ${obs.pos.x} is out of bounds")
@@ -27,8 +31,7 @@ class MapGeneratorTest extends AnyFunSuite:
 
   test("generateObstacles should generate a mix of Shapes given a large enough count"):
     val count = 100
-    val obstacles = MapGenerator.generateObstacles(count, minX, maxX, minY, maxY)
-
+    val obstacles = gs.obstacles
     val hasCircles = obstacles.exists(_.shape.isInstanceOf[Circle])
     val hasPolygons = obstacles.exists(_.shape.isInstanceOf[Polygon])
 
@@ -36,7 +39,7 @@ class MapGeneratorTest extends AnyFunSuite:
     assert(hasPolygons)
 
   test("generatePlayers should create exactly two players with correct names"):
-    val players = MapGenerator.generatePlayers(minX, maxX, minY, maxY, Set("player1", "player2"), 1)
+    val players = gs.manager.p
     assert(players.size == 2)
 
     val names = players.keys.map(_.name).toSet
