@@ -5,14 +5,37 @@ import util.Position
 
 import model.function.Direction.{Negative, Positive}
 
+/**
+ * The direction of travel of a mathematical function
+ * along the x coordinate.
+ */
 enum Direction:
+
+  /**
+   * The negative direction, traveling towards the
+   * negative x-coordinate.
+   */
   case Negative
+
+  /**
+   * The positive direction, traveling towards the
+   * positive x-coordinate.
+   */
   case Positive
 
+  /**
+   * Returns the [[Double]] value of this direction.
+   * @return `-1` for Negative or `1` for Positive
+   */
   def apply(): Double = this match
     case Negative => -1
     case Positive => 1
 
+  /**
+   * Returns a new [[Direction]] based on the passed value.
+   * @param d the value to derive the direction from.
+   * @return [[Negative]] if `d` is negative, [[Positive]] otherwise
+   */
   def fromDouble(d: Double): Direction = d match
     case x if x < 0 => Negative
     case x if x > 0 => Positive
