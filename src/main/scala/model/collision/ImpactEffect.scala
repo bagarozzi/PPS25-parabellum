@@ -2,7 +2,7 @@ package it.unibo.parabellum
 package model.collision
 
 import model.entity.{Obstacle, PowerUp, Soldier}
-import model.shape.Circle
+import model.shape.{Circle, Shape}
 import util.Position
 
 import BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
@@ -15,7 +15,6 @@ import BorderImpactType.{HorizontalBorderImpact, VerticalBorderImpact}
  * upon an [[Impact]]
  */
 trait ImpactEffect:
-
     /**
      * Apply the effect of this [[ImpactEffect]] producing a set of [[ImpactEvent]]s
      * @param impact the impact to react to
@@ -29,7 +28,7 @@ trait ImpactEffect:
  */
 object ImpactEffect:
   def normalImpactEffect(): ImpactEffect = {
-      case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.5)), DestroyProjectile())
+      case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, normalExplosion(pos)), DestroyProjectile())
       case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
       case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
       case BorderImpact(_) => Set(DestroyProjectile())
@@ -43,7 +42,7 @@ object ImpactEffect:
     }
   
   def piercingImpactEffect(): ImpactEffect = {
-    case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, Circle(pos, 0.2)))
+    case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, piercingExplosion(pos)))
     case i => normalImpactEffect().applyEffect(i)
   }
 
@@ -52,4 +51,13 @@ object ImpactEffect:
       case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
       case i => normalImpactEffect().applyEffect(i)
   }
+
+  private val PiercingExplosionRadius = 0.2
+  private val ExplosionRadius = 0.5
+
+  private def normalExplosion(pos: Position): Shape =
+    Circle(pos, ExplosionRadius)
+
+  private def piercingExplosion(pos: Position): Shape =
+    Circle(pos, PiercingExplosionRadius)
 
