@@ -6,6 +6,12 @@ Questa scelta architetturale deriva dalla necessità di mantenere il più pulito
 **Functional Core, Imperative Shell**. L'architettura MVVM pone una barriera proprio tra View e Model, permettendo astrazione rispetto al livello di presentazione
 ed evitando di *sporcare* il codice backend solo per necessità di convenienza, per esempio con dei *side-effect*s.
 
+L'architettura è quindi divisa tra View (scritta tramite ScalaFX) ed un Model puramente funzionale connessi tramite un **Controller**
+che si occupa dell'avvio del game-loop, in cui sono *confinati* i side-effects.
+
+
+
+
 <br>
 A questo fine viene sviluppato un componente **GameContext** che viene *osservato* dalla View per ricevere cambiamenti.
 
