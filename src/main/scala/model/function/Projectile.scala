@@ -38,9 +38,9 @@ private case class ProjectileI(trajectory: Trajectory, effect: ImpactEffect) ext
 
 object Projectile:
 
-  def createProjectile(startingPosition: Position, function: Function, direction: Int, impactEffect: ImpactEffect, powerUp: Option[PowerUp]): Projectile =
+  def createProjectile(startingPosition: Position, function: Function, direction: Direction, impactEffect: ImpactEffect, powerUp: Option[PowerUp]): Projectile =
     ProjectileI(
-        Trajectory.create(startingPosition, powerUp.fold(function)(_.trajectoryDistortion(function)), if direction > 0 then Direction.Positive else Direction.Negative),
+        Trajectory.create(startingPosition, powerUp.fold(function)(_.trajectoryDistortion(function)), direction),
         powerUp.fold(impactEffect)(_.impactEffect)
     )
 

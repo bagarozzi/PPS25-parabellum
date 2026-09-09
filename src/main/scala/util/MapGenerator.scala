@@ -8,8 +8,9 @@ import controller.GameState
 
 import scala.annotation.tailrec
 import model.shape.Circle as ModelCircle
-
 import model.collision.ImpactEffect.normalImpactEffect
+
+import it.unibo.parabellum.model.function.Direction
 
 /**
  * Utility object responsible for the procedural generation of the game map.
@@ -118,7 +119,7 @@ object MapGenerator:
    * @return The updated GameState containing the newly assigned soldier.
    */
   @tailrec
-  def spawnSoldier(g: GameState, playerName: String, direction: Int, spawnMinX: Double, spawnMaxX: Double)(using border: BoundingBox): GameState =
+  def spawnSoldier(g: GameState, playerName: String, direction: Direction, spawnMinX: Double, spawnMaxX: Double)(using border: BoundingBox): GameState =
     val pX = spawnMinX + (spawnMaxX - spawnMinX) * math.random()
     val pY = border.y0 + (border.y1 - border.y0) * math.random()
 
@@ -174,7 +175,7 @@ object MapGenerator:
       val isLeft = index == 0
       val spawnMinX = if isLeft then border.x0 else midX + safeMargin
       val spawnMaxX = if isLeft then midX - safeMargin else border.x1
-      val direction = if isLeft then 1 else -1
+      val direction = if isLeft then Direction.Positive else Direction.Negative
 
       // Add the empty player shell to the TurnManager first
       val stateWithPlayer = GameState.addPlayer(stateAcc, initPlayer(playerName, normalImpactEffect()))
