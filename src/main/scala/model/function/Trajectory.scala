@@ -82,6 +82,11 @@ object Trajectory:
      */
     def mapFunction(op: Function => Function): Trajectory = t.copy(function = op(t.function))
 
+    /**
+     * Reverses the direction of this Trajectory, returning a
+     * new one that will travel the function in the other direction.
+     * @return a new, reversed [[Trajectory]]
+     */
     def reverse(): Trajectory = t.direction match
       case Negative => t.copy(direction = Positive)
       case Positive => t.copy(direction = Negative)
@@ -97,15 +102,6 @@ object Trajectory:
         currentPosition = t.currentPosition,
         startingPosition = t.currentPosition,
         function = Function(x => - x * t.function.derivative(t.currentPosition.x)),
-      )
-    
-    def changeFunction(function: Function): Trajectory = Trajectory(
-        t.currentPosition,
-        t.startingPosition,
-        function,
-        t.speed,
-        t.distance,
-        t.direction
       )
 
   private def advance(dt: Double, distance: Double, speed: Double, direction: Direction): Double = distance + speed * dt * direction()
