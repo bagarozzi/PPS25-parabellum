@@ -74,7 +74,13 @@ object Trajectory:
       t.direction
     )
 
-    def mapFunction[B](op: Function => Function): Trajectory = t.copy(function = op(t.function))
+    /**
+     * Applies the passed operation to the [[Function]] that this
+     * [[Trajectory]] is following, returning a new one.
+     * @param op the operation to apply to the [[Function]]
+     * @return a new [[Trajectory]] with the modified [[Function]]
+     */
+    def mapFunction(op: Function => Function): Trajectory = t.copy(function = op(t.function))
 
     def reverse(): Trajectory = t.direction match
       case Negative => t.copy(direction = Positive)
