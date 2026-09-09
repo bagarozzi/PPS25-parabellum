@@ -1,10 +1,10 @@
-package it.unibo.parabellum.model.map
+package it.unibo.parabellum
+package model.map
 
-import it.unibo.parabellum.controller.GameController.border
-import it.unibo.parabellum.controller.{GameState, TeamManager}
-import it.unibo.parabellum.model.entity.Player
-import it.unibo.parabellum.model.shape.{Circle, Polygon}
-import it.unibo.parabellum.util.MapGenerator
+import controller.GameController.given 
+import controller.{GameState, TeamManager}
+import model.shape.{Circle, Polygon}
+import util.MapGenerator
 import org.scalatest.funsuite.AnyFunSuite
 
 class MapGeneratorTest extends AnyFunSuite:
