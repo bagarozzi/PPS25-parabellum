@@ -13,6 +13,10 @@ enum Direction:
     case Negative => -1
     case Positive => 1
 
+  def fromDouble(d: Double): Direction = d match
+    case x if x < 0 => Negative
+    case x if x > 0 => Positive
+
 /**
  * Represents a Trajectory
  * @param currentPosition the current (and latest) [[Position]] of the trajectory
