@@ -1,8 +1,11 @@
 # Design architetturale
-Per rispettare il principio di *Separation of Concerns* tra view e logica di business e favorire l'immutabilità e uno sviluppo funzionale, si è deciso di
-adottare il pattern Observer per comunicare i cambiamenti del Model alla View in maniera distaccata.
-In questo modo i *side-effects* vengono confinati solo alla parte di sistema che si relaziona con la View, lasciando la possibilità alla logica di business di poter
-essere completamente funzionale e immutabile.
+Per rispettare il principio di *Separation of Concerns* tra view e logica di business, favorendo l'immutabilità e uno sviluppo funzionale, viene adottato il pattern
+Model-View-ViewModel (M-V-VM).
+
+Questa scelta architetturale deriva dalla necessità di mantenere il più pulito ed astratto possibile il codice della logica di business, riferendosi al principio
+**Functional Core, Imperative Shell**. L'architettura MVVM pone una barriera proprio tra View e Model, permettendo astrazione rispetto al livello di presentazione
+ed evitando di *sporcare* il codice backend solo per necessità di convenienza, per esempio con dei *side-effect*s.
+
 <br>
 A questo fine viene sviluppato un componente **GameContext** che viene *osservato* dalla View per ricevere cambiamenti.
 
