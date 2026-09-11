@@ -43,8 +43,18 @@ Le entità di gioco sono organizzate secondo una gerarchia di trait che favorisc
 ### Figure
 Le Figure sono le entità di gioco fisicheche che occupano uno spazio definito da una forma geometrica e possono interagire con i proiettili attraverso il rilevamento di collisioni. Questo design consente di applicare una logica di impatto uniforme a soldati, ostacoli e potenziamenti, indipendentemente dalla loro forma specifica mentre ognuna di queste gestisce la propria logica di gioco.
 
+Le Figure si dividono in:
+- Soldier
+- Obstacle
+- PowerUp
 
-##
+## Proiettili in gioco
+I proiettili rappresentano il meccanismo di interazione principale tra i giocatori e l'ambiente di gioco. La loro logica è stata progettata per gestire due aspetti: il movimento nello spazio seguendo una traiettoria matematica, e l'effetto dell'impatto in caso di collisione.
+
+### Projectile
+
+
+### Trajectory
 
 ## MapGenerator
 Il modulo MapGenerator gestisce la creazione procedurale della mappa adottando un pattern architetturale basato sull'evoluzione dello stato (`GameState => GameState`). Abbandonando l'uso di variabili globali o stati mutabili, l'algoritmo mappa il posizionamento spaziale come un flusso di dati continuo. La generazione multipla delle entità (ostacoli, power-up e soldati) è orchestrata tramite operazioni di `foldLeft`, che propagano esplicitamente lo stato aggiornato e immutabile da una fase di generazione alla successiva. Le dimensioni fisiche dell'area di gioco vengono totalmente disaccoppiate dalla logica di posizionamento tramite l'iniezione implicita della `BoundingBox` (`using border`), garantendo scalabilità su mappe di qualsiasi proporzione.

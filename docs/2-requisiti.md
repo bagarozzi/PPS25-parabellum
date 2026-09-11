@@ -14,7 +14,7 @@ Il dominio include le seguenti entità:
 - **Position**: la posizione di un Entity
 - **Player**: rappresenta il partecipante alla partita
 
-Una *Figure* può essere di 3 tipi diversi: 
+Una **Figure** può essere di 3 tipi diversi: 
 - **Obstacle**: una particolare figura geometrica che, quando colpita, possiede dei buchi generati dall'impatto con i proiettili
 - **Soldier**: rappresenta l'entità controllata da un giocatore e presente sul campo di gioco.
 - **Power-up**: - I power-up, sono Figure che quando colpite da un proiettile, vengono distrutti e attribuiscono un effetto speciale al giocatore che li ha colpiti.
