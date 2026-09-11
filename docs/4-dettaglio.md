@@ -35,6 +35,19 @@ rispettare certi vincoli di usabilità:
     - I giocatori non devono essere vicini tra di loro per non rischiare di essere colpiti dalla stessa funzione
 - I **potenziamenti** (o *power-up*) sono ostacoli che, se colpiti da una funzione, si distruggono e donano al giocatore che li ha colpiti un'abilità speciale.
 
+## Entità di gioco
+Le entità di gioco sono organizzate secondo una gerarchia di trait che favorisce la composizione e la separazione delle responsabilità. La struttura è costruita su tre livelli di astrazione:
+
+<img src="./figures/EntitySheme.png" width="600" height="auto">
+
+### Figure
+Le Figure sono le entità di gioco fisicheche che occupano uno spazio definito da una Shape e possono interagire con i proiettili attraverso il rilevamento di collisioni. Questo design consente di applicare una logica di impatto uniforme a soldati, ostacoli e potenziamenti, indipendentemente dalla loro forma specifica mentre ognuna di queste gestisce la propria logica di gioco.
+
+### Shape
+La Shape è stata pensata come un predicato logico che astrae una figura geometrica. Tramite il metodo `belongs(pos: Position): Boolean`, la Shape verifica se una posizione ricade all'interno della geometria, abilitando il rilevamento delle collisioni tra proiettili e Figure. Le implementazioni concrete di Shape: Circle per forme semplici, Polygon per forme arbitrarie, e Difference per ostacoli danneggiati da esplosioni che consentono al sistema di collision detection di rimanere agnostico rispetto alla geometria specifica, mantenendo una logica uniforme e riusabile.
+
+##
+
 ## MapGenerator
 Il modulo MapGenerator gestisce la creazione procedurale della mappa adottando un pattern architetturale basato sull'evoluzione dello stato (`GameState => GameState`). Abbandonando l'uso di variabili globali o stati mutabili, l'algoritmo mappa il posizionamento spaziale come un flusso di dati continuo. La generazione multipla delle entità (ostacoli, power-up e soldati) è orchestrata tramite operazioni di `foldLeft`, che propagano esplicitamente lo stato aggiornato e immutabile da una fase di generazione alla successiva. Le dimensioni fisiche dell'area di gioco vengono totalmente disaccoppiate dalla logica di posizionamento tramite l'iniezione implicita della `BoundingBox` (`using border`), garantendo scalabilità su mappe di qualsiasi proporzione.
 
