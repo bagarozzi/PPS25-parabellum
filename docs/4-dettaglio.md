@@ -27,15 +27,6 @@ I proiettili rappresentano il meccanismo di interazione principale tra i giocato
 ### Projectile
 Projectile è un'entità che si compone di una Trajectory, che gestisce il movimento nello spazio secondo la funzione matematica che il giocatore inserisce, e di un ImpactEffect, che determina il comportamento in caso di collisione. Quando viene creato a partire da un soldato, il Projectile acquisisce automaticamente il potenziamento del Player che lo ha sparato. Dato che ci può essere un solo Projectile in gioco il proiettile appartiene implicitamente al Player di turno. 
 
-
-## MapGenerator
-Il modulo MapGenerator gestisce la creazione procedurale della mappa adottando un pattern architetturale basato sull'evoluzione dello stato (`GameState => GameState`). Abbandonando l'uso di variabili globali o stati mutabili, l'algoritmo mappa il posizionamento spaziale come un flusso di dati continuo. La generazione multipla delle entità (ostacoli, power-up e soldati) è orchestrata tramite operazioni di `foldLeft`, che propagano esplicitamente lo stato aggiornato e immutabile da una fase di generazione alla successiva. Le dimensioni fisiche dell'area di gioco vengono totalmente disaccoppiate dalla logica di posizionamento tramite l'iniezione implicita della `BoundingBox` (`using border`), garantendo scalabilità su mappe di qualsiasi proporzione.
-
-### Propagazione dello Spazio e Validazione Incrementale
-Per evitare compenetrazioni (es. power-up generati sopra ostacoli o soldati), la gestione delle collisioni si affida a una mappatura dinamica degli ingombri fisici. Prima di ogni singolo spawn, il metodo `getOccupiedSpaces` interroga lo snapshot del `GameState` corrente per estrarre il footprint spaziale (coordinate X, Y e Raggio) di tutte le entità già posizionate.
-
-Questo tracciato storico viene passato al motore logico esterno (`PrologMapChecker`), il quale esegue una validazione spaziale incrementale. Questo approccio risolve i colli di bottiglia degli algoritmi "Dart Throwing": anziché calcolare e validare l'intera mappa in blocco (con il rischio di doverla scartare e ricalcolare interamente per una singola sovrapposizione), il sistema interroga Prolog per singola coordinata. Se viene rilevata un'intersezione, la funzione di spawn sfrutta la ricorsione in coda (`@tailrec`) per scartare e rigenerare esclusivamente quel singolo punto, azzerando i tempi morti di inizializzazione.
-
 ### Specializzazione delle Entità
 La logica di istanziazione si adatta proceduralmente alle caratteristiche geometriche e tattiche delle singole categorie di entità:
 
