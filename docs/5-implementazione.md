@@ -1,6 +1,20 @@
 # Implementazione
 In questa sezione vengono elencati gli aspetti implementativi significativi del progetto, eseguiti singolarmente o in gruppo.
 
+## GameState
+*realizzato da Federico Bagattoni e Luca Venturini*
+
+Questo componente rappresenta lo stato globale del gioco: funge da contenitore per tutte le entità e permette l'aggiornamento di quest'ultime.
+Il suo metodo ```update``` applica una serie di trasformazioni sul suo stato, restituendone uno aggiornato. 
+
+```Scala
+def update(g: GameState, dt: Double, passedFunction: Option[Function])(using border: BoundingBox): GameState =
+updateProjectile(g, dt).fold(g)(p => g.copy(projectile = Some(p)))
+    .map(resolveCollisions)
+    .map(processPendingInput(_, passedFunction))
+    .map(spawnProjectile)
+```
+
 # Luca Venturini
 
 ## Shape
@@ -20,9 +34,16 @@ override def addExplosion(s: Shape): Obstacle = shape match
 ```
 
 ## Collisioni
-Le collisioni vengono rilevate dal CollisionDetector, che ad ogni frame testa se la posizione del proiettile ricade all'interno di una qualsiasi Figure presente nel gioco utilizzando il metodo `belongs()`. Quando una collisione viene rilevata, il CollisionDetector genera un Set di ImpactEvent che descrivono l'esito dell'impatto. Questi eventi vengono successivamente gestiti dal GameState, che applica i cambiamenti allo stato del gioco in base alla natura degli impact event ricevuti: la logica specifica di come una collisione influenzi il gioco (danneggiare un ostacolo, eliminare un nemico, raccogliere un potenziamento) rimane incapsulata negli event stessi, mantenendo la separazione delle responsabilità tra rilevamento geometrico e logica di gioco.
+
+### Rilevazione delle collisioni
+Le collisioni vengono rilevate dal CollisionDetector, che ad ogni frame testa se la posizione del proiettile ricade all'interno di una qualsiasi Figure presente nel gioco utilizzando il metodo ```belongs()```. Quando una collisione viene rilevata, il CollisionDetector genera un Set di ImpactEvent che descrivono l'esito dell'impatto. Questi eventi vengono successivamente gestiti dal GameState, che applica i cambiamenti allo stato del gioco in base alla natura degli eventi ricevuti: la logica specifica di come una collisione influenzi il gioco (danneggiare un ostacolo, eliminare un nemico, raccogliere un potenziamento) rimane incapsulata negli event stessi, mantenendo la separazione delle responsabilità tra rilevamento geometrico e logica di gioco.
+
+### Gestione degli impatti
+Spiegazione di cosa è stato modellato con cosa.
 
 # Federico Bagattoni
+
+TODO: Parlare di Trajectory dentro Function o farne una sezione a parte
 ## Function
 Le funzioni matematiche sono al cuore di questo gioco. Per garantire flessibilità nel loro utilizzo ma senza la verbosità di
 funzioni ```Double => Double``` è stata implementata ```Function```.
@@ -58,6 +79,11 @@ in notazione matematica.
 Ad esempio, nel PowerUp *Burden*, la funzione che applica il *peso* alla traiettoria può essere sottratta alla prima.
 
 Un metodo di estensione interessante è anche il calcolo della derivata in un punto tramite il metodo ```derive(x)```.
+
+## ImpactEffect
+*realizzato il collaborazione con Luca Venturini*
+
+TODO
 
 # Pietro Sbaraccani
 
