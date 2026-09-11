@@ -20,9 +20,35 @@ override def addExplosion(s: Shape): Obstacle = shape match
 Le funzioni matematiche sono al cuore di questo gioco. Per garantire flessibilità nel loro utilizzo ma senza la verbosità di
 funzioni ```Double => Double``` è stata implementata ```Function```.
 
-Per garantirne l'utilizzo all'interno del dominio si ricorre all'utilizzo di ```opaque type``` mentre i metodi infissi come 
+```Scala
+/**
+ * A mathematical function.
+ */
+opaque type Function = Double => Double
+
+object Function:
+
+    val DERIVATIVE_H = 0.0001
+
+    /**
+     * Create a mathematical function from the one passed as argument
+     * @param f the function to create
+     * @return a Function
+     */
+    def apply(f: Double => Double): Function = f
+```
+
+L' utilizzo di ```opaque type``` permette di astrarre dal tipo sottostante e garantisce sicurezza nell'uso, impedendo *leaky abstractions*; mentre i metodi infissi come 
 ```+``` o ```-``` contribuiscono alla creazione di un mini-DSL che facilità la combinazione di più funzioni o la loro trasformazione. L'implementazione di ```apply()``` permette di estrarre il valore di y semplicemente chiamando function(x), come
 in notazione matematica.
+
+```Scala
+  private val distortFunction: Function = Function(x => 0.05 * x * x)
+
+  def trajectoryDistortion(function: Function): Function = function - distortFunction
+```
+
+Ad esempio, nel PowerUp *Burden*, la funzione che applica il *peso* alla traiettoria può essere sottratta alla prima.
 
 Un metodo di estensione interessante è anche il calcolo della derivata in un punto tramite il metodo ```derive(x)```.
 
