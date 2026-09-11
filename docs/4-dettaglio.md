@@ -22,6 +22,8 @@ Le Figure si dividono in:
 ## Logica dei Proiettili
 I proiettili rappresentano il meccanismo di interazione principale tra i giocatori e l'ambiente di gioco. La loro logica è stata progettata per gestire due aspetti: il movimento nello spazio seguendo una traiettoria matematica, e l'effetto dell'impatto in caso di collisione.
 
+<img src="./figures/projectileScheme.png" width="600" height="auto">
+
 ### Projectile
 Projectile è un'entità che si compone di una Trajectory, che gestisce il movimento nello spazio secondo la funzione matematica che il giocatore inserisce, e di un ImpactEffect, che determina il comportamento in caso di collisione. Quando viene creato a partire da un soldato, il Projectile acquisisce automaticamente il potenziamento del Player che lo ha sparato. Dato che ci può essere un solo Projectile in gioco il proiettile appartiene implicitamente al Player di turno. 
 
