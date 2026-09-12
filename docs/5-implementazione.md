@@ -36,8 +36,15 @@ override def addExplosion(s: Shape): Obstacle = shape match
 ## Collisioni
 
 ### Rilevazione delle collisioni
-Le collisioni vengono rilevate dal CollisionDetector, che ad ogni frame testa se la posizione del proiettile ricade all'interno di una qualsiasi Figure presente nel gioco utilizzando il metodo ```belongs()```. Quando una collisione viene rilevata, il CollisionDetector genera un Set di ImpactEvent che descrivono l'esito dell'impatto. Questi eventi vengono successivamente gestiti dal GameState, che applica i cambiamenti allo stato del gioco in base alla natura degli eventi ricevuti: la logica specifica di come una collisione influenzi il gioco (danneggiare un ostacolo, eliminare un nemico, raccogliere un potenziamento) rimane incapsulata negli event stessi, mantenendo la separazione delle responsabilità tra rilevamento geometrico e logica di gioco.
+Le collisioni vengono rilevate dal CollisionDetector, che ad ogni frame testa se la posizione del proiettile ricade all'interno di una qualsiasi Figure presente nel gioco utilizzando il metodo `belongs()`. Il rilevamento avviene su tre fronti: collisioni con i soldati nemici, collisioni con gli ostacoli, e collisioni con i bordi della mappa. Quando una collisione viene rilevata, il CollisionDetector genera un Set di ImpactEvent che descrivono l'esito dell'impatto attraverso il metodo `applyEffect()` dell'ImpactEffect associato al proiettile. Questi eventi vengono successivamente gestiti dal GameState in una pipeline funzionale che applica sequenzialmente ogni evento tramite `foldLeft()`, trasformando lo stato del gioco in base alla natura degli ImpactEvent ricevuti.
+```Scala
+  private def resolveCollisions(g: GameState)(using border: BoundingBox): GameState = g
+      .projectile
+      .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
+      .map(_.foldLeft(g)((g,e) => e.action(g)))
+      .getOrElse(g)
 
+```
 ### Gestione degli impatti
 Spiegazione di cosa è stato modellato con cosa.
 
