@@ -5,7 +5,7 @@ In questa sezione vengono elencati gli aspetti implementativi significativi del 
 *realizzato da Federico Bagattoni e Luca Venturini*
 
 Questo componente rappresenta lo stato globale del gioco: funge da contenitore per tutte le entità e permette l'aggiornamento di quest'ultime.
-Il suo metodo ```update``` applica una serie di trasformazioni sul suo stato, restituendone uno aggiornato. 
+Il suo metodo ```update``` applica una serie di trasformazioni sul suo stato, restituendone uno aggiornato:
 
 ```Scala
 def update(g: GameState, dt: Double, passedFunction: Option[Function])(using border: BoundingBox): GameState =
@@ -14,6 +14,10 @@ updateProjectile(g, dt).fold(g)(p => g.copy(projectile = Some(p)))
     .map(processPendingInput(_, passedFunction))
     .map(spawnProjectile)
 ```
+
+Come verrà menzionato più avanti, ogni trasformazione che interessa il gioco è stata implementata come funzione di tipo
+```GameState => GameState``` in modo tale da poter essere applicate tramite ```map()```.
+Generazione delle entità, movimento e collisioni sono tutte trasformazioni dello stato del gioco.
 
 # Luca Venturini
 
@@ -43,7 +47,6 @@ Spiegazione di cosa è stato modellato con cosa.
 
 # Federico Bagattoni
 
-TODO: Parlare di Trajectory dentro Function o farne una sezione a parte
 ## Function
 Le funzioni matematiche sono al cuore di questo gioco. Per garantire flessibilità nel loro utilizzo ma senza la verbosità di
 funzioni ```Double => Double``` è stata implementata ```Function```.
