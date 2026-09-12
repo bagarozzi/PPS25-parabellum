@@ -83,7 +83,30 @@ Un metodo di estensione interessante è anche il calcolo della derivata in un pu
 ## ImpactEffect
 *realizzato il collaborazione con Luca Venturini*
 
-TODO
+ImpactEffect racchiude il comportamento di un proiettile, definisce il comportamento che un proiettile deve avere quando avviene un impatto.
+Questo viene realizzato definendo una funzione ```applyEffect``` che, passato un impatto ```Impact```, torna un insieme di 
+```ImpactEvent```s, i quali possono essere applicati allo stato del gioco per modificarlo.
+
+```Scala
+def normalImpactEffect(): ImpactEffect = {
+    case FigureImpact(pos, obs: Obstacle) => Set(DamageObstacle(obs, normalExplosion(pos)), DestroyProjectile())
+    case FigureImpact(pos, sld: Soldier) => Set(KillSoldier(sld))
+    case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
+    case BorderImpact(_) => Set(DestroyProjectile())
+    case FigureImpact(Position(_, _), _) => Set()
+}
+
+def shootingRangeImpactEffect(): ImpactEffect = {
+    case FigureImpact(pos, obs: Obstacle) => Set(DestroyObstacle(obs), SpawnNewObstacle())
+    case FigureImpact(_, powerUp: PowerUp) => Set(GainPowerUp(powerUp))
+    case i => normalImpactEffect().applyEffect(i)
+}
+```
+
+In questo modo si possono creare estensioni, combinare assieme più comportamenti tramite la definizione di una funzione.
+
+Questo è stato particolarmente utile nella creazione della schermata *Shooting Range* in cui il proiettile, oltre a
+distruggere un ostacolo, provocava la comparsa di un altro ostacolo.
 
 # Pietro Sbaraccani
 
