@@ -11,7 +11,7 @@ che si occupa dell'avvio del game-loop, aggiornamento del model e passaggio dei 
 
 L'architettura è rappresentata nel seguente diagramma:
 
-TODO: DIAGRAMMA ARCHITETTURA
+<img src="./figures/arch.png" height="600" height="auto">
 
 ## Model e ViewModel
 La parte Model è concepita per essere puramente funzionale ed immutabile. Il Controller la aggiorna, ottenendo un
