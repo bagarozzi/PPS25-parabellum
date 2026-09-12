@@ -22,7 +22,15 @@ Generazione delle entità, movimento e collisioni sono tutte trasformazioni dell
 # Luca Venturini
 
 ## Shape
-La Shape è stata pensata come un predicato logico che astrae una figura geometrica. Tramite il metodo ```belongs```, la Shape verifica se una posizione ricade al suo interno, abilitando il rilevamento delle collisioni tra proiettili e Figure. Le implementazioni concrete di Shape: Circle per forme semplici, Polygon per forme arbitrarie e Difference per ostacoli danneggiati da esplosioni che consentono al sistema di collision detection di rimanere agnostico rispetto alla geometria specifica, mantenendo una logica uniforme e riusabile.
+La Shape è stata pensata come un predicato logico che astrae una figura geometrica. Tramite il metodo ```belongs```, la Shape verifica se una posizione ricade al suo interno, abilitando il rilevamento delle collisioni tra proiettili e Figure. Le implementazioni concrete di Shape consentono al sistema di collision detection di rimanere agnostico rispetto alla geometria specifica, mantenendo una logica uniforme e riusabile.
+
+### Circle
+Circle implementa ```belongs``` tramite la distanza euclidea dal centro: un punto appartiene al cerchio se la distanza dal centro è minore o uguale al raggio. Questa implementazione è semplice e efficiente, rendendo Circle ideale per entità mobili come i soldati e i potenziamenti.
+
+### Polygon
+Polygon rappresenta forme arbitrarie tramite una sequenza di vertici. L'implementazione del metodo `belongs` utilizza l'**algoritmo di ray casting**: proietta un raggio orizzontale dal punto di test e conta le intersezioni con i lati del poligono; se il numero di intersezioni è dispari, il punto è interno. Questa tecnica consente di testare l'appartenenza in O(n) dove n è il numero di vertici, senza necessità di formule geometriche complesse.
+
+La creazione di un Polygon avviene tramite il metodo `create()`, che utilizza l'**algoritmo di ordinamento polare** per garantire che i vertici siano disposti in senso antiorario (CCW): calcola il baricentro dei vertici e li ordina per angolo polare rispetto al centro. Ciò assicura che il poligono sia sempre ben-formato e che l'algoritmo di ray casting funzioni correttamente, indipendentemente dall'ordine iniziale dei vertici forniti dall'utente.
 
 ### Difference
 Come menzionato sopra, un'implementazione di Shape è ```Difference```. Essa rappresenta la differenza tra una forma geometrica ed 
