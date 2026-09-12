@@ -29,9 +29,28 @@ Circle implementa ```belongs``` tramite la distanza euclidea dal centro: un punt
 
 ### Polygon
 Polygon rappresenta forme arbitrarie tramite una sequenza di vertici. L'implementazione del metodo `belongs` utilizza l'**algoritmo di ray casting**: proietta un raggio orizzontale dal punto di test e conta le intersezioni con i lati del poligono; se il numero di intersezioni è dispari, il punto è interno. Questa tecnica consente di testare l'appartenenza in O(n) dove n è il numero di vertici, senza necessità di formule geometriche complesse.
-
+```Scala
+  override def belongs: Position => Boolean =
+    p =>
+      edges.count { (a, b) =>
+        ((a.y > p.y) != (b.y > p.y)) &&
+          (p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x)
+      } % 2 == 1
+```    
 La creazione di un Polygon avviene tramite il metodo `create()`, che utilizza l'**algoritmo di ordinamento polare** per garantire che i vertici siano disposti in senso antiorario (CCW): calcola il baricentro dei vertici e li ordina per angolo polare rispetto al centro. Ciò assicura che il poligono sia sempre ben-formato e che l'algoritmo di ray casting funzioni correttamente, indipendentemente dall'ordine iniziale dei vertici forniti dall'utente.
-
+```Scala
+private def sortVertices(vertices: Seq[Position]): Seq[Position] =
+    val center = Position(
+      vertices.map(_.x).sum / vertices.size,
+      vertices.map(_.y).sum / vertices.size
+    )
+    vertices.sortBy { v =>
+      math.atan2(
+        v.y - center.y,
+        v.x - center.x
+      )
+    }
+```
 ### Difference
 Come menzionato sopra, un'implementazione di Shape è ```Difference```. Essa rappresenta la differenza tra una forma geometrica ed 
 una o più forme, calcolata esclusivamente dal punto di vista logico e insiemistico.
