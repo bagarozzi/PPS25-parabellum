@@ -13,6 +13,8 @@ L'architettura è rappresentata nel seguente diagramma:
 
 <img src="./figures/arch.png" height="600" height="auto">
 
+Più avanti si vedrà che, essendo il model aggiornato in maniera immutabile, lo stato globale del gioco può essere usato direttamente dalla View senza introdurre nessuna struttura aggiuntiva.
+
 ## Model e ViewModel
 La parte Model è concepita per essere puramente funzionale ed immutabile. Il Controller la aggiorna, ottenendo un
 nuovo **stato del gioco** che può essere usato come *ViewModel* nel livello di rappresentazione.
