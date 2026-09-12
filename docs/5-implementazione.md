@@ -83,6 +83,13 @@ Ad esempio, nel PowerUp *Burden*, la funzione che applica il *peso* alla traiett
 
 Un metodo di estensione interessante è anche il calcolo della derivata in un punto tramite il metodo ```derive(x)```.
 
+## Trajectory
+```Function``` viene usata in Trajectory. Questo componente viene usato in Projectile e ne rappresenta la traiettoria. Implementa
+le proprietà matematiche che permettono al proiettile di muoversi lungo la funzione scelta dall'utente ed allo stesso tempo
+allineando la traiettoria al soldato da cui è stata sparata.
+
+Qui sono state implementati i metodi per la creazione del ricochet (che crea una retta a partire dalla derivata prima della funzione nel punto di impatto) e la regolazione dinamica della velocità per funzioni molto pendenti.
+
 ## ImpactEffect
 *realizzato il collaborazione con Luca Venturini*
 
