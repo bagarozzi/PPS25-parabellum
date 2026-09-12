@@ -39,8 +39,20 @@ override def addExplosion(s: Shape): Obstacle = shape match
 
 ## Collisioni
 
-### Rilevazione delle collisioni
-Le collisioni vengono rilevate dal CollisionDetector, che ad ogni frame testa se la posizione del proiettile ricade all'interno di una qualsiasi Figure presente nel gioco utilizzando il metodo `belongs()`. Il rilevamento avviene su tre fronti: collisioni con i soldati nemici, collisioni con gli ostacoli, e collisioni con i bordi della mappa. Quando una collisione viene rilevata, il CollisionDetector genera un Set di ImpactEvent che descrivono l'esito dell'impatto attraverso il metodo `applyEffect()` dell'ImpactEffect associato al proiettile. Questi eventi vengono successivamente gestiti dal GameState in una pipeline funzionale che applica sequenzialmente ogni evento tramite `foldLeft()`, trasformando lo stato del gioco in base alla natura degli ImpactEvent ricevuti.
+Il sistema di risoluzione delle collisioni è costruito attorno a una pipeline di trasformazioni funzionali 
+che mantiene la separazione tra rilevamento geometrico e logica di gioco.
+
+Quando il CollisionDetector rileva una collisione, crea un Impact (che rappresenta l'impatto stesso della 
+collisione: una posizione, una figura colpita, o un bordo toccato). Questo Impact viene quindi passato 
+all'ImpactEffect associato al proiettile, il quale utilizza il pattern matching per trasformare l'Impact 
+in un Set di ImpactEvent specializzati.
+
+Questa trasformazione avviene interamente attraverso funzioni pure: l'ImpactEffect sa come reagire a diverse tipologie di impatto. Ad esempio, se un proiettile 
+colpisce un ostacolo, l'ImpactEffect decide se l'ostacolo deve essere danneggiato. Ogni effetto 
+può essere composto e riutilizzato.
+
+Una volta generato il Set di ImpactEvent, il GameState accumula gli effetti sequenzialmente tramite 
+`foldLeft()`, applicando il metodo `action()` di ogni evento:
 ```Scala
   private def resolveCollisions(g: GameState)(using border: BoundingBox): GameState = g
       .projectile
@@ -49,8 +61,7 @@ Le collisioni vengono rilevate dal CollisionDetector, che ad ogni frame testa se
       .getOrElse(g)
 
 ```
-### Gestione degli impatti
-Spiegazione di cosa è stato modellato con cosa.
+Ogni action() trasforma il GameState in modo immutabile, garantendo che gli effetti si propaghino in ordine definito. Questo approccio rende il sistema completamente estensibile: aggiungere un nuovo tipo di impatto (es. congelamento, teletrasporto, danno nel tempo) richiede solo di definire un nuovo ImpactEvent con il suo action(), senza modificare il motore di collision detection.
 
 # Federico Bagattoni
 
