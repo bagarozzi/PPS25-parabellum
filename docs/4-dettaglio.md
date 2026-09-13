@@ -15,9 +15,9 @@ Le entità di gioco sono organizzate secondo una gerarchia di trait che favorisc
 Le Figure sono le entità di gioco fisicheche che occupano uno spazio definito da una forma geometrica e possono interagire con i proiettili attraverso il rilevamento di collisioni. Questo design consente di applicare una logica di impatto uniforme a soldati, ostacoli e potenziamenti, indipendentemente dalla loro forma specifica mentre ognuna di queste gestisce la propria logica di gioco.
 
 Le Figure si dividono in:
-- Soldier
-- Obstacle
-- PowerUp
+- **Soldier**
+- **Obstacle**
+- **PowerUp**
 
 ## Projectile
 I proiettili rappresentano il meccanismo di interazione principale tra i giocatori e l'ambiente di gioco. La loro logica è stata progettata per gestire due aspetti: il movimento nello spazio seguendo una traiettoria matematica, e l'effetto dell'impatto in caso di collisione.
@@ -26,8 +26,23 @@ I proiettili rappresentano il meccanismo di interazione principale tra i giocato
 
 Projectile è un'entità che si compone di una Trajectory, che gestisce il movimento nello spazio secondo la funzione matematica che il giocatore inserisce, e di un ImpactEffect, che determina il comportamento in caso di collisione. Quando viene creato a partire da un soldato, il Projectile acquisisce automaticamente il potenziamento del Player che lo ha sparato. Dato che ci può essere un solo Projectile in gioco il proiettile appartiene implicitamente al Player di turno. 
 
-### ImpactEffect 
-TODO
+## Pipeline di calcolo delle collisioni
+Si vuole rendere il più estensibile e modulare possibile il rilevamento, calcolo ed effetti collaterali delle collisioni.
+A questo fine si è deciso di dividere il compito in fasi: rilevazione, calcolo delle *conseguenze* ed applicazione di queste allo stato del gioco;
+ed introdurre entità nuove come:
+- **Impact**: rappresenta un impatto tra un proiettile ed un componente fisico del gioco
+- **ImpactEffect**: il comportamento che il proiettile deve avere quando avviene un impatto
+- **ImpactEvent**: le conseguenze di un impatto sullo stato globale del gioco
+
+Una rappresentazione di questa *pipeline* può essere quella del seguente schema:
+
+<img src="./figures/collisions.png" height="200" height="auto">
+
+L'introduzione di questo processo rende ciascuna fase personalizzabile e permette di avere controllo sul suo comportamento, senza andare a modificare altre fasi.
+Ad esempio, se si vuole aggiungere un nuovo tipo di proiettile, è sufficiente introdurre un nuovo ImpactEffect con comportamneto diverso e le altre fasi di 
+rilevazione e applicazione non avranno bisogno di modifiche.
+
+L'introduzione dei **Power-Ups** si riduce quindi ad una variazione o estensione di ImpactEffect e ImpactEvents.
 
 ### Specializzazione delle Entità
 La logica di istanziazione si adatta proceduralmente alle caratteristiche geometriche e tattiche delle singole categorie di entità:
