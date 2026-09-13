@@ -16,7 +16,7 @@ I ruoli sono come segue:
 ### Documentazione redatta
 Per ogni sprint viene creata l'[opportuna documentazione](../process/sprint_4_backlog.md).
 In particolare, la documentazione viene redatta in markdown tramite l'uso di tabelle in cui sono elencate le task del backlog.
-Ogni task è numerata unicamente, corredata di *definition of done*, personale assegnato e descrizione sommaria; un'esempio di questo può essere trovato in [uno degli sprint](../process/sprint_4_backlog.md).
+Ogni task è numerata unicamente, corredata di *definition of done*, personale assegnato e descrizione sommaria; un esempio di questo può essere trovato in [uno degli sprint](../process/sprint_4_backlog.md).
 
 La redazione di una documentazione di processo efficace permette di pianificare accuratamente
 e migliorare l'efficienza durante il lavoro.
