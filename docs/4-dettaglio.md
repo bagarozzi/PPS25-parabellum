@@ -12,7 +12,7 @@ Le entità di gioco sono organizzate secondo una gerarchia di trait che favorisc
 <img src="./figures/EntitySheme.png" width="600" height="auto">
 
 ### Figure
-Le Figure sono le entità di gioco fisicheche che occupano uno spazio definito da una forma geometrica e possono interagire con i proiettili attraverso il rilevamento di collisioni. Questo design consente di applicare una logica di impatto uniforme a soldati, ostacoli e potenziamenti, indipendentemente dalla loro forma specifica mentre ognuna di queste gestisce la propria logica di gioco.
+Le Figure sono le entità di gioco fisiche che occupano uno spazio definito da una forma geometrica e possono interagire con i proiettili attraverso il rilevamento di collisioni. Questo design consente di applicare una logica di impatto uniforme a soldati, ostacoli e potenziamenti, indipendentemente dalla loro forma specifica mentre ognuna di queste gestisce la propria logica di gioco.
 
 Le Figure si dividono in:
 - **Soldier**
