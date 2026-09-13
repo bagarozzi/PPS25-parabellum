@@ -15,6 +15,7 @@
 
 ### Sprint Backlogs
 | Sprint | Description | Started | Ended |
+| :--- | :--- | :--- | :--- |
 | [Sprint 1](./sprint_1_backlog.md) | Domain modelling and architecutre | 13/07/2026 | 19/07/2026 (delayed to 10/08/2026) |
 | [Sprint 2](./sprint_2_backlog.md) | Alpha version, v1.0 | 10/08/2026 | 17/08/2026 |
 | [Sprint 3](./sprint_3_backlog.md) | New functions and Soldiers, v2.0 | 17/08/2026 |24/08/2026 (delayed to 26/08/2026) |
