@@ -3,7 +3,7 @@
 ## Processo di sviluppo
 Come menzionato in precedenza, il processo di sviluppo adottato ha permesso a tutti i membri del gruppo di familiarizzare con design e codebase.
 I meeting organizzati favoriscono lo sviluppo di idee, la cooperazione e la internalizzazione degli obbiettivi.
-Le scadenze hanno invece contribuito al mantemento del rigore e del rispetto.
+Le scadenze hanno invece contribuito al mantenendo del rigore e del rispetto.
 
 Sono stati svolti 6 sprint.
 
