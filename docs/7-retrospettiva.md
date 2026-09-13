@@ -30,7 +30,11 @@ Qui è stata redatta gran parte della documentazione (soprattutto gli aspetti di
 corrette piccole imperfezioni.
 
 ## Considerazioni finali
-Nonostante le ferie estive ed un inizio turbolento, il gruppo è rimasto coeso.
+Nonostante le ferie estive ed un inizio turbolento, il gruppo è rimasto coeso ed è stato in grado di sviluppare tutte le feature
+previste con idee innovative e dei buoni compromessi.
+
+L'unica feature prevista che non è stata aggiunta sono i giocatori controllati da computer. Questa feature è sicuramente inclusa negli sviluppi futuri del 
+progetto.
 ___
 ___
 [**&larr; Testing** ](./6-testing.md) | **Retrospettiva** | [**Introduzione &rarr;**](./0-introduzione.md)
