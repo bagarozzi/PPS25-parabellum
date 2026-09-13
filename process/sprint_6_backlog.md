@@ -50,9 +50,9 @@ e di come l'ha pensato. Si fa un introduzione per tutti su come, assieme, abbiam
 ### Tasks to be done
 | Task ID | Task Description | Assignee | When it's done | Done |
 | :--- | :--- | :--- | :--- | :---: |
-| 06 | Docs - correction of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | no |
-| 37 | Docs - [**Design**](../docs/3-design.md) | unassigned | this | no |
-| 38 | Docs - [**Detailed design**](../docs/4-dettaglio.md) | unassigned | each member writes its own section | no |
+| 06 | Docs - correction of [**Requirements**](../docs/2-requisiti.md) | Venturini | . | yes |
+| 37 | Docs - [**Design**](../docs/3-design.md) | Everyone | this | yes |
+| 38 | Docs - [**Detailed design**](../docs/4-dettaglio.md) | Everyone | each member writes its own section | yes |
 | 42 | ImpactEffect refactoring | Venturini | separation in multiple files (Impact, ImpactEvent, ImpactEffect), Refactoring of ImpactEffect | yes |
 | 47 | Obstacle refactoring | Sbaraccani | Rename the companion object's methods | yes |
 | 48 | Shape refactoring | Venturini | Separate the classes in multiple files, create companion object's method for easy creation of Explosions | yes |
@@ -60,9 +60,9 @@ e di come l'ha pensato. Si fa un introduzione per tutti su come, assieme, abbiam
 | 50 | Trajectory refactoring | Bagattoni | Use the "Direction" enum everywhere instead of Ints | yes |
 | 51 | Comments on BoundingBox | Bagattoni | this | yes |
 | 52 | GUI refactoring | Sbaraccani | Better reuse of code in render() method | yes |
-| 53 | Docs - [**Implementation**](../docs/5-implementazione.md)| everyone | each member writes its own section | no |
-| 54 | Docs - [**Testing**](../docs/6-testing.md) | someone | write Testing section | no |
-| 55 | Docs - [**Retrospettiva**](../docs/7-retrospettiva.md) | someone | write Retrospettiva section | no |
+| 53 | Docs - [**Implementation**](../docs/5-implementazione.md)| everyone | each member writes its own section | yes |
+| 54 | Docs - [**Testing**](../docs/6-testing.md) | Bagattoni | write Testing section | yes |
+| 55 | Docs - [**Retrospettiva**](../docs/7-retrospettiva.md) | Everyone | write Retrospettiva section | yes |
 
 Keep in mind: ***always merge working code***
 
