@@ -39,7 +39,7 @@ Una rappresentazione di questa *pipeline* può essere quella del seguente schema
 <img src="./figures/collisions.png" height="200" height="auto">
 
 L'introduzione di questo processo rende ciascuna fase personalizzabile e permette di avere controllo sul suo comportamento, senza andare a modificare altre fasi.
-Ad esempio, se si vuole aggiungere un nuovo tipo di proiettile, è sufficiente introdurre un nuovo ImpactEffect con comportamneto diverso e le altre fasi di 
+Ad esempio, se si vuole aggiungere un nuovo tipo di proiettile, è sufficiente introdurre un nuovo ImpactEffect con comportamento diverso e le altre fasi di 
 rilevazione e applicazione non avranno bisogno di modifiche.
 
 L'introduzione dei **Power-Ups** si riduce quindi ad una variazione o estensione di ImpactEffect e ImpactEvents.
