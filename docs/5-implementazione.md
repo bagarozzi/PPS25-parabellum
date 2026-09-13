@@ -69,14 +69,11 @@ override def addExplosion(s: Shape): Obstacle = shape match
 Il sistema di risoluzione delle collisioni è costruito attorno a una pipeline di trasformazioni funzionali 
 che mantiene la separazione tra rilevamento geometrico e logica di gioco.
 
-Quando il CollisionDetector rileva una collisione, crea un Impact (che rappresenta l'impatto stesso della 
-collisione: una posizione, una figura colpita, o un bordo toccato). Questo Impact viene quindi passato 
-all'ImpactEffect associato al proiettile, il quale utilizza il pattern matching per trasformare l'Impact 
-in un Set di ImpactEvent specializzati.
-
-Questa trasformazione avviene interamente attraverso funzioni pure: l'ImpactEffect sa come reagire a diverse tipologie di impatto. Ad esempio, se un proiettile 
-colpisce un ostacolo, l'ImpactEffect decide se l'ostacolo deve essere danneggiato. Ogni effetto 
-può essere composto e riutilizzato.
+Come menzionato durante la [fase di design]("./4-dettaglio.md), questo processo avviene 
+interamente attraverso funzioni pure: 
+1. `CollisionDetector` rileva le collisioni producendo un `Impact`
+2. `ImpactEffect` del proiettile reagisce al tipo di impatto producendo una `Set` di `ImpactEvent`s
+3. Gli `ImpactEvent`s sono applicati al `GameState`
 
 Una volta generato il Set di ImpactEvent, il GameState accumula gli effetti sequenzialmente tramite 
 `foldLeft()`, applicando il metodo `action()` di ogni evento:
@@ -86,9 +83,8 @@ Una volta generato il Set di ImpactEvent, il GameState accumula gli effetti sequ
       .map(detectCollision(_, g.manager.enemies ++ g.obstacles ++ g.powerUps))
       .map(_.foldLeft(g)((g,e) => e.action(g)))
       .getOrElse(g)
-
 ```
-Ogni action() trasforma il GameState in modo immutabile, garantendo che gli effetti si propaghino in ordine definito. Questo approccio rende il sistema completamente estensibile: aggiungere un nuovo tipo di impatto (es. congelamento, teletrasporto, danno nel tempo) richiede solo di definire un nuovo ImpactEvent con il suo action(), senza modificare il motore di collision detection.
+Ogni `action()` trasforma il GameState in modo immutabile, garantendo che gli effetti si propaghino in ordine definito. Questo approccio rende il sistema completamente estensibile: aggiungere un nuovo tipo di impatto (es. congelamento, teletrasporto, danno nel tempo) richiede solo di definire un nuovo ImpactEvent con il suo `action()`, senza modificare il motore di collision detection.
 
 # Federico Bagattoni
 
@@ -138,7 +134,7 @@ Qui sono state implementati i metodi per la creazione del ricochet (che crea una
 ## ImpactEffect
 *realizzato il collaborazione con Luca Venturini*
 
-ImpactEffect racchiude il comportamento di un proiettile, definisce il comportamento che un proiettile deve avere quando avviene un impatto.
+ImpactEffect definisce il comportamento che un proiettile deve avere quando avviene un impatto.
 Questo viene realizzato definendo una funzione ```applyEffect``` che, passato un impatto ```Impact```, torna un insieme di 
 ```ImpactEvent```s, i quali possono essere applicati allo stato del gioco per modificarlo.
 
