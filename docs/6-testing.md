@@ -33,6 +33,15 @@ Oltre ai casi di impatto, sono stati verificati anche alcuni casi con Power-Up, 
 ```
 
 Infine sono stati creati test per la verifica del posizionamento durante la generazione della mappa.
+
+## Copertura
+La copertura del testing è abbastanza limitata. Si è preferito testare quei componenti il cui comportamento è più incerto e ricco di casi particolari (come collisioni o parsing).
+
+Altri componenti, come le traiettorie, non è stato necessario testarli in quanto non presentano comportamenti strani e sono stati implementati dopo diverse iterazioni di trial-and-error 
+(si pensi, ad esempio, alla formula matematica per ottenere un nuovo punto da Trajectory).
+
+Invece, componenti che utilizzano altri componenti, seppur utilizzino componenti testati sarebbe bene verificare il loro comportamento. Allo stesso tempo, GameState utilizza in parte componenti già testati 
+e la sua implementazione è intuitiva.
 ___
 ___
 [**&larr; Implementazione** ](./5-implementazione.md) | **Testing** | [ **Retrospettiva &rarr;**](./7-retrospettiva.md)
