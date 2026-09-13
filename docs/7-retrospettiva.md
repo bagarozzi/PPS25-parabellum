@@ -15,7 +15,7 @@ Nel caso specifico, gli sprint sono stati divisi in macro-argomenti (*milestones
 L'utilizzo di [file appositi](../process/product_backlog.md) per tracciare lo stato dei lavori è stato di grande aiuto all'organizzazione.
 
 ### Sprint 1 e 2
-Le prime due iterazioni sono state in parte rallentate dalla pausa estiva. Nonstante questo è stato 
+Le prime due iterazioni sono state in parte rallentate dalla pausa estiva. Nonostante questo è stato 
 prodotto un artefatto minimale e funzionante che permetteva un combattimento usando solo rette.
 Inoltre, il rallentamento ha permesso una maggiore riflessione sull'architettura e sul modello del dominio.
 
