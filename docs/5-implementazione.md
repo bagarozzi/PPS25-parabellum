@@ -22,6 +22,8 @@ Generazione delle entità, movimento e collisioni sono tutte trasformazioni dell
 # Luca Venturini
 
 ## Shape
+*realizzato il collaborazione con Pietro Sbaraccani*
+
 La Shape è stata pensata come un predicato logico che astrae una figura geometrica. Tramite il metodo ```belongs```, la Shape verifica se una posizione ricade al suo interno, abilitando il rilevamento delle collisioni tra proiettili e Figure. Le implementazioni concrete di Shape consentono al sistema di collision detection di rimanere agnostico rispetto alla geometria specifica, mantenendo una logica uniforme e riusabile.
 
 ### Circle
