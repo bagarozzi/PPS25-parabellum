@@ -1,7 +1,7 @@
 package it.unibo.parabellum
 package util
 
-import model.entity.{Burden, Obstacle, Piercing, PowerUp, Random, Ricochet}
+import model.entity.{Burden, Figure, Obstacle, Piercing, PowerUp, Random, Ricochet}
 import model.entity.Player.initPlayer
 import model.entity.Soldier.*
 import controller.GameState
@@ -18,7 +18,9 @@ import it.unibo.parabellum.model.function.Direction
  * where each generation step reads the occupied spaces from the current state and returns an updated one.
  */
 object MapGenerator:
-
+  private val defaultObs = 4.0
+  private val defaultPu = 0.4
+  private val defaultSoldier = 0.5
   /**
    * Dynamically extracts the spatial footprint (X, Y, Radius) of all entities
    * currently present in the given GameState.
@@ -27,34 +29,29 @@ object MapGenerator:
    * @return A sequence of tuples representing the occupied areas to be passed to Prolog.
    */
   private def getOccupiedSpaces(g: GameState): Seq[(Double, Double, Double)] =
-    val obsSpaces = g.obstacles.toSeq.map: o =>
-      val r = o.shape match
-        case ModelCircle(_, radius) => radius
-        case _ => 4.0
-      (o.pos.x, o.pos.y, r)
+    transform(g.obstacles, defaultObs) ++ transform(g.powerUps, defaultPu) ++ transform(g.manager.soldiers, defaultSoldier)
 
-    val puSpaces = g.powerUps.toSeq.map: pu =>
-      val r = pu.shape match
-        case ModelCircle(_, radius) => radius
-        case _ => 0.2
-      (pu.pos.x, pu.pos.y, r)
+  private def transform[C <: Figure](set: Set[C], defRad: Double): Seq[(Double, Double, Double)] =
+    val out = for
+      o <- set
+    yield extractDimensions(o, defRad)
+    out.toSeq
 
-    val soldierSpaces = g.manager.soldiers.toSeq.map: s =>
-      val r = s.shape match
-        case ModelCircle(_, radius) => radius
-        case _ => 0.15
-      (s.pos.x, s.pos.y, r)
+  private def extractDimensions(element: Figure, defaultRadius: Double): (Double, Double, Double) =
+    (element.pos.x, element.pos.y, getRadius(element, defaultRadius))
 
-    obsSpaces ++ puSpaces ++ soldierSpaces
+  private def getRadius(element: Figure, defaultRadius: Double): Double = element.shape match
+    case ModelCircle(_, radius) => radius
+    case _ => defaultRadius
 
 
-  // --- SINGULAR SPAWN FUNCTIONS (Generate and append exactly 1 entity) ---
+
 
   /**
    * Spawns a single random obstacle (Circle or Polygon) avoiding collisions.
    * Uses tail recursion to retry upon overlap detection.
    *
-   * @param g The current GameState.
+   * @param g      The current GameState.
    * @param border The implicit bounding box of the map.
    * @return The updated GameState containing the new obstacle.
    */
@@ -62,10 +59,10 @@ object MapGenerator:
   def spawnObstacle(g: GameState)(using border: BoundingBox): GameState =
     val pos = RandomGenerator.randomPosition(border.x0, border.x1, border.y0, border.y1)
     val isCircle = math.random() > 0.5
-    val maxRadius = if isCircle then 0.5 + math.random() else 3.0 + math.random()
+    val maxRadius = if isCircle then 0.5 + math.random() else defaultObs + math.random()
 
     if PrologMapChecker.hasOverlap(pos.x, pos.y, maxRadius, getOccupiedSpaces(g)) then
-      spawnObstacle(g) // Collision detected, retry
+      spawnObstacle(g)
     else
       val newObstacle = if isCircle then Obstacle.setCircle(pos, maxRadius)
       else
@@ -80,7 +77,7 @@ object MapGenerator:
   /**
    * Spawns a single random power-up in a free space.
    *
-   * @param g The current GameState.
+   * @param g      The current GameState.
    * @param border The implicit bounding box of the map.
    * @return The updated GameState containing the new power-up.
    */
@@ -97,11 +94,7 @@ object MapGenerator:
       else if rand < 0.75 then Random(pos)
       else Piercing(pos)
 
-    val radius = pu.shape match
-      case ModelCircle(_, r) => r
-      case _ => 0.2
-
-    if PrologMapChecker.hasOverlap(pX, pY, radius, getOccupiedSpaces(g)) then
+    if PrologMapChecker.hasOverlap(pX, pY, getRadius(pu, defaultPu), getOccupiedSpaces(g)) then
       spawnPowerUp(g)
     else
       GameState.addPowerUp(g, pu)
@@ -110,12 +103,12 @@ object MapGenerator:
   /**
    * Spawns a single soldier for a specific team within the designated map segment.
    *
-   * @param g The current GameState.
+   * @param g          The current GameState.
    * @param playerName The name of the player owning this soldier.
-   * @param direction The facing direction of the soldier (1 for right, -1 for left).
-   * @param spawnMinX The minimum X boundary for this specific team's spawn area.
-   * @param spawnMaxX The maximum X boundary for this specific team's spawn area.
-   * @param border The implicit bounding box of the map.
+   * @param direction  The facing direction of the soldier (1 for right, -1 for left).
+   * @param spawnMinX  The minimum X boundary for this specific team's spawn area.
+   * @param spawnMaxX  The maximum X boundary for this specific team's spawn area.
+   * @param border     The implicit bounding box of the map.
    * @return The updated GameState containing the newly assigned soldier.
    */
   @tailrec
@@ -126,22 +119,17 @@ object MapGenerator:
     val teamCurrentSize = g.manager.teams.find(_.owner.name == playerName).map(_.soldiers.size).getOrElse(0)
     val newSoldier = initSoldier(s"$playerName-soldier${teamCurrentSize + 1}", Position(pX, pY), playerName, direction)
 
-    val radius = newSoldier.shape match
-      case ModelCircle(_, r) => r
-      case _ => 0.15
-
-    if PrologMapChecker.hasOverlap(pX, pY, radius, getOccupiedSpaces(g)) then
+    if PrologMapChecker.hasOverlap(pX, pY, getRadius(newSoldier, defaultSoldier), getOccupiedSpaces(g)) then
       spawnSoldier(g, playerName, direction, spawnMinX, spawnMaxX)
     else
       GameState.addSoldier(g, playerName, newSoldier)
 
 
-  // --- PLURAL GENERATION FUNCTIONS (Folds over the state) ---
 
   /**
    * Generates a specified number of obstacles by folding over the GameState.
    *
-   * @param count The amount of obstacles to generate.
+   * @param count            The amount of obstacles to generate.
    * @param initialGameState The starting GameState.
    * @return The resulting GameState populated with obstacles.
    */
@@ -151,7 +139,7 @@ object MapGenerator:
   /**
    * Generates a specified number of power-ups by folding over the GameState.
    *
-   * @param count The amount of power-ups to generate.
+   * @param count            The amount of power-ups to generate.
    * @param initialGameState The starting GameState.
    * @return The resulting GameState populated with power-ups.
    */
@@ -161,8 +149,8 @@ object MapGenerator:
   /**
    * Divides the map, initializes the players, and generates their respective teams of soldiers.
    *
-   * @param players A Set containing the names of the players.
-   * @param soldierCount The number of soldiers per team.
+   * @param players          A Set containing the names of the players.
+   * @param soldierCount     The number of soldiers per team.
    * @param initialGameState The starting GameState (usually already containing obstacles).
    * @return The resulting GameState populated with players and soldiers.
    */
@@ -177,9 +165,7 @@ object MapGenerator:
       val spawnMaxX = if isLeft then midX - safeMargin else border.x1
       val direction = if isLeft then Direction.Positive else Direction.Negative
 
-      // Add the empty player shell to the TurnManager first
       val stateWithPlayer = GameState.addPlayer(stateAcc, initPlayer(playerName, normalImpactEffect()))
 
-      // Fold over the required soldier count, adding them one by one to the specific player's team
       (1 to soldierCount).foldLeft(stateWithPlayer): (teamAcc, _) =>
         spawnSoldier(teamAcc, playerName, direction, spawnMinX, spawnMaxX)
