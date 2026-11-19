@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ScalaCompilerConfiguration">
     <option name="separateProdTestSources" value="true" />
-    <profile name="sbt 1" modules="parabellum,parabellum.main,parabellum.test,pps25-parabellum_5353,pps25-parabellum_5353.main,pps25-parabellum_5353.test" />
+    <profile name="sbt 1" modules="parabellum,parabellum-root,parabellum-root.main,parabellum-root.parabellum,parabellum-root.parabellum-core,parabellum-root.parabellum-server,parabellum-root.test,pps25-parabellum_5353,pps25-parabellum_5353.main,pps25-parabellum_5353.test" />
+    <profile name="sbt 2" modules="parabellum-root.parabellum-core.main,parabellum-root.parabellum-core.test,parabellum-root.parabellum-server.main,parabellum-root.parabellum-server.test,parabellum-root.parabellum.main,parabellum-root.parabellum.test,parabellum.main,parabellum.test">
+      <parameters>
+        <parameter value="-Wconf:msg=Implicit parameters should be provided with a `using` clause:s" />
+      </parameters>
+    </profile>
   </component>
 </project>
