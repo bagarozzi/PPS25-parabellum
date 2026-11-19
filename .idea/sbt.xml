@@ -7,8 +7,11 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="C:\Users\feder\Documents\projects\graphwar\PPS25-parabellum" />
-            <option value="C:\Users\feder\Documents\projects\graphwar\PPS25-parabellum\project" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/client" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/project" />
+            <option value="$PROJECT_DIR$/server" />
           </set>
         </option>
         <option name="sbtVersion" value="2.0.2" />
